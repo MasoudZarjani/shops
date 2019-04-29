@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\v1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Category;
+use App\File;
+use App\Describe;
 
 class HomeController extends Controller
 {
@@ -22,7 +24,25 @@ class HomeController extends Controller
 
     public function index()
     {
-        return Category::getParentCategory(config('constants.category.type.main'));
+        $mainPageData = Describe::getSettingIndex();
+
+        $limited = (int)Describe::getSettingWithTitle('categoryPaginationLimited');
+        $mainCategories = Category::getParentCategory(config('constants.category.type.main'))->take($limited);
+
+        $specialOffer = 
+        
+        $slider = File::get('mainSlider');
+
+        return response()->json([
+            'data' => $mainPageData,
+            'categories' => $mainCategories,
+            'slider' => $slider,
+        ]);
+    }
+
+    public function categories()
+    {
+        return response()->json(Category::getParentCategory(config('constants.category.type.main')));
     }
 
     public function handleErrors()

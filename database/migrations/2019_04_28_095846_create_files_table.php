@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Helpers\Relations;
+use App\Helpers\Database\Relations;
 
 class CreateFilesTable extends Migration
 {
@@ -20,6 +20,7 @@ class CreateFilesTable extends Migration
             $table->string('size')->nullable();
 
             Relations::constant($table, 'type', 'file.type.image');
+            Relations::constant($table, 'position', 'file.position.category');
 
             Relations::morph($table, 'file');
 

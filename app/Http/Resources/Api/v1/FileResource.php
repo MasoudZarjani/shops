@@ -4,7 +4,7 @@ namespace App\Http\Resources\Api\v1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+class FileResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,9 +15,9 @@ class CategoryResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'uuid' => $this->uuid ?? '',
-            'title' => $this->describe->title ?? '',
-            'path' => $this->file->path ?? config('constants.default.category.image')
+            'path' => $this->path ?? '',
+            'title' => ($this->describe) ? $this->describe->title : '',
+            'description' => ($this->describe) ? $this->describe->description : '',
         ];
     }
 }

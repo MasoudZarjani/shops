@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\CreateUuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Http\Resources\Api\v1\CategoryResource;
 
 class Category extends Model
 {
@@ -13,9 +14,9 @@ class Category extends Model
     /**
      * Get the category's image.
      */
-    public function image()
+    public function file()
     {
-        return $this->morphOne('App\Image', 'image_able');
+        return $this->morphOne('App\File', 'file_able');
     }
 
     /**
@@ -78,6 +79,11 @@ class Category extends Model
         return $query->where('status', config('constants.category.status.active'));
     }
 
+    public function scopeOrdered($query)
+    {
+        return $query->orderBy('sort', 'asc');
+    }
+
     /**
      * Get category info
      * 
@@ -86,6 +92,7 @@ class Category extends Model
      */
     public static function getParentCategory($type)
     {
-        $parentCategory = Category::ofType($type)->ofCategoryId(0)->active()->get();
+        $parentCategory = Category::ofType($type)->ofCategoryId(0)->active()->ordered()->get();
+        return CategoryResource::collection($parentCategory);
     }
 }

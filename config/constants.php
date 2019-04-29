@@ -22,6 +22,15 @@ return [
             'image' => 0,
             'video' => 1,
             'audio' => 2
+        ],
+        'position' => [
+            'category' => 0,
+            'mainSlider' => 1
+        ]
+    ],
+    'default' => [
+        'category' => [
+            ''
         ]
     ]
 ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Helpers\Database;
 
 class Relations
 {
@@ -15,7 +15,6 @@ class Relations
     {
         $table->integer($name . '_id')->unsigned()->nullable();
     }
-
 
     public static function constant($table, $name, $default)
     {

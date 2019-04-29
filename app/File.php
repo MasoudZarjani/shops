@@ -3,8 +3,39 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Http\Resources\Api\v1\FileResource;
 
 class File extends Model
 {
-    //
+    use  SoftDeletes;
+
+    /**
+     * Get all of the owning file_able models.
+     */
+    public function file_able()
+    {
+        return $this->morphTo();
+    }
+
+    /**
+     * Scope a query to return position from file.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  mixed $position
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfPosition($query, $position)
+    {
+        return $query->where('position', $position);
+    }
+
+    public static function get($position)
+    {
+        $file = File::ofPosition(config('constants.file.position.' . $position))->get();
+        if (count($file) > 0) {
+            return FileResource::collection($file);
+        }
+        return [config('constants.default.' . $file)];
+    }
 }
