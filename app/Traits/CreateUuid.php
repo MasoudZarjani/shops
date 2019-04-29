@@ -4,7 +4,7 @@ namespace App\Traits;
 
 use Webpatser\Uuid\Uuid;
 
-trait Uuids
+trait CreateUuid
 {
 
     /**

@@ -16,12 +16,15 @@ class CreateCategoriesTable extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid')->unique()->nullable();
 
             Relations::pointer($table, 'category');
 
             $table->integer('sort')->default(0);
 
             Relations::constant($table, 'type', 'category.type.main');
+
+            Relations::status($table, 'status', 'category.status.active');
 
             $table->softDeletes();
             $table->timestamps();

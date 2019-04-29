@@ -21,4 +21,9 @@ class Relations
     {
         $table->tinyInteger($name)->default(config('constants.' . $default));
     }
+
+    public static function status($table, $name, $default)
+    {
+        $table->boolean($name)->default(config('constants.' . $default));
+    }
 }
