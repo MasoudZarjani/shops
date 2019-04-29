@@ -1,0 +1,23 @@
+<?php
+
+return [
+    'category' => [
+        'type' => [
+            'main' => 0,
+            'feature' => 1
+        ]
+    ],
+    'describe' => [
+        'type' => [
+            'text' => 0,
+            'setting' => 1
+        ]
+    ],
+    'file' => [
+        'type' => [
+            'image' => 0,
+            'video' => 1,
+            'audio' => 2
+        ]
+    ]
+];
