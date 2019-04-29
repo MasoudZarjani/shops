@@ -12,7 +12,7 @@ $factory->define(Describe::class, function (Faker $faker) {
     $describeAbleType = $faker->randomElement($describeAble);
     $describeAble = factory($describeAbleType)->create();
     return [
-        'title' => $faker->title,
+        'title' => $faker->word,
         'describe_able_type' => $describeAbleType,
         'describe_able_id' => $describeAble->id,
     ];
