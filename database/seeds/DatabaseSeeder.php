@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Helpers\Database\Factory;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,7 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(DescribesTableSeeder::class);
-        $this->call(FilesTableSeeder::class);
+        Factory::Group('other', 'otherDescription');
     }
 }

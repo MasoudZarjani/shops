@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Helpers\Database\Relations;
 
 class CreateGroupsTable extends Migration
 {
@@ -15,6 +16,9 @@ class CreateGroupsTable extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->bigIncrements('id');
+
+            Relations::pointer($table, 'group');
+
             $table->timestamps();
         });
     }

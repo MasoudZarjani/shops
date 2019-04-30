@@ -11,6 +11,12 @@ return [
             'active' => 1
         ]
     ],
+    'product' => [
+        'status' => [
+            'inactive' => 0,
+            'active' => 1
+        ]
+    ],
     'describe' => [
         'type' => [
             'text' => 0,

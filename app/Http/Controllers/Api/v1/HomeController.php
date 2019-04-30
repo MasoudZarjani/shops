@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Category;
 use App\File;
@@ -10,6 +9,8 @@ use App\Describe;
 
 class HomeController extends Controller
 {
+    protected $user;
+    
     /**
      * Instantiate a new controller instance.
      *

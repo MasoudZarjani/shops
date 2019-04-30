@@ -64,4 +64,14 @@ class Describe extends Model
             ]
         ];
     }
+
+    public static function setFactory($title, $description)
+    {
+        $describe = new Describe();
+        $describe->title = $title ?? '';
+        $describe->description = $description ?? '';
+        $describe->type = config('constants.describe.type.text') ?? 0;
+        $describe->save();
+        return $describe;
+    }
 }
