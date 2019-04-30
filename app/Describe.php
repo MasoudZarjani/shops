@@ -10,6 +10,14 @@ class Describe extends Model
     use  SoftDeletes;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title', 'description',
+    ];
+    /**
      * Get all of the owning describe_able models.
      */
     public function describe_able()
@@ -65,13 +73,12 @@ class Describe extends Model
         ];
     }
 
-    public static function setFactory($title, $description)
+    public function setFactory($title, $description)
     {
-        $describe = new Describe();
-        $describe->title = $title ?? '';
-        $describe->description = $description ?? '';
-        $describe->type = config('constants.describe.type.text') ?? 0;
-        $describe->save();
-        return $describe;
+        $this->title = $title ?? '';
+        $this->description = $description ?? '';
+        $this->type = config('constants.describe.type.text') ?? 0;
+        $this->save();
+        return $this;
     }
 }

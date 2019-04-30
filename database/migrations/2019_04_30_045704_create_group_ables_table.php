@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use App\Helpers\Database\Relations;
 
-class CreateProductsTable extends Migration
+class CreateGroupAblesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,14 +14,11 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->uuid('uuid')->unique();
-            Relations::constant($table, 'status', 'product.status.active');
+        Schema::create('group_ables', function (Blueprint $table) {
+            Relations::pointer($table, 'group');
 
-            Relations::morph($table, 'product');
+            Relations::morph($table, 'group');
 
-            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -33,6 +30,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('group_ables');
     }
 }

@@ -15,8 +15,6 @@ class CreateTagAblesTable extends Migration
     public function up()
     {
         Schema::create('tag_ables', function (Blueprint $table) {
-            $table->bigIncrements('id');
-
             Relations::pointer($table, 'tag');
 
             Relations::morph($table, 'tag');

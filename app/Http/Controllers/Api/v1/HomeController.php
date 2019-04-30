@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Category;
 use App\File;
 use App\Describe;
+use App\Helpers\Database\Factory;
 
 class HomeController extends Controller
 {
@@ -30,8 +31,6 @@ class HomeController extends Controller
         $limited = (int)Describe::getSettingWithTitle('categoryPaginationLimited');
         $mainCategories = Category::getParentCategory(config('constants.category.type.main'))->take($limited);
 
-        $specialOffer = 
-        
         $slider = File::get('mainSlider');
 
         return response()->json([

@@ -13,7 +13,7 @@ class Relations
 
     public static function pointer($table, $name)
     {
-        $table->integer($name . '_id')->unsigned()->nullable();
+        $table->integer($name . '_id')->unsigned()->default(0);
     }
 
     public static function constant($table, $name, $default)

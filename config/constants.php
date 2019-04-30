@@ -31,7 +31,8 @@ return [
         ],
         'position' => [
             'category' => 0,
-            'mainSlider' => 1
+            'mainSlider' => 1,
+            'mainImage' => 2,
         ]
     ],
     'default' => [
