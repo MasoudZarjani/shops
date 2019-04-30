@@ -42,32 +42,4 @@ class Product extends Model
     {
         return $this->morphOne(Describe::class, 'describe_able');
     }
-
-    public function set()
-    {
-        $factory = new Factory();
-
-        $this->status = $factory->getFaker('status');
-        $this->save();
-
-        $describe = $factory->describe($factory->getFaker('title'), $factory->getFaker('description'), 'text');
-
-        $file = new File();
-        $file = $file->set(
-            $factory->getFaker('image'),
-            $factory->getFaker('size'),
-            config('constants.file.type.image'),
-            config('constants.file.position.mainImage')
-        );
-
-
-        $group = Group::find($factory->getFaker('between'));
-
-        $tag = Tag::find($factory->getFaker('number'));
-
-        $this->tags()->save($tag);
-        $this->groups()->save($group);
-        $this->files()->save($file);
-        $this->describe()->save($describe);
-    }
 }

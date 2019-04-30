@@ -2,6 +2,9 @@
 
 use Illuminate\Database\Seeder;
 use App\Helpers\Database\Factory;
+use App\Group;
+use App\Product;
+use App\Tag;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,34 +15,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $factory = new Factory();
-        // Category
-        for($i = 0; $i < 6; $i++)
-        {
-            $factory->category();
-        }
+        $this->call([
+            TagsTableSeeder::class,
+            DescribesTableSeeder::class,
+        ]);
 
-        // Setting
-        $factory->describe('tell', '09335551234', 'setting');
-        $factory->describe('address', 'private st.', 'setting');
-        $factory->describe('telegram', 'http://telegram.me/@real', 'setting');
-        $factory->describe('instagram', 'http://instagram.com/real', 'setting');
-        $factory->describe('email', 'admin@info.com', 'setting');
-
-        // Group
-        $factory->group('other', 'otherDescription');
-        $factory->group('special', 'specialDescription');
-
-        // Tag
-        for($i = 0; $i < 6; $i++)
-        {
-            $factory->tag();
-        }
-
-        // Product
-        for($i = 0; $i < 6; $i++)
-        {
-            $factory->product();
-        }
+        $group = Group::find(mt_rand(1, 2));
+        $products = Product::all();
+        $products->map(function($item) use($group){
+            $item->groups()->save($group);
+            $tag = Tag::find(mt_rand(1, 50));
+            $item->tags()->save($tag);
+        });
     }
 }

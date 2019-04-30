@@ -23,7 +23,7 @@ class Factory
         $this->faker = Faker::create();
     }
 
-    public function group($title, $description)
+    public static function group($title, $description)
     {
         $describes = self::describe($title, $description, 'text');
         if (!$describes->describe_able) {
@@ -38,19 +38,13 @@ class Factory
         $product->set();
     }
 
-    public function tag()
-    {
-        $tag = new Tag();
-        $tag->set($this->getFaker('word'));
-    }
-
     public function category()
     {
         $category = new Category();
         $category->set();
     }
 
-    public function describe($title, $description, $type)
+    public static function describe($title, $description, $type)
     {
         return Describe::firstOrCreate(
             ['title' => $title],

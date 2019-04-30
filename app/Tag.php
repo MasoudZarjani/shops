@@ -13,10 +13,4 @@ class Tag extends Model
     {
         return $this->morphedByMany(Product::class, 'tag_able');
     }
-
-    public function set($title)
-    {
-        $this->title = $title;
-        $this->save();
-    }
 }

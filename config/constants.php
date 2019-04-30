@@ -38,6 +38,11 @@ return [
     'default' => [
         'category' => [
             ''
+        ],
+        'slider' => [
+            'path' => 'http://lorempixel.com/output/sports-q-c-640-480-6.jpg',
+            'title' => '',
+            'description' => ''
         ]
     ]
 ];
