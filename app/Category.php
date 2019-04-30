@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\CreateUuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Http\Resources\Api\v1\CategoryResource;
+use App\Helpers\Database\Factory;
 
 class Category extends Model
 {
@@ -94,5 +95,26 @@ class Category extends Model
     {
         $parentCategory = Category::ofType($type)->ofCategoryId(0)->active()->ordered()->get();
         return CategoryResource::collection($parentCategory);
+    }
+
+    public function set()
+    {
+        $factory = new Factory();
+
+        $describe = $factory->describe($factory->getFaker('title'), $factory->getFaker('description'), 'text');
+
+        $file = new File();
+        $file = $file->set(
+            $factory->getFaker('image'),
+            $factory->getFaker('size'),
+            config('constants.file.type.image'),
+            config('constants.file.position.mainImage')
+        );
+
+        $this->type = config('constants.category.type.main');
+        $this->save();
+
+        $this->file()->save($file);
+        $this->describe()->save($describe);
     }
 }

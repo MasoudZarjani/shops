@@ -12,27 +12,34 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Setting
-        Factory::describe('tell', '09335551234', 'setting');
-        Factory::describe('address', 'private st.', 'setting');
-        Factory::describe('telegram', 'http://telegram.me/@real', 'setting');
-        Factory::describe('instagram', 'http://instagram.com/real', 'setting');
-        Factory::describe('email', 'admin@info.com', 'setting');
-
-        // Group
-        Factory::group('other', 'otherDescription');
-        Factory::group('special', 'specialDescription');
-
-        //Tag
-        for($i = 0; $i < 15; $i++)
+        $factory = new Factory();
+        // Category
+        for($i = 0; $i < 6; $i++)
         {
-            Factory::tag();
+            $factory->category();
         }
 
-        //Product
-        for($i = 0; $i < 14; $i++)
+        // Setting
+        $factory->describe('tell', '09335551234', 'setting');
+        $factory->describe('address', 'private st.', 'setting');
+        $factory->describe('telegram', 'http://telegram.me/@real', 'setting');
+        $factory->describe('instagram', 'http://instagram.com/real', 'setting');
+        $factory->describe('email', 'admin@info.com', 'setting');
+
+        // Group
+        $factory->group('other', 'otherDescription');
+        $factory->group('special', 'specialDescription');
+
+        // Tag
+        for($i = 0; $i < 6; $i++)
         {
-            Factory::product();
+            $factory->tag();
+        }
+
+        // Product
+        for($i = 0; $i < 6; $i++)
+        {
+            $factory->product();
         }
     }
 }

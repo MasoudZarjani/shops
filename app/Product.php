@@ -50,7 +50,7 @@ class Product extends Model
         $this->status = $factory->getFaker('status');
         $this->save();
 
-        $describe = Factory::describe($factory->getFaker('title'), $factory->getFaker('description'), 'text');
+        $describe = $factory->describe($factory->getFaker('title'), $factory->getFaker('description'), 'text');
 
         $file = new File();
         $file = $file->set(
@@ -59,7 +59,9 @@ class Product extends Model
             config('constants.file.type.image'),
             config('constants.file.position.mainImage')
         );
-        $group = Group::find(1);
+
+
+        $group = Group::find($factory->getFaker('between'));
 
         $tag = Tag::find($factory->getFaker('number'));
 

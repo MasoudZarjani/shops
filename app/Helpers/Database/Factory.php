@@ -7,6 +7,7 @@ use App\Product;
 use App\Group;
 use App\Describe;
 use App\Tag;
+use App\Category;
 
 class Factory
 {
@@ -22,7 +23,7 @@ class Factory
         $this->faker = Faker::create();
     }
 
-    public static function group($title, $description)
+    public function group($title, $description)
     {
         $describes = self::describe($title, $description, 'text');
         if (!$describes->describe_able) {
@@ -31,20 +32,25 @@ class Factory
         }
     }
 
-    public static function product()
+    public function product()
     {
         $product = new Product();
         $product->set();
     }
 
-    public static function tag()
+    public function tag()
     {
         $tag = new Tag();
-        $faker = new Factory();
-        $tag->set($faker->getFaker('word'));
+        $tag->set($this->getFaker('word'));
     }
 
-    public static function describe($title, $description, $type)
+    public function category()
+    {
+        $category = new Category();
+        $category->set();
+    }
+
+    public function describe($title, $description, $type)
     {
         return Describe::firstOrCreate(
             ['title' => $title],
@@ -76,6 +82,9 @@ class Factory
                 break;
             case 'number':
                 $faker = $this->faker->numberBetween(1, 5);
+                break;
+            case 'between':
+                $faker = $this->faker->numberBetween(1, 2);
                 break;
             default:
                 break;
