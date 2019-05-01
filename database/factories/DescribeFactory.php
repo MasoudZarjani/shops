@@ -7,7 +7,8 @@ use Faker\Generator as Faker;
 
 $factory->define(Describe::class, function (Faker $faker) {
     $describeAble = [
-        App\File::class,
+        App\Category::class,
+        App\Product::class,
     ];
     $describeAbleType = $faker->randomElement($describeAble);
     $describeAble = factory($describeAbleType)->create();

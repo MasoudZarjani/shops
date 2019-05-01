@@ -25,8 +25,8 @@ class DescribesTableSeeder extends Seeder
         Factory::describe('specialOfferShowStatus', '1', 'setting');
         Factory::describe('specialOfferSort', '3', 'setting');
 
-        Factory::group('other', 'otherDescription');
-        Factory::group('special', 'specialDescription');
+        Factory::group('gp_other', 'otherDescription');
+        Factory::group('gp_special', 'specialDescription');
 
         factory(App\Describe::class, 50)->create();
     }

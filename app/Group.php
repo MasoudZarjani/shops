@@ -13,13 +13,25 @@ class Group extends Model
     {
         return $this->morphedByMany(Product::class, 'group_able');
     }
-    
+
     /**
      * Get the group's describe.
      */
     public function describe()
     {
         return $this->morphOne('App\Describe', 'describe_able');
+    }
+
+    /**
+     * Scope a query to return parent from group.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  mixed $parent
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfGroupId($query, $groupId)
+    {
+        return $query->where('group_id', $groupId);
     }
 
     public static function set()

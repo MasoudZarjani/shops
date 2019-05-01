@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             TagsTableSeeder::class,
             DescribesTableSeeder::class,
+            FilesTableSeeder::class,
         ]);
 
         $group = Group::find(mt_rand(1, 2));

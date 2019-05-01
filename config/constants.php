@@ -4,7 +4,7 @@ return [
     'category' => [
         'type' => [
             'main' => 0,
-            'feature' => 1
+            'special' => 1
         ],
         'status' => [
             'inactive' => 0,

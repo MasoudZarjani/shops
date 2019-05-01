@@ -7,11 +7,14 @@ use App\Category;
 use App\File;
 use App\Describe;
 use App\Helpers\Database\Factory;
+use App\Product;
+use App\Group;
+use App\Http\Resources\Api\v1\ProductResource;
 
 class HomeController extends Controller
 {
     protected $user;
-    
+
     /**
      * Instantiate a new controller instance.
      *
@@ -31,12 +34,22 @@ class HomeController extends Controller
         $limited = (int)Describe::getSettingWithTitle('categoryPaginationLimited');
         $mainCategories = Category::getParentCategory(config('constants.category.type.main'))->take($limited);
 
+        $specialTitles = Group::ofGroupId(0)->get();
+        foreach ($specialTitles as $specialTitle) {
+            if ($specialTitle->describe->title == 'gp_special')
+                $specialGroup = $specialTitle;
+        }
+
+        $specialProduct = $specialGroup->products()->get();
+        $specialProduct = ProductResource::collection($specialProduct);
+
         $slider = File::get('mainSlider');
 
         return response()->json([
             'data' => $mainPageData,
             'categories' => $mainCategories,
             'slider' => $slider,
+            'specialProduct' => $specialProduct
         ]);
     }
 
