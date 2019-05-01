@@ -31,8 +31,8 @@ class HomeController extends Controller
     {
         $mainPageData = Describe::getSettingIndex();
 
-        $limited = (int)Describe::getSettingWithTitle('categoryPaginationLimited');
-        $mainCategories = Category::getParentCategory(config('constants.category.type.main'))->take($limited);
+        $categoryPaginationLimited = (int)Describe::getSettingWithTitle('categoryPaginationLimited');
+        $mainCategories = Category::getParentCategory(config('constants.category.type.main'))->take($categoryPaginationLimited);
 
         $specialTitles = Group::ofGroupId(0)->get();
         foreach ($specialTitles as $specialTitle) {
@@ -40,7 +40,7 @@ class HomeController extends Controller
                 $specialGroup = $specialTitle;
         }
 
-        $specialProduct = $specialGroup->products()->get();
+        $specialProduct = $specialGroup->products()->active()->get();
         $specialProduct = ProductResource::collection($specialProduct);
 
         $slider = File::get('mainSlider');

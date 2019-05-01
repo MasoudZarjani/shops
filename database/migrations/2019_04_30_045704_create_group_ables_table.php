@@ -17,7 +17,7 @@ class CreateGroupAblesTable extends Migration
         Schema::create('group_ables', function (Blueprint $table) {
             Relations::pointer($table, 'group');
 
-            Relations::morph($table, 'group');
+            $table->nullableMorphs('group_able');
 
             $table->timestamps();
         });

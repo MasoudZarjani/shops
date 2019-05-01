@@ -22,7 +22,7 @@ class CreateFilesTable extends Migration
             Relations::constant($table, 'type', 'file.type.image');
             Relations::constant($table, 'position', 'file.position.category');
 
-            Relations::morph($table, 'file');
+            $table->nullableMorphs('file_able');
 
             $table->softDeletes();
             $table->timestamps();

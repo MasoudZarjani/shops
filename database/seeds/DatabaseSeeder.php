@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Helpers\Database\Factory;
 use App\Group;
 use App\Product;
 use App\Tag;
@@ -19,13 +18,16 @@ class DatabaseSeeder extends Seeder
             TagsTableSeeder::class,
             DescribesTableSeeder::class,
             FilesTableSeeder::class,
+            ProductsSeeder::class,
+            CategoriesSeeder::class,
+            GroupsSeeder::class,
         ]);
 
-        $group = Group::find(mt_rand(1, 2));
+        $group = Group::find(2);
         $products = Product::all();
-        $products->map(function($item) use($group){
+        $products->map(function ($item) use ($group) {
             $item->groups()->save($group);
-            $tag = Tag::find(mt_rand(1, 50));
+            $tag = Tag::find(mt_rand(1, 17));
             $item->tags()->save($tag);
         });
     }

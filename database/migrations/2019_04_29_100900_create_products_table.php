@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->uuid('uuid')->unique();
             Relations::constant($table, 'status', 'product.status.active');
 
-            Relations::morph($table, 'product');
+            $table->nullableMorphs('product_able');
 
             $table->softDeletes();
             $table->timestamps();

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Helpers\Database\Factory;
+use App\Tag;
 
 class TagsTableSeeder extends Seeder
 {
@@ -12,6 +12,12 @@ class TagsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Tag::class, 50)->create();
+        $tags = File::get("database/data/tags.json");
+        $tags = json_decode($tags);
+        foreach ($tags as $tag) {
+            $tagModel = new Tag();
+            $tagModel->title = $tag->title;
+            $tagModel->save();
+        }
     }
 }

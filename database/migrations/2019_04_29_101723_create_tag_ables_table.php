@@ -17,7 +17,7 @@ class CreateTagAblesTable extends Migration
         Schema::create('tag_ables', function (Blueprint $table) {
             Relations::pointer($table, 'tag');
 
-            Relations::morph($table, 'tag');
+            $table->nullableMorphs('tag_able');
 
             $table->timestamps();
         });

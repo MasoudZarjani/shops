@@ -42,4 +42,16 @@ class Product extends Model
     {
         return $this->morphOne(Describe::class, 'describe_able');
     }
+
+    /**
+     * Scope a query to return active from product.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  mixed $active
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('status', config('constants.product.status.active'));
+    }
 }

@@ -21,7 +21,7 @@ class CreateDescribesTable extends Migration
 
             Relations::constant($table, 'type', 'describe.type.text');
 
-            Relations::morph($table, 'describe');
+            $table->nullableMorphs('describe_able');
 
             $table->softDeletes();
             $table->timestamps();

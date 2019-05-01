@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Helpers\Database\Factory;
+use App\Describe;
 
 class DescribesTableSeeder extends Seeder
 {
@@ -12,22 +13,16 @@ class DescribesTableSeeder extends Seeder
      */
     public function run()
     {
-        Factory::describe('tell', '09335551234', 'setting');
-        Factory::describe('address', 'private st.', 'setting');
-        Factory::describe('telegram', 'http://telegram.me/@real', 'setting');
-        Factory::describe('instagram', 'http://instagram.com/real', 'setting');
-        Factory::describe('email', 'admin@info.com', 'setting');
-        Factory::describe('categoryPaginationLimited', '3', 'setting');
-        Factory::describe('slidersShowStatus', '1', 'setting');
-        Factory::describe('slidersSort', '1', 'setting');
-        Factory::describe('categoriesShowStatus', '1', 'setting');
-        Factory::describe('categoriesSort', '2', 'setting');
-        Factory::describe('specialOfferShowStatus', '1', 'setting');
-        Factory::describe('specialOfferSort', '3', 'setting');
-
-        Factory::group('gp_other', 'otherDescription');
-        Factory::group('gp_special', 'specialDescription');
-
-        factory(App\Describe::class, 50)->create();
+        $describes = File::get("database/data/describes.json");
+        $describes = json_decode($describes);
+        foreach ($describes as $describe) {
+            $describeModel = new Describe();
+            $describeModel->title = $describe->title;
+            $describeModel->description = $describe->description;
+            $describeModel->type = $describe->type;
+            $describeModel->describe_able_type = $describe->describe_able_type;
+            $describeModel->describe_able_id = $describe->describe_able_id;
+            $describeModel->save();
+        }
     }
 }
