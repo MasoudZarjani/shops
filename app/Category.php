@@ -33,7 +33,7 @@ class Category extends Model
      */
     public function children()
     {
-        return $this->hasMany('App\Category', 'category_id');
+        return $this->hasMany('App\Category', 'parent_id');
     }
 
     /**
@@ -41,7 +41,7 @@ class Category extends Model
      */
     public function parent()
     {
-        return $this->belongsTo('App\Category', 'category_id');
+        return $this->belongsTo('App\Category', 'parent_id');
     }
 
     /**
@@ -57,17 +57,29 @@ class Category extends Model
     }
 
     /**
-     * Scope a query to return category_id from category.
+     * Scope a query to return parent_id from category.
      *
      * @param  \Illuminate\Database\Eloquent\Builder $query
-     * @param  mixed $category_id
+     * @param  mixed $parent_id
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeOfCategoryId($query, $categoryId)
+    public function scopeOfCategoryId($query, $parentId)
     {
-        return $query->where('category_id', $categoryId);
+        return $query->where('parent_id', $parentId);
     }
 
+    /**
+     * Scope a query to return uuid from product.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  mixed $uuid
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfUuid($query, $uuid)
+    {
+        return $query->where('uuid', $uuid);
+    }
+    
     /**
      * Scope a query to return active from category.
      *

@@ -17,7 +17,8 @@ class CategoryResource extends JsonResource
         return [
             'uuid' => $this->uuid ?? '',
             'title' => $this->describe->title ?? '',
-            'path' => $this->file->path ?? config('constants.default.category.image')
+            'path' => $this->file->path ?? config('constants.default.category.image'),
+            'children' => $this->children
         ];
     }
 }

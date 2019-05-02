@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Category;
 use App\File;
 use App\Describe;
-use App\Helpers\Database\Factory;
-use App\Product;
 use App\Group;
 use App\Http\Resources\Api\v1\ProductResource;
 
@@ -51,11 +49,6 @@ class HomeController extends Controller
             'slider' => $slider,
             'specialProduct' => $specialProduct
         ]);
-    }
-
-    public function categories()
-    {
-        return response()->json(Category::getParentCategory(config('constants.category.type.main')));
     }
 
     public function handleErrors()

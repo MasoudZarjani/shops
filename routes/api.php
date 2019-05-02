@@ -19,7 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'v1'], function () {
     Route::post('index', 'Api\v1\HomeController@index');
-    Route::post('categories', 'Api\v1\HomeController@categories');
+    Route::group(['prefix' => 'product'], function () {
+        Route::post('categories', 'Api\v1\ProductController@categories');
+        Route::post('category_detail', 'Api\v1\ProductController@categoryDetail');
+    });
     Route::get('errors', 'Api\v1\HomeController@handleErrors')->name('api-errors');
     Route::middleware('auth:api')->group(function () {
         

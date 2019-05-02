@@ -18,7 +18,7 @@ class CreateCategoriesTable extends Migration
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique()->nullable();
 
-            Relations::pointer($table, 'category');
+            Relations::pointer($table, 'parent');
 
             $table->integer('sort')->default(0);
 

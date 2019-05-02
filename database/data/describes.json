@@ -302,6 +302,34 @@
         "describe_able_id" : 29
     },
     {
+        "title" : "کیف و کاور گوشی",
+        "description" : "کیف و کفش های مختلف",
+        "type" : 0,
+        "describe_able_type" : "App\\Category",
+        "describe_able_id" : 30
+    },
+    {
+        "title" : "پاور بانک",
+        "description" : "پاوربانک با مقدار های مختلف",
+        "type" : 0,
+        "describe_able_type" : "App\\Category",
+        "describe_able_id" : 31
+    },
+    {
+        "title" : "هندزفری، هدفون، هدست",
+        "description" : "بهترین کیفیت ها",
+        "type" : 0,
+        "describe_able_type" : "App\\Category",
+        "describe_able_id" : 32
+    },
+    {
+        "title" : "پایه نگهدارنده گوشی",
+        "description" : "پایه نگهدارنده برای ماشین، روی میز و...",
+        "type" : 0,
+        "describe_able_type" : "App\\Category",
+        "describe_able_id" : 33
+    },
+    {
         "title" : "هندزفری بلوتوث وی کی پروداکتس مدل i7S-TWS",
         "description" : "این محصول با وزن بسیار کم و طراحی مینیمال و منحصر بفرد خود علاقمندان بسیاری پیدا کرده است چرا که با سازگاری با انواع مختلف گوشی های اندروید و آی او اس و محدوده عملکرد 10 متری ، همینطور قابلیت پخش موزیک و امکان برقراری مکالمه همراه با حذف نویز محیط ، نیاز افراد زیادی را برطرف نموده است.",
         "type" : 0,
