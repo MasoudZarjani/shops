@@ -22,6 +22,7 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::group(['prefix' => 'product'], function () {
         Route::post('detail', 'Api\v1\ProductController@detail');
+        Route::post('specification', 'Api\v1\ProductController@specification');
     });
 
     Route::group(['prefix' => 'category'], function () {

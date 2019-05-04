@@ -4,7 +4,7 @@ namespace App\Http\Resources\Api\v1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductDetailResource extends JsonResource
+class SpecificationResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +16,7 @@ class ProductDetailResource extends JsonResource
     {
         return [
             'title' => $this->describe->title ?? "",
-            'description' => $this->describe->description ?? "",
-            'image' => FileResource::collection($this->files()->ofPosition(config('constants.file.position.productSliderFile'))->get() ?? ""),
+            'attributes' => AttributeResource::collection($this->attributes ?? ""),
         ];
     }
 }

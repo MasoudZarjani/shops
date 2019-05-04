@@ -91,7 +91,6 @@ class Product extends Model
      */
     public static function get()
     {
-        $product = Product::ofUuid(request('uuid'))->active()->first();
-        return new ProductDetailResource($product ?? []);
+        return Product::ofUuid(request('uuid'))->active()->first();
     }
 }
