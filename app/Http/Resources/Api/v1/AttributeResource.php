@@ -4,7 +4,7 @@ namespace App\Http\Resources\Api\v1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductResource extends JsonResource
+class AttributeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,9 +15,8 @@ class ProductResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'uuid' => $this->uuid ?? "",
-            'title' => $this->describe->title ?? "",
-            'image' => new FileResource($this->files()->ofPosition(config('constants.file.position.productMainImage'))->first() ?? ""),
+            'title' => $this->describe->title,
+            'description' => $this->describe->description
         ];
     }
 }

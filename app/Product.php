@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Helpers\Database\Factory;
 use App\Traits\CreateUuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Http\Resources\Api\v1\ProductDetailResource;
@@ -26,6 +25,14 @@ class Product extends Model
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'tag_able');
+    }
+
+    /**
+     * Get all of the attributes for the product.
+     */
+    public function attributes()
+    {
+        return $this->morphToMany(Attribute::class, 'attribute_able');
     }
 
     /**
@@ -85,6 +92,6 @@ class Product extends Model
     public static function get()
     {
         $product = Product::ofUuid(request('uuid'))->active()->first();
-        return ProductDetailResource::collection($product);
+        return new ProductDetailResource($product ?? []);
     }
 }

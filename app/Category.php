@@ -113,7 +113,7 @@ class Category extends Model
      */
     public static function getParentCategory($type)
     {
-        $parentCategory = Category::ofType($type)->ofCategoryId(0)->active()->ordered()->get();
+        $parentCategory = Category::ofType($type)->ofCategoryId(0)->ofType(config('constants.category.type.main'))->active()->ordered()->get();
         return CategoryResource::collection($parentCategory);
     }
 }

@@ -18,26 +18,34 @@ class CategoryController extends Controller
 
     public function detail()
     {
-        $category = Category::ofUuid(request('uuid'))->active();
-        $subCategory = CategoryDetailResource::collection($category->first()->children);
-        $product = new Collection();
-        $product->push(self::check($category->get()));
-        $products = Utility::filterNullValue($product->flatten());
-        $products = ProductResource::collection(Utility::paginate_collection($products, 15));
+        $category = Category::ofUuid(request('uuid'))->ofType(config('constants.category.type.main'))->active()->first();
+        $subCategory = CategoryDetailResource::collection($category->children);
+        $products = new Collection();
+        $products->push(self::check($category));
+        $productsFlatten = $products->flatten();
+        $productsFilterNull = Utility::filterNullValue($productsFlatten);
+        $productsPagination = Utility::paginate_collection($productsFilterNull, 15);
+        $productsResource = ProductResource::collection($productsPagination);
         return response()->json([
             'sub_categories' => $subCategory,
-            'products' => $products
+            'products' => $productsResource
         ]);
     }
 
     public function check($categories)
     {
         $data = [];
-        foreach ($categories as $category) {
-            $data[] = [
-                'product' => $category->product,
-                'children' => self::check($category->children),
-            ];
+        foreach ($categories->children as $category) {
+            if ($category->product) {
+                if ($category->product->status == 1)
+                    $data[] = [
+                        'product' => $category->product,
+                        'children' => self::check($category),
+                    ];
+                $data[] = [
+                    'children' => self::check($category),
+                ];
+            }
         }
         return $data;
     }

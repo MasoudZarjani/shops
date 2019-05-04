@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Group;
 use App\Product;
 use App\Tag;
+use App\Category;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
             ProductsSeeder::class,
             CategoriesSeeder::class,
             GroupsSeeder::class,
+            AttributesSeeder::class,
         ]);
 
         $group = Group::find(2);

@@ -17,6 +17,21 @@ return [
             'active' => 1
         ]
     ],
+    'attribute' => [
+        'status' => [
+            'inactive' => 0,
+            'active' => 1
+        ],
+        'inputFieldType' => [
+            'text' => 0,
+            'number' => 1,
+            'email' => 2,
+            'textArea' => 3,
+            'radioButton' => 4,
+            'selectMenu' => 5,
+            'checkBox' => 6
+        ]
+    ],
     'describe' => [
         'type' => [
             'text' => 0,
@@ -32,7 +47,8 @@ return [
         'position' => [
             'category' => 0,
             'mainSlider' => 1,
-            'mainImage' => 2,
+            'productMainImage' => 2,
+            'productSliderFile' => 3,
         ]
     ],
     'default' => [
@@ -44,5 +60,5 @@ return [
             'title' => '',
             'description' => ''
         ]
-    ]
+    ],
 ];

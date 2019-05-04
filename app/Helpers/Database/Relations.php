@@ -10,7 +10,6 @@ class Relations
         $table->integer($name . '_able_id')->unsigned()->nullable();
     }
 
-
     public static function pointer($table, $name)
     {
         $table->integer($name . '_id')->unsigned()->default(0);

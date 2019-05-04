@@ -17,6 +17,7 @@ class Describe extends Model
     protected $fillable = [
         'title', 'description',
     ];
+    
     /**
      * Get all of the owning describe_able models.
      */

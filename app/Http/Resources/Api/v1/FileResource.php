@@ -16,6 +16,8 @@ class FileResource extends JsonResource
     {
         return [
             'path' => $this->path ?? '',
+            'size' => $this->size ?? '',
+            'type' => $this->type ?? 0,
             'title' => ($this->describe) ? $this->describe->title : '',
             'description' => ($this->describe) ? $this->describe->description : '',
         ];
