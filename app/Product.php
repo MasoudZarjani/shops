@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Helpers\Database\Factory;
 use App\Traits\CreateUuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Http\Resources\Api\v1\ProductDetailResource;
 
 class Product extends Model
 {
@@ -61,5 +62,29 @@ class Product extends Model
     public function scopeActive($query)
     {
         return $query->where('status', config('constants.product.status.active'));
+    }
+
+    /**
+     * Scope a query to return uuid from product.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  mixed $uuid
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfUuid($query, $uuid)
+    {
+        return $query->where('uuid', $uuid);
+    }
+
+    /**
+     * Get product detail
+     * 
+     * @param string uuid
+     * @return json category
+     */
+    public static function get()
+    {
+        $product = Product::ofUuid(request('uuid'))->active()->first();
+        return ProductDetailResource::collection($product);
     }
 }
