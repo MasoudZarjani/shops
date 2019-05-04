@@ -12,6 +12,14 @@ class Product extends Model
     use CreateUuid, SoftDeletes;
 
     /**
+     * Get all of the owning product_able models.
+     */
+    public function product_able()
+    {
+        return $this->morphTo();
+    }
+
+    /**
      * Get all of the tags for the product.
      */
     public function tags()

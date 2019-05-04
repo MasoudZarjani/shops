@@ -160,6 +160,14 @@
         "file_able_id": 20
     },
     {
+        "path": "https://dkstatics-public.digikala.com/digikala-products/3559030.jpg?x-oss-process=image/resize,m_lfit,h_500,w_500/quality,q_80",
+        "size" : "10000",
+        "type" : 0,
+        "position" : 2,
+        "file_able_type": "App\\Product",
+        "file_able_id": 21
+    },
+    {
         "path": "https://dkstatics-public.digikala.com/digikala-adservice-banners/1636.png",
         "size" : "10000",
         "type" : 0,
@@ -422,5 +430,13 @@
         "position" : 0,
         "file_able_type": "App\\Category",
         "file_able_id": 33
+    },
+    {
+        "path": "https://dkstatics-public.digikala.com/digikala-products/4635214.jpg?x-oss-process=image/resize,m_lfit,h_500,w_500/quality,q_80",
+        "size" : "10000",
+        "type" : 0,
+        "position" : 0,
+        "file_able_type": "App\\Category",
+        "file_able_id": 34
     }
 ]

@@ -13,11 +13,11 @@ class Category extends Model
     use CreateUuid, SoftDeletes;
 
     /**
-     * Get the category's image.
+     * Get the category's file.
      */
     public function file()
     {
-        return $this->morphOne('App\File', 'file_able');
+        return $this->morphOne(File::class, 'file_able');
     }
 
     /**
@@ -25,7 +25,15 @@ class Category extends Model
      */
     public function describe()
     {
-        return $this->morphOne('App\Describe', 'describe_able');
+        return $this->morphOne(Describe::class, 'describe_able');
+    }
+
+    /**
+     * Get the category's product.
+     */
+    public function product()
+    {
+        return $this->morphOne(Product::class, 'product_able');
     }
 
     /**
@@ -33,7 +41,7 @@ class Category extends Model
      */
     public function children()
     {
-        return $this->hasMany('App\Category', 'parent_id');
+        return $this->hasMany(self::class, 'parent_id');
     }
 
     /**
@@ -41,7 +49,7 @@ class Category extends Model
      */
     public function parent()
     {
-        return $this->belongsTo('App\Category', 'parent_id');
+        return $this->belongsTo(self::class, 'parent_id');
     }
 
     /**
@@ -79,7 +87,7 @@ class Category extends Model
     {
         return $query->where('uuid', $uuid);
     }
-    
+
     /**
      * Scope a query to return active from category.
      *
