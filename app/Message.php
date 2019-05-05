@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Comment extends Model
+class Message extends Model
 {
     /**
-     * Get all of the owning comment_able models.
+     * Get all of the owning message_able models.
      */
-    public function comment_able()
+    public function message_able()
     {
         return $this->morphTo();
     }

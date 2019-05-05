@@ -17,6 +17,20 @@ return [
             'active' => 1
         ]
     ],
+    'message' => [
+        'status' => [
+            'unread' => 0,
+            'read' => 1,
+            'submitted' => 2,
+            'await' => 3,
+            'rejected' => 4,
+        ],
+        'type' => [
+            'message' => 0,
+            'discuss' => 1,
+            'comment' => 2,
+        ]
+    ],
     'attribute' => [
         'status' => [
             'inactive' => 0,
@@ -35,7 +49,8 @@ return [
     'describe' => [
         'type' => [
             'text' => 0,
-            'setting' => 1
+            'setting' => 1,
+            'question' => 2
         ]
     ],
     'file' => [
@@ -49,6 +64,18 @@ return [
             'mainSlider' => 1,
             'productMainImage' => 2,
             'productSliderFile' => 3,
+        ]
+    ],
+    'action' => [
+        'type' => [
+            'bookmark' => 0,
+            'like' => 1,
+            'score' => 2,
+            'question' => 3
+        ],
+        'status' => [
+            'inactive' => 0,
+            'active' => 1
         ]
     ],
     'default' => [

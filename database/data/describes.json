@@ -516,5 +516,33 @@
         "type": 0,
         "describe_able_type": "App\\Attribute",
         "describe_able_id": 3
+    },
+    {
+        "title": "ارزش خرید در برابر قیمت",
+        "description": "",
+        "type": 2,
+        "describe_able_type": "App\\Category",
+        "describe_able_id": 1
+    },
+    {
+        "title": "کیفیت ساخت",
+        "description": "",
+        "type": 2,
+        "describe_able_type": "App\\Category",
+        "describe_able_id": 1
+    },
+    {
+        "title": "کارایی و عملکرد",
+        "description": "",
+        "type": 2,
+        "describe_able_type": "App\\Category",
+        "describe_able_id": 1
+    },
+    {
+        "title": "طراحی و ظاهر",
+        "description": "",
+        "type": 2,
+        "describe_able_type": "App\\Category",
+        "describe_able_id": 1
     }
 ]

@@ -44,11 +44,11 @@ class Product extends Model
     }
 
     /**
-     * Get all of the product's comments.
+     * Get all of the product's messages.
      */
-    public function comments()
+    public function messages()
     {
-        return $this->morphMany('App\Comment', 'commentable');
+        return $this->morphMany('App\Comment', 'message_able');
     }
 
     /**
