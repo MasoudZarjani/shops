@@ -7,14 +7,14 @@
         "action_able_id": 1
     },
     {
-        "value": 3,
+        "value": 5,
         "user_id": 1,
         "describe_id": 76,
         "action_able_type": "App\\Message",
         "action_able_id": 1
     },
     {
-        "value": 3,
+        "value": 2,
         "user_id": 1,
         "describe_id": 77,
         "action_able_type": "App\\Message",

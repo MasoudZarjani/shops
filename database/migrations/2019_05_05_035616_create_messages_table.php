@@ -16,16 +16,17 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid')->unique()->nullable();
 
             Relations::pointer($table, 'parent');
-            
-            Relations::pointer($table, 'user_id');
+            Relations::pointer($table, 'user');
 
             Relations::constant($table, 'type', 'message.type.comment');
             Relations::status($table, 'status', 'message.status.read');
 
             $table->nullableMorphs('message_able');
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

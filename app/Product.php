@@ -5,7 +5,6 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\CreateUuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Http\Resources\Api\v1\ProductDetailResource;
 
 class Product extends Model
 {
@@ -48,7 +47,7 @@ class Product extends Model
      */
     public function messages()
     {
-        return $this->morphMany('App\Comment', 'message_able');
+        return $this->morphMany('App\Message', 'message_able');
     }
 
     /**
@@ -66,7 +65,7 @@ class Product extends Model
     {
         return $this->morphOne(Describe::class, 'describe_able');
     }
-
+    
     /**
      * Scope a query to return active from product.
      *

@@ -39,6 +39,18 @@ class Describe extends Model
     }
 
     /**
+     * Scope a query to return id from describe.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  mixed $id
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfId($query, $id)
+    {
+        return $query->where('id', $id);
+    }
+
+    /**
      * Scope a query to return title from describe.
      *
      * @param  \Illuminate\Database\Eloquent\Builder $query

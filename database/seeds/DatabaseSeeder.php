@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             CitiesTableSeeder::class,
             ProvincesTableSeeder::class,
             ActionsTableSeeder::class,
+            MessagesTableSeeder::class,
         ]);
 
         $group = Group::find(2);

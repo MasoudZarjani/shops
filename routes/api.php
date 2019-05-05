@@ -30,6 +30,10 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('detail', 'Api\v1\CategoryController@detail');
     });
 
+    Route::group(['prefix' => 'message'], function () {
+        Route::post('list', 'Api\v1\MessageController@list');
+    });
+
     Route::get('errors', 'Api\v1\HomeController@handleErrors')->name('api-errors');
     
     Route::middleware('auth:api')->group(function () { });

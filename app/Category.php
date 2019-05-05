@@ -106,7 +106,7 @@ class Category extends Model
     }
 
     /**
-     * Get category info
+     * Get category information
      * 
      * @param string type
      * @return json category
