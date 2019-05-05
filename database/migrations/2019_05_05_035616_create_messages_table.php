@@ -22,7 +22,7 @@ class CreateMessagesTable extends Migration
             Relations::pointer($table, 'user_id');
 
             Relations::constant($table, 'type', 'message.type.comment');
-            Relations::status($table, 'status', 'message.status.unread');
+            Relations::status($table, 'status', 'message.status.read');
 
             $table->nullableMorphs('message_able');
 

@@ -20,10 +20,10 @@ class CreateActionsTable extends Migration
             $table->bigInteger('user_id');
             $table->bigInteger('describe_id');
 
-            Relations::constant($table, 'type', 'action.type.bookmark');
+            Relations::constant($table, 'type', 'action.type.question');
             Relations::status($table, 'status', 'action.status.active');
 
-            $table->nullableMorphs('message_able');
+            $table->nullableMorphs('action_able');
             
             $table->timestamps();
         });

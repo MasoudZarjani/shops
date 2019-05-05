@@ -1,0 +1,14 @@
+[
+    {
+        "parent_id": 0,
+        "user_id": 1,
+        "message_able_type": "App\\Product",
+        "message_able_id": 2
+    },
+    {
+        "parent_id": 0,
+        "user_id": 2,
+        "message_able_type": "App\\Product",
+        "message_able_id": 2
+    }
+]

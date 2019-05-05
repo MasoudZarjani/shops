@@ -1,6 +1,16 @@
 <?php
 
 return [
+    'user' => [
+        'type' => [
+            'user' => 0,
+            'admin' => 1
+        ],
+        'status' => [
+            'inactive' => 0,
+            'active' => 1
+        ]
+    ],
     'category' => [
         'type' => [
             'main' => 0,
