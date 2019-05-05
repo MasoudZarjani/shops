@@ -34,6 +34,9 @@ class Group extends Model
         return $query->where('group_id', $groupId);
     }
 
+    /**
+     * Create new group
+     */
     public static function set()
     {
         $group = new Group();

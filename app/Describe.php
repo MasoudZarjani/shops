@@ -50,12 +50,18 @@ class Describe extends Model
         return $query->where('title', $title);
     }
 
+    /**
+     * Get setting from describe model with title
+     */
     public static function getSettingWithTitle($title)
     {
         $result = Describe::ofTitle($title)->ofType(config('constants.describe.type.setting'))->first();
         return $result->description ?? 0;
     }
 
+    /**
+     * Get all setting from describes
+     */
     public static function getSettingIndex()
     {
         return [
@@ -72,14 +78,5 @@ class Describe extends Model
                 'sort' => (int)Describe::getSettingWithTitle('specialOfferSort') ?? 0,
             ]
         ];
-    }
-
-    public function setFactory($title, $description)
-    {
-        $this->title = $title ?? '';
-        $this->description = $description ?? '';
-        $this->type = config('constants.describe.type.text') ?? 0;
-        $this->save();
-        return $this;
     }
 }

@@ -44,7 +44,15 @@ class Product extends Model
     }
 
     /**
-     * Get all of the files for the product.
+     * Get all of the product's comments.
+     */
+    public function comments()
+    {
+        return $this->morphMany('App\Comment', 'commentable');
+    }
+
+    /**
+     * Get all of the product's for the files.
      */
     public function files()
     {

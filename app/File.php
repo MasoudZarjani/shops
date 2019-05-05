@@ -30,6 +30,9 @@ class File extends Model
         return $query->where('position', $position);
     }
 
+    /**
+     * Get files information
+     */
     public static function get($position)
     {
         $file = File::ofPosition(config('constants.file.position.' . $position))->get();
