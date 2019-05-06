@@ -4,7 +4,7 @@ namespace App\Http\Resources\Api\v1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FileResource extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,11 +15,10 @@ class FileResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'path' => $this->path ?? '',
-            'size' => $this->size ?? '',
-            'type' => $this->type ?? 0,
-            'title' => ($this->describe) ? $this->describe->title : '',
-            'link' => ($this->describe) ? $this->describe->description : '',
+            'name' => $this->name ?? "",
+            'family' => $this->family ?? "",
+            'tel' => $this->tel ?? "",
+            'avatar' => $this->file->path ?? "",
         ];
     }
 }

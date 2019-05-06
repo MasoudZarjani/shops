@@ -41,4 +41,13 @@ class File extends Model
         }
         return [config('constants.default.slider.path')];
     }
+
+    public function set($path, $size, $type, $position)
+    {
+        $this->path = $path ?? "";
+        $this->size = $size ?? "";
+        $this->type = $type ?? 0;
+        $this->position = $position ?? 0;
+        $this->save();
+    }
 }

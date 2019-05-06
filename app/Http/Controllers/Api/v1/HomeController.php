@@ -53,6 +53,6 @@ class HomeController extends Controller
 
     public function handleErrors()
     {
-        return Errors::showResponse(config('constants.error.http.' . request('error')));
+        return response()->json('Unauthorized', 401);;
     }
 }

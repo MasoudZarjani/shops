@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\CreateUuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Http\Resources\Api\v1\CategoryResource;
-use App\Helpers\Database\Factory;
 
 class Category extends Model
 {
@@ -113,7 +112,11 @@ class Category extends Model
      */
     public static function getParentCategory($type)
     {
-        $parentCategory = Category::ofType($type)->ofCategoryId(0)->ofType(config('constants.category.type.main'))->active()->ordered()->get();
-        return CategoryResource::collection($parentCategory);
+        return Category::ofType($type)
+            ->ofCategoryId(0)
+            ->ofType(config('constants.category.type.main'))
+            ->active()
+            ->ordered()
+            ->get();
     }
 }

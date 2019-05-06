@@ -8,12 +8,14 @@ use App\Http\Resources\Api\v1\CategoryDetailResource;
 use Illuminate\Support\Collection;
 use App\Helpers\Utility;
 use App\Http\Resources\Api\v1\ProductResource;
+use App\Http\Resources\Api\v1\CategoryResource;
 
 class CategoryController extends Controller
 {
     public function list()
     {
-        return response()->json(Category::getParentCategory(config('constants.category.type.main')));
+        $categories = Category::getParentCategory(config('constants.category.type.main'));
+        return CategoryResource::collection($categories);
     }
 
     public function detail()

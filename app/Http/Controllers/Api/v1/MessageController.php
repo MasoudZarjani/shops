@@ -44,6 +44,8 @@ class MessageController extends Controller
             return response()->json(["status" => false], 203);
         }
         $message = new Message();
-        return $message->set($this->user->id);
+        if ($message->set($this->user->id))
+            return response()->json(["status" => true]);
+        return response()->json(["status" => false], 203);
     }
 }

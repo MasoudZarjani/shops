@@ -66,5 +66,6 @@ class Message extends Model
         $this->describe()->save($describe);
 
         $product->messages()->save($this);
+        return true;
     }
 }
