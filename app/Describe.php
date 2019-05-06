@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Http\Resources\Api\v1\SettingResource;
 
 class Describe extends Model
 {
@@ -17,7 +18,7 @@ class Describe extends Model
     protected $fillable = [
         'title', 'description',
     ];
-    
+
     /**
      * Get all of the owning describe_able models.
      */
@@ -67,12 +68,29 @@ class Describe extends Model
      */
     public static function getSettingWithTitle($title)
     {
-        $result = Describe::ofTitle($title)->ofType(config('constants.describe.type.setting'))->first();
+        $result = Describe::ofTitle($title)->ofType(config('constants.describe.type.layoutStatus'))->first();
         return $result->description ?? 0;
     }
 
     /**
+     * Get setting from describe model with type
+     */
+    public static function getSettingWithType($type)
+    {
+        $result = Describe::ofType($type)->get();
+        return SettingResource::collection($result);
+    }
+
+    /**
      * Get all setting from describes
+     */
+    public static function getSetting()
+    {
+        return Describe::getSettingWithType(config('constants.describe.type.setting'));
+    }
+
+    /**
+     * Get setting from describes
      */
     public static function getSettingIndex()
     {

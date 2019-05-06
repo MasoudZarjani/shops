@@ -43,7 +43,10 @@ class HomeController extends Controller
 
         $slider = File::get('mainSlider');
 
+        $setting = Describe::getSetting();
+        
         return response()->json([
+            'setting' => $setting,
             'data' => $mainPageData,
             'categories' => $mainCategories,
             'slider' => $slider,

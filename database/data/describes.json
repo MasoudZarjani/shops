@@ -37,49 +37,49 @@
     {
         "title": "categoryPaginationLimited",
         "description": "3",
-        "type": 1,
+        "type": 3,
         "describe_able_type": null,
         "describe_able_id": null
     },
     {
         "title": "slidersShowStatus",
         "description": "1",
-        "type": 1,
+        "type": 3,
         "describe_able_type": null,
         "describe_able_id": null
     },
     {
         "title": "slidersSort",
         "description": "1",
-        "type": 1,
+        "type": 3,
         "describe_able_type": null,
         "describe_able_id": null
     },
     {
         "title": "categoriesShowStatus",
         "description": "1",
-        "type": 1,
+        "type": 3,
         "describe_able_type": null,
         "describe_able_id": null
     },
     {
         "title": "categoriesSort",
         "description": "1",
-        "type": 1,
+        "type": 3,
         "describe_able_type": null,
         "describe_able_id": null
     },
     {
         "title": "specialOfferShowStatus",
         "description": "1",
-        "type": 1,
+        "type": 3,
         "describe_able_type": null,
         "describe_able_id": null
     },
     {
         "title": "specialOfferSort",
         "description": "3",
-        "type": 1,
+        "type": 3,
         "describe_able_type": null,
         "describe_able_id": null
     },

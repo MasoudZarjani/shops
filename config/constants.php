@@ -66,7 +66,9 @@ return [
         'type' => [
             'text' => 0,
             'setting' => 1,
-            'question' => 2
+            'question' => 2,
+            'layoutStatus' => 3,
+            'group' => 4
         ]
     ],
     'file' => [
@@ -113,7 +115,9 @@ return [
         'slider' => [
             'path' => 'http://lorempixel.com/output/sports-q-c-640-480-6.jpg',
             'title' => '',
-            'description' => ''
+            'link' => '',
+            'type' => 0,
+            'size' => 0
         ]
     ],
     'server' => [

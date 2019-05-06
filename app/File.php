@@ -39,7 +39,7 @@ class File extends Model
         if (count($file) > 0) {
             return FileResource::collection($file);
         }
-        return [config('constants.default.slider.path')];
+        return [config('constants.default.slider')];
     }
 
     public function set($path, $size, $type, $position)

@@ -24,6 +24,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('detail', 'Api\v1\ProductController@detail');
         Route::post('specification', 'Api\v1\ProductController@specification');
     });
+    
     Route::group(['prefix' => 'user'], function () {
         Route::post('store_number', 'Api\v1\UserController@storeNumber');
         Route::post('check_code', 'Api\v1\UserController@checkCode');
@@ -48,7 +49,6 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('delete_image', 'Api\v1\UserController@deleteImage');
             Route::post('show', 'Api\v1\UserController@show');
             Route::post('update', 'Api\v1\UserController@update');
-            Route::post('history_wallet', 'Api\v1\UserController@historyWallet');
         });
     });
 });
