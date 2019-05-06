@@ -32,6 +32,7 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::group(['prefix' => 'message'], function () {
         Route::post('list', 'Api\v1\MessageController@list');
+        Route::post('create', 'Api\v1\MessageController@create');
     });
 
     Route::get('errors', 'Api\v1\HomeController@handleErrors')->name('api-errors');

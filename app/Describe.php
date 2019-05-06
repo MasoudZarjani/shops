@@ -91,4 +91,15 @@ class Describe extends Model
             ]
         ];
     }
+
+    /**
+     * Create describe
+     */
+    public function set()
+    {
+        $this->title = request('title') ?? "";
+        $this->description = request('description') ?? "";
+        $this->save();
+        return $this;
+    }
 }

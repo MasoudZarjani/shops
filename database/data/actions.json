@@ -19,5 +19,29 @@
         "describe_id": 77,
         "action_able_type": "App\\Message",
         "action_able_id": 1
+    },
+    {
+        "value": 1,
+        "user_id": 1,
+        "describe_id": 0,
+        "type": 1,
+        "action_able_type": "App\\Message",
+        "action_able_id": 1
+    },
+    {
+        "value": 1,
+        "user_id": 2,
+        "describe_id": 0,
+        "type": 1,
+        "action_able_type": "App\\Message",
+        "action_able_id": 1
+    },
+    {
+        "value": 1,
+        "user_id": 1,
+        "describe_id": 0,
+        "type": 1,
+        "action_able_type": "App\\Message",
+        "action_able_id": 2
     }
 ]

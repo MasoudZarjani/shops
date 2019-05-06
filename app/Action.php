@@ -21,4 +21,18 @@ class Action extends Model
     {
         return $this->morphOne(Describe::class, 'describe_able');
     }
+
+    /**
+     * Create action
+     */
+    public function set($user_id)
+    {
+        $this->value = request('value') ?? "";
+        $this->user_id = $user_id ?? 0;
+        $this->describe_id = request('describe_uuid') ?? 0;
+        $this->type = request('action_type') ?? 0;
+        $this->status = config('constants.action.type.question');
+        $this->save();
+        return $this;
+    }
 }

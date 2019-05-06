@@ -17,18 +17,20 @@ class MessageResource extends JsonResource
     public function toArray($request)
     {
         $product = Product::get()->product_able;
-        $actions = $this->actions->map(function ($item) use ($product) {
+        return $actions = $this->actions->map(function ($item) use ($product) {
             $describe = Describe::ofId($item->describe_id)->first();
-            $checkParent = self::checkParent($product, $describe->describe_able, $item->describe_id);
+            $checkParent = self::checkParent($product, $describe->describe_able ?? 0, $item->describe_id);
             return [
                 'value' => $item->value ?? "",
                 'title' => Describe::ofId($checkParent)->first()->title ?? ""
             ];
         });
+        $like = $this->actions->ofType(config('constants.action.type.like'));
         return [
             'title' => $this->describe->title ?? "",
             'description' => $this->describe->description ?? "",
             'actions' => $actions ?? "",
+            'like' => $like ?? 0,
         ];
     }
 
