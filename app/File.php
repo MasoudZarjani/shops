@@ -19,6 +19,14 @@ class File extends Model
     }
 
     /**
+     * Get the file's describe.
+     */
+    public function describe()
+    {
+        return $this->morphOne(Describe::class, 'describe_able');
+    }
+
+    /**
      * Scope a query to return position from file.
      *
      * @param  \Illuminate\Database\Eloquent\Builder $query

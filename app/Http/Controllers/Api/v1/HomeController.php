@@ -7,6 +7,7 @@ use App\Category;
 use App\File;
 use App\Describe;
 use App\Group;
+use App\User;
 use App\Http\Resources\Api\v1\ProductResource;
 
 class HomeController extends Controller
@@ -44,13 +45,15 @@ class HomeController extends Controller
         $slider = File::get('mainSlider');
 
         $setting = Describe::getSetting();
-        
+
         return response()->json([
             'setting' => $setting,
             'data' => $mainPageData,
             'categories' => $mainCategories,
             'slider' => $slider,
-            'specialProduct' => $specialProduct
+            'banner' => config('constants.default.slider'),
+            'specialProduct' => $specialProduct,
+            'products' => $specialProduct
         ]);
     }
 

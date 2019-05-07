@@ -118,4 +118,16 @@ class Utility
             ['path' => \Illuminate\Pagination\Paginator::resolveCurrentPath()]
         );
     }
+
+    public static function rounded($items)
+    {
+        $avg = 0;
+        foreach ($items as $item) {
+            $avg += $item->value;
+        }
+
+        $avg /= count($items);
+
+        return round($avg);
+    }
 }

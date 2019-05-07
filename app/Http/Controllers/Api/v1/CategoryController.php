@@ -20,10 +20,13 @@ class CategoryController extends Controller
 
     public function detail()
     {
-        $category = Category::ofUuid(request('uuid'))->ofType(config('constants.category.type.main'))->active()->first();
-        $subCategory = CategoryDetailResource::collection($category->children);
         $products = new Collection();
+        $category = Category::ofUuid(request('category_uuid'))->ofType(config('constants.category.type.main'))->active()->first();
+
+        $products->push($category->product);
+        $subCategory = CategoryDetailResource::collection($category->children);
         $products->push(self::check($category));
+
         $productsFlatten = $products->flatten();
         $productsFilterNull = Utility::filterNullValue($productsFlatten);
         $productsPagination = Utility::paginate_collection($productsFilterNull, 15);
@@ -39,7 +42,7 @@ class CategoryController extends Controller
         $data = [];
         foreach ($categories->children as $category) {
             if ($category->product) {
-                if ($category->product->status == 1)
+                if ($category->product->status == config('constants.product.status.active'))
                     $data[] = [
                         'product' => $category->product,
                         'children' => self::check($category),

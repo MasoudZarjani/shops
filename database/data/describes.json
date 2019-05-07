@@ -558,5 +558,19 @@
         "type": 0,
         "describe_able_type": "App\\Message",
         "describe_able_id": 2
+    },
+    {
+        "title": "فروش ویژه محصولات فرهنگی با 30 درصد تخفیف",
+        "description": "",
+        "type": 0,
+        "describe_able_type": "App\\File",
+        "describe_able_id": 58
+    },
+    {
+        "title": "فروش ویژه محصولات آرایشی و بهداشتی با 30 درصد تخفیف",
+        "description": "",
+        "type": 0,
+        "describe_able_type": "App\\File",
+        "describe_able_id": 59
     }
 ]

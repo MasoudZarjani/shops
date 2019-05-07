@@ -19,7 +19,7 @@ class MessageController extends Controller
     public function __construct()
     {
         if (request('uuid') && request('api_token')) {
-            $this->user = User::ofUuid(request('user_uuid') ?? "")->ofApiToken(request('api_token') ?? "")->first();
+            $this->user = User::ofUuid(request('uuid') ?? "")->ofApiToken(request('api_token') ?? "")->first();
         }
     }
 

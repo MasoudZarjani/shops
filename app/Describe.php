@@ -106,6 +106,14 @@ class Describe extends Model
             'specialOffer' => [
                 'status' => (int)Describe::getSettingWithTitle('specialOfferShowStatus') ?? 0,
                 'sort' => (int)Describe::getSettingWithTitle('specialOfferSort') ?? 0,
+            ],
+            'banner' => [
+                'status' => (int)Describe::getSettingWithTitle('bannersShowStatus') ?? 0,
+                'sort' => (int)Describe::getSettingWithTitle('bannersSort') ?? 0,
+            ],
+            'products' => [
+                'status' => (int)Describe::getSettingWithTitle('productsShowStatus') ?? 0,
+                'sort' => (int)Describe::getSettingWithTitle('productsSort') ?? 0,
             ]
         ];
     }

@@ -68,7 +68,7 @@ return [
             'setting' => 1,
             'question' => 2,
             'layoutStatus' => 3,
-            'group' => 4
+            'group' => 4,
         ]
     ],
     'file' => [
@@ -89,7 +89,7 @@ return [
         'type' => [
             'bookmark' => 0,
             'like' => 1,
-            'score' => 2,
+            'rate' => 2,
             'question' => 3
         ],
         'status' => [
@@ -113,6 +113,13 @@ return [
             ''
         ],
         'slider' => [
+            'path' => 'http://lorempixel.com/output/sports-q-c-640-480-6.jpg',
+            'title' => '',
+            'link' => '',
+            'type' => 0,
+            'size' => 0
+        ],
+        'banner' => [
             'path' => 'http://lorempixel.com/output/sports-q-c-640-480-6.jpg',
             'title' => '',
             'link' => '',

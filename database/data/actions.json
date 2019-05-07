@@ -43,5 +43,21 @@
         "type": 1,
         "action_able_type": "App\\Message",
         "action_able_id": 2
+    },
+    {
+        "value": 5,
+        "user_id": 2,
+        "describe_id": 0,
+        "type": 2,
+        "action_able_type": "App\\Product",
+        "action_able_id": 2
+    },
+    {
+        "value": 3,
+        "user_id": 1,
+        "describe_id": 0,
+        "type": 2,
+        "action_able_type": "App\\Product",
+        "action_able_id": 2
     }
 ]

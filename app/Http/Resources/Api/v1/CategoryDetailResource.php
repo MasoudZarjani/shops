@@ -18,7 +18,7 @@ class CategoryDetailResource extends JsonResource
             'uuid' => $this->uuid ?? '',
             'title' => $this->describe->title ?? '',
             'path' => $this->file->path ?? config('constants.default.category.image'),
-            'children' => CategoryDetailResource::collection($this->children ?? ''),
+            'children' => CategoryDetailResource::collection($this->children()->ofType(0)->get() ?? ''),
         ];
     }
 }

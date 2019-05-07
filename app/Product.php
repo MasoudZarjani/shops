@@ -65,6 +65,14 @@ class Product extends Model
     {
         return $this->morphOne(Describe::class, 'describe_able');
     }
+
+    /**
+     * Get all of the product's actions.
+     */
+    public function actions()
+    {
+        return $this->morphMany('App\Action', 'action_able');
+    }
     
     /**
      * Scope a query to return active from product.
@@ -94,10 +102,10 @@ class Product extends Model
      * Get product detail
      * 
      * @param string uuid
-     * @return json category
+     * @return json product
      */
     public static function get()
     {
-        return Product::ofUuid(request('uuid'))->active()->first();
+        return Product::ofUuid(request('product_uuid'))->active()->first();
     }
 }

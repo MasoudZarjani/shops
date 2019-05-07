@@ -454,5 +454,21 @@
         "position": 0,
         "file_able_type": "App\\Category",
         "file_able_id": 34
+    },
+    {
+        "path": "https://dkstatics-public.digikala.com/digikala-adservice-banners/1000003218.jpg",
+        "size": "523145",
+        "type": 0,
+        "position": 1,
+        "file_able_type": null,
+        "file_able_id": null
+    },
+    {
+        "path": "https://dkstatics-public-2.digikala.com/digikala-adservice-banners/1000003187.jpg",
+        "size": "12356",
+        "type": 0,
+        "position": 1,
+        "file_able_type": null,
+        "file_able_id": null
     }
 ]
