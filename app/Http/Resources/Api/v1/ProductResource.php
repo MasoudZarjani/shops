@@ -14,10 +14,11 @@ class ProductResource extends JsonResource
      */
     public function toArray($request)
     {
+        $image = $this->files()->ofPosition(config('constants.file.position.productMainImage'))->first()->path;
         return [
             'uuid' => $this->uuid ?? "",
             'title' => $this->describe->title ?? "",
-            'image' => new FileResource($this->files()->ofPosition(config('constants.file.position.productMainImage'))->first() ?? ""),
+            'image' => $image ?? "",
         ];
     }
 }

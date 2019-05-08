@@ -25,12 +25,14 @@ class CategoryController extends Controller
 
         $products->push($category->product);
         $subCategory = CategoryDetailResource::collection($category->children);
+
         $products->push(self::check($category));
 
         $productsFlatten = $products->flatten();
         $productsFilterNull = Utility::filterNullValue($productsFlatten);
         $productsPagination = Utility::paginate_collection($productsFilterNull, 15);
         $productsResource = ProductResource::collection($productsPagination);
+        
         return response()->json([
             'sub_categories' => $subCategory,
             'products' => $productsResource

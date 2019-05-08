@@ -48,7 +48,7 @@ class Upload
         $name = md5(time() . uniqid()) . '.' . strtolower($ext);
         Storage::disk('public')->move($storage, $destinationPath . $name);
         $path = 'uploads/' . $destinationPath . $name;
-        return ["status" => true, "path" => $path, 'type' => $type, 'size' => $size];
+        return ["status" => true, "path" => $path, 'type' => $type, 'size' => $size, 'mime' => $ext];
     }
 
     /**

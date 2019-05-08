@@ -9,6 +9,7 @@ use App\Describe;
 use App\Group;
 use App\User;
 use App\Http\Resources\Api\v1\ProductResource;
+use App\Http\Resources\Api\v1\CategoryResource;
 
 class HomeController extends Controller
 {
@@ -32,6 +33,8 @@ class HomeController extends Controller
 
         $categoryPaginationLimited = (int)Describe::getSettingWithTitle('categoryPaginationLimited');
         $mainCategories = Category::getParentCategory(config('constants.category.type.main'))->take($categoryPaginationLimited);
+
+        $mainCategories = CategoryResource::collection($mainCategories);
 
         $specialTitles = Group::ofGroupId(0)->get();
         foreach ($specialTitles as $specialTitle) {
