@@ -108,6 +108,19 @@ return [
             'ios' => 1,
         ]
     ],
+    'price' => [
+        'type' => [
+            'noWarranty' => 0,
+            'warranty' => 1,
+            'discount' => 2
+        ]
+    ],
+    'address' => [
+        'type' => [
+            'home' => 0,
+            'work' => 1,
+        ]
+    ],
     'default' => [
         'category' => [
             ''

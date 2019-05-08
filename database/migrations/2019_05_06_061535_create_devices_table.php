@@ -21,10 +21,10 @@ class CreateDevicesTable extends Migration
             $table->string('os')->default(0);
             $table->string('version')->nullable();
             $table->string('push_token')->nullable();
-            
+
             Relations::Constant($table, 'status', 'device.status.inactive');
 
-            Relations::Morph($table, 'device');
+            $table->nullableMorphs('device_able');
 
             $table->softDeletes();
 
