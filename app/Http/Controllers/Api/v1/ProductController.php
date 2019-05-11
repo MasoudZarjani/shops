@@ -11,13 +11,13 @@ class ProductController extends Controller
 {
     public function detail()
     {
-        $productDetail = new ProductDetailResource(Product::get() ?? []);
+        $productDetail = new ProductDetailResource(Product::getWithUuid() ?? []);
         return response()->json($productDetail);
     }
 
     public function Specification()
     {
-        $productDetail = new SpecificationResource(Product::get() ?? []);
+        $productDetail = new SpecificationResource(Product::getWithUuid() ?? []);
         return response()->json($productDetail);
     }
 }

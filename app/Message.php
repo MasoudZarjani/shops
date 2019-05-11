@@ -39,7 +39,7 @@ class Message extends Model
      */
     public static function getWithProduct()
     {
-        $product = Product::get();
+        $product = Product::getWithUuid();
         if ($product)
             return $product->messages;
         return false;

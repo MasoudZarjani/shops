@@ -15,7 +15,10 @@ class CreateWarrantorsTable extends Migration
     {
         Schema::create('warrantors', function (Blueprint $table) {
             $table->bigIncrements('id');
-            
+            $table->string('name');
+
+            $table->nullableMorphs('warrantor_able');
+
             $table->timestamps();
         });
     }

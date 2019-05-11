@@ -27,6 +27,14 @@ class Product extends Model
     }
 
     /**
+     * Get all of the prices for the product.
+     */
+    public function prices()
+    {
+        return $this->morphToMany(Price::class, 'price_able');
+    }
+
+    /**
      * Get all of the attributes for the product.
      */
     public function attributes()
@@ -48,6 +56,14 @@ class Product extends Model
     public function messages()
     {
         return $this->morphMany('App\Message', 'message_able');
+    }
+
+    /**
+     * Get all of the product's warrantors.
+     */
+    public function warrantors()
+    {
+        return $this->morphMany(Warrantor::class, 'warrantor_able');
     }
 
     /**
@@ -104,7 +120,7 @@ class Product extends Model
      * @param string uuid
      * @return json product
      */
-    public static function get()
+    public static function getWithUuid()
     {
         return Product::ofUuid(request('product_uuid'))->active()->first();
     }

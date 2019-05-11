@@ -69,6 +69,7 @@ return [
             'question' => 2,
             'layoutStatus' => 3,
             'group' => 4,
+            'color' => 5,
         ]
     ],
     'file' => [
@@ -168,7 +169,7 @@ return [
             'mime' => 2
         ],
     ],
-    'activeIp' => [
+    'session' => [
         'register' => [
             'type' => 0,
             'count' => 15

@@ -1,0 +1,107 @@
+[
+    {
+        "id": 1,
+        "price": "80000",
+        "discount": ""
+    },
+    {
+        "id": 2,
+        "price": "4595000",
+        "discount": ""
+    },
+    {
+        "id": 3,
+        "price": "3810000",
+        "discount": ""
+    },
+    {
+        "id": 4,
+        "price": "3790000",
+        "discount": ""
+    },
+    {
+        "id": 5,
+        "price": "50000",
+        "discount": ""
+    },
+    {
+        "id": 6,
+        "price": "102000",
+        "discount": ""
+    },
+    {
+        "id": 7,
+        "price": "717000",
+        "discount": ""
+    },
+    {
+        "id": 8,
+        "price": "685000",
+        "discount": ""
+    },
+    {
+        "id": 9,
+        "price": "13500000",
+        "discount": ""
+    },
+    {
+        "id": 10,
+        "price": "50000",
+        "discount": ""
+    },
+    {
+        "id": 11,
+        "price": "280000",
+        "discount": "224000"
+    },
+    {
+        "id": 12,
+        "price": "415000",
+        "discount": ""
+    },
+    {
+        "id": 13,
+        "price": "50000",
+        "discount": ""
+    },
+    {
+        "id": 14,
+        "price": "14500",
+        "discount": "11000"
+    },
+    {
+        "id": 15,
+        "price": "50000",
+        "discount": ""
+    },
+    {
+        "id": 16,
+        "price": "175000",
+        "discount": ""
+    },
+    {
+        "id": 17,
+        "price": "10900000",
+        "discount": ""
+    },
+    {
+        "id": 18,
+        "price": "50000",
+        "discount": ""
+    },
+    {
+        "id": 19,
+        "price": "6200",
+        "discount": "5940"
+    },
+    {
+        "id": 20,
+        "price": "27500",
+        "discount": "18800"
+    },
+    {
+        "id": 21,
+        "price": "23000",
+        "discount": ""
+    }
+]

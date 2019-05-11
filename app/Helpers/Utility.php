@@ -3,8 +3,8 @@
 namespace App\Helpers;
 
 use Keygen\Keygen;
-use App\ActiveIp;
 use App\User;
+use App\Session;
 
 class Utility
 {
@@ -25,17 +25,17 @@ class Utility
     }
 
     /**
-     * Check tel and combine tel and area code in single tel
+     * Check mobile and combine mobile and area code in single mobile
      *
      * @param string mobile_number
      *
-     * @return string tel
+     * @return string mobile
      */
-    public static function checkTel($tel)
+    public static function checkMobile($mobile)
     {
-        $telArray = explode('*', $tel);
-        $telArray[1] = ltrim($telArray[1], 0);
-        return $telArray[0] . $telArray[1];
+        $mobileArray = explode('*', $mobile);
+        $mobileArray[1] = ltrim($mobileArray[1], 0);
+        return $mobileArray[0] . $mobileArray[1];
     }
 
     /**
@@ -45,24 +45,23 @@ class Utility
      *
      * @return integer counter ip counter of use
      */
-    public static function checkIp($ip, $type)
+    public static function checkIp($ip)
     {
         $date = new \DateTime();
         $date->modify('-5 minutes');
         $formatted_date = $date->format('Y-m-d H:i:s');
-        $checkIp = ActiveIp::where([['ip', $ip], ['type', $type], ['created_at', '>=', $formatted_date]])->first();
+        $checkIp = Session::where([['ip_address', $ip], ['created_at', '>=', $formatted_date]])->first();
         if (is_null($checkIp)) {
-            ActiveIp::where('ip', $ip)->delete();
-            $active_ip = new ActiveIp();
-            $active_ip->ip = $ip;
-            $active_ip->type = $type;
-            $active_ip->counter = 0;
-            $active_ip->save();
+            Session::where('ip_address', $ip)->delete();
+            $session = new Session();
+            $session->ip_address = $ip;
+            $session->counter = 0;
+            $session->save();
             $counter = 1;
         } else
             $counter = $checkIp->counter;
-        if ($counter < config('constants.activeIp.register.count')) {
-            self::incrementIpCounter($ip, config('constants.activeIp.register.type'));
+        if ($counter < config('constants.session.register.count')) {
+            self::incrementIpCounter($ip);
             return true;
         }
         return false;
@@ -73,9 +72,9 @@ class Utility
      *
      * @return string type
      */
-    public static function incrementIpCounter($ip, $type)
+    public static function incrementIpCounter($ip)
     {
-        ActiveIp::where([['ip', $ip], ['type', $type]])->increment('counter', 1);
+        Session::where([['ip_address', $ip]])->increment('counter', 1);
     }
 
 

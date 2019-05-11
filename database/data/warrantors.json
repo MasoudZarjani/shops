@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "name": "سرویس ویژه دیجی کالا: 7 روز تضمین بازگشت کالا",
+        "warrantor_able_type": "App\\Product",
+        "warrantor_able_id": 1
+    },
+    {
+        "id": 2,
+        "name": "گارانتی اصالت و سلامت فیزیکی کالا",
+        "warrantor_able_type": "App\\Product",
+        "warrantor_able_id": 1
+    },
+    {
+        "id": 3,
+        "name": "گارانتی 18 ماهه داریا همراه پایتخت",
+        "warrantor_able_type": "App\\Product",
+        "warrantor_able_id": 2
+    },
+    {
+        "id": 4,
+        "name": "گارانتی 36 ماهه ایده آل",
+        "warrantor_able_type": "App\\Product",
+        "warrantor_able_id": 3
+    },
+    {
+        "id": 5,
+        "name": "گارانتی 24 ماهه سازگار",
+        "warrantor_able_type": "App\\Product",
+        "warrantor_able_id": 4
+    }
+]

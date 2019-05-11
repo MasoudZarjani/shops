@@ -17,11 +17,10 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique()->nullable();
+            $table->string('mobile')->nullable()->unique();
+            $table->string('phone')->nullable();
+            $table->string('email')->unique()->nullable();
             $table->string('api_token')->unique()->nullable();
-            $table->string('name')->nullable();
-            $table->string('family')->nullable();
-            $table->string('tel', 15)->unique();
-            $table->integer('city_id')->nullable();
             $table->string('verification_code', 15)->nullable();
 
             Relations::Constant($table, 'status', 'user.status.inactive');

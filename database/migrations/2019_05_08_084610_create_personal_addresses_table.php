@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Helpers\Database\Relations;
 
 class CreatePersonalAddressesTable extends Migration
 {
@@ -15,6 +16,7 @@ class CreatePersonalAddressesTable extends Migration
     {
         Schema::create('personal_addresses', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->text('address')->nullable();
             $table->string('postal_code', 15)->nullable();
 
             Relations::pointer($table, 'city');

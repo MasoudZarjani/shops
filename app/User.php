@@ -19,7 +19,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['tel', 'name', 'family', 'verification_code'];
+    protected $fillable = ['phone', 'mobile', 'name', 'family', 'verification_code'];
 
     /**
      * Get the user's city.
@@ -42,7 +42,7 @@ class User extends Authenticatable
      */
     public function devices()
     {
-        return $this->morphMany('App\Device', 'device_able');
+        return $this->morphMany(Device::class, 'device_able');
     }
 
     /**
@@ -50,7 +50,31 @@ class User extends Authenticatable
      */
     public function file()
     {
-        return $this->morphOne('App\File', 'file_able');
+        return $this->morphOne(File::class, 'file_able');
+    }
+
+    /**
+     * Get the user's address.
+     */
+    public function address()
+    {
+        return $this->morphOne(PersonalAddress::class, 'address_able');
+    }
+
+    /**
+     * Get the user's contact.
+     */
+    public function contact()
+    {
+        return $this->morphOne(PersonalContact::class, 'contact_able');
+    }
+
+    /**
+     * Get the user's profile.
+     */
+    public function profile()
+    {
+        return $this->morphOne(PersonalProfile::class, 'profile_able');
     }
 
     /**
@@ -58,7 +82,7 @@ class User extends Authenticatable
      */
     public function messages()
     {
-        return $this->morphMany('App\Message', 'message_able');
+        return $this->morphMany(Message::class, 'message_able');
     }
 
     /**
@@ -105,18 +129,18 @@ class User extends Authenticatable
     {
         $this->verification_code = SendSMS::RandomCode();
         $this->save();
-        return SendSMS::sendSMS($this->tel, $this->verification_code);
+        return SendSMS::sendSMS($this->mobile, $this->verification_code);
     }
 
     /**
      * Get user info or create it
      * 
-     * @param string tel
+     * @param string mobile
      * @return json user
      */
-    public static function createOrGetWithTel($tel)
+    public static function createOrGetWithMobile($mobile)
     {
-        $user = User::firstOrCreate(['tel' => $tel]);
+        $user = User::firstOrCreate(['mobile' => $mobile]);
         if ($user->status != config('constants.user.status.block'))
             return $user;
         return false;
@@ -136,12 +160,12 @@ class User extends Authenticatable
     /**
      * Get user info or create it with devices information
      * 
-     * @param string tel
+     * @param string mobile
      * @return json user information
      */
-    public static function createOrGetDeviceWithTel($tel)
+    public static function createOrGetDeviceWithMobile($mobile)
     {
-        $user = User::firstOrCreate(['tel' => $tel]);
+        $user = User::firstOrCreate(['mobile' => $mobile]);
         $check = $user->checkMatchVerificationCode(request('active_code'));
         if ($check) {
             $devices = $user->devices;
@@ -206,11 +230,44 @@ class User extends Authenticatable
      */
     public function edit()
     {
-        $this->name = request('name') ?? ($this->name ?? null);
-        $this->family = request('family') ?? ($this->family ?? null);
-        $this->city_id = request('city_id') ?? ($this->city_id ?? null);
+        $this->setAddress();
+        $this->setProfile();
+        $this->phone = request('phone') ?? ($this->phone ?? null);
+        $this->email = request('email') ?? ($this->email ?? null);
         $this->status = config('constants.user.status.active') ?? 0;
         $this->save();
+    }
+
+    /**
+     * Set address from this user in the model
+     * 
+     */
+    public function setAddress()
+    {
+        if (!$this->address) {
+            $address = new PersonalAddress();
+        } else {
+            $address = $this->address;
+        }
+        $address->set();
+        $this->address()->save($address);
+        return $address;
+    }
+
+    /**
+     * Set contact from this user in the model
+     * 
+     */
+    public function setProfile()
+    {
+        if (!$this->profile) {
+            $profile = new PersonalProfile();
+        } else {
+            $profile = $this->profile;
+        }
+        $profile->set();
+        $this->profile()->save($profile);
+        return $profile;
     }
 
     /**

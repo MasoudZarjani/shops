@@ -11,7 +11,7 @@ use App\Http\Resources\Api\v1\UserResource;
 
 class UserController extends Controller
 {
-    protected $tel;
+    protected $mobile;
     protected $user;
 
     /**
@@ -21,24 +21,24 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        if (request('tel'))
-            $this->tel = Utility::checkTel(request('tel') ?? "");
+        if (request('mobile'))
+            $this->mobile = Utility::checkMobile(request('mobile') ?? "");
         if (request('uuid') && request('api_token')) {
             $this->user = User::ofUuid(request('uuid') ?? "")->ofApiToken(request('api_token') ?? "")->first();
         }
     }
 
     /**
-     * Store the tel for the given user and send sms for the tel.
+     * Store the mobile for the given user and send sms for the mobile.
      *
-     * @param  string $tel
+     * @param  string $mobile
      * @return json status
      */
-    public function storeNumber(Request $request)
+    public function storeNumber()
     {
-        $ipCheck = Utility::checkIp($request->ip(), config('constants.activeIp.register.type'));
+        $ipCheck = Utility::checkIp(request()->ip());
         if ($ipCheck == true) {
-            $user = User::createOrGetWithTel($this->tel);
+            $user = User::createOrGetWithMobile($this->mobile);
             if (!$user) {
                 return response()->json(['status' => false, 'message' => config('constants.server.message.blockUser')], 401);
             }
@@ -50,14 +50,14 @@ class UserController extends Controller
     }
 
     /**
-     * Check the tel for the given user.
+     * Check the mobile for the given user.
      *
-     * @param  string $tel
+     * @param  string $mobile
      * @return json status, api_token, uuid
      */
     public function checkCode()
     {
-        $user = User::createOrGetDeviceWithTel($this->tel);
+        $user = User::createOrGetDeviceWithMobile($this->mobile);
         if ($user) {
             return $user;
         }
