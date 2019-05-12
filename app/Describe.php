@@ -5,10 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Http\Resources\Api\v1\SettingResource;
+use App\Traits\CreateUuid;
 
 class Describe extends Model
 {
-    use  SoftDeletes;
+    use  SoftDeletes, CreateUuid;
 
     /**
      * The attributes that are mass assignable.
@@ -61,6 +62,18 @@ class Describe extends Model
     public function scopeOfTitle($query, $title)
     {
         return $query->where('title', $title);
+    }
+
+    /**
+     * Scope a query to return uuid from describes.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  mixed $uuid
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfUuid($query, $uuid)
+    {
+        return $query->where('uuid', $uuid);
     }
 
     /**

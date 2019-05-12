@@ -8,6 +8,7 @@ use App\Helpers\Utility;
 use App\User;
 use App\Helpers\Upload;
 use App\Http\Resources\Api\v1\UserResource;
+use App\PersonalAddress;
 
 class UserController extends Controller
 {
@@ -152,6 +153,17 @@ class UserController extends Controller
             return response()->json(["status" => false], 203);
         }
         $this->user->edit();
+        return response()->json(['status' => true]);
+    }
+
+    public function setAddress()
+    {
+        if (!$this->user) {
+            return response()->json(["status" => false], 203);
+        }
+        $address = new PersonalAddress();
+        $address->set();
+        $this->user->addresses()->save($address);
         return response()->json(['status' => true]);
     }
 }

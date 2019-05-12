@@ -50,7 +50,7 @@ class Message extends Model
      */
     public function set($user_id)
     {
-        $product = Product::get();
+        $product = Product::getWithUuid();
 
         $describe = new Describe();
         $describe->set();

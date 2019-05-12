@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Message;
 use App\Http\Resources\Api\v1\MessageResource;
 use App\User;
+use App\Product;
+use App\Category;
 
 class MessageController extends Controller
 {
@@ -40,12 +42,23 @@ class MessageController extends Controller
 
     public function create()
     {
+        if ($this->user) {
+            $message = new Message();
+            if ($message->set($this->user->id))
+                return response()->json(["status" => true]);
+        }
+        return response()->json(["status" => false], 203);
+    }
+
+    public function question()
+    {
         if (!$this->user) {
             return response()->json(["status" => false], 203);
         }
-        $message = new Message();
-        if ($message->set($this->user->id))
-            return response()->json(["status" => true]);
-        return response()->json(["status" => false], 203);
+        if ($product = Product::getWithUuid()) {
+            $category = $product->product_able;
+            return Category::getQuestion($category);
+        } 
+        return response()->json(["status" => false]); 
     }
 }

@@ -7,7 +7,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Traits\CreateUuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-use Webpatser\Uuid\Uuid;
 use App\Helpers\SendSMS;
 
 class User extends Authenticatable
@@ -230,24 +229,11 @@ class User extends Authenticatable
      */
     public function edit()
     {
-        $this->setAddress();
         $this->setProfile();
         $this->phone = request('phone') ?? ($this->phone ?? null);
         $this->email = request('email') ?? ($this->email ?? null);
         $this->status = config('constants.user.status.active') ?? 0;
         $this->save();
-    }
-
-    /**
-     * Set address from this user in the model
-     * 
-     */
-    public function setAddress()
-    {
-        $address = new PersonalAddress();
-        $address->set();
-        $this->address()->save($address);
-        return $address;
     }
 
     /**

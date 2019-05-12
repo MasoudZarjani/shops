@@ -33,7 +33,6 @@ class HomeController extends Controller
 
         $categoryPaginationLimited = (int)Describe::getSettingWithTitle('categoryPaginationLimited');
         $mainCategories = Category::getParentCategory(config('constants.category.type.main'))->take($categoryPaginationLimited);
-
         $mainCategories = CategoryResource::collection($mainCategories);
 
         $specialTitles = Group::ofGroupId(0)->get();

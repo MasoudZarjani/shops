@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\CreateUuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Http\Resources\Api\v1\CategoryResource;
+use App\Http\Resources\Api\v1\QuestionResource;
 
 class Category extends Model
 {
@@ -20,11 +21,11 @@ class Category extends Model
     }
 
     /**
-     * Get the category's describe.
+     * Get the category's describes.
      */
-    public function describe()
+    public function describes()
     {
-        return $this->morphOne(Describe::class, 'describe_able');
+        return $this->morphMany(Describe::class, 'describe_able');
     }
 
     /**
@@ -118,5 +119,11 @@ class Category extends Model
             ->active()
             ->ordered()
             ->get();
+    }
+
+    public static function getQuestion($category)
+    {
+        $questions = $category->describes()->ofType(config('constants.describe.type.question'))->get();
+        return QuestionResource::collection($questions ?? []);
     }
 }

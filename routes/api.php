@@ -36,12 +36,11 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('detail', 'Api\v1\CategoryController@detail');
     });
 
+    Route::get('errors', 'Api\v1\HomeController@handleErrors')->name('api-errors');
+
     Route::group(['prefix' => 'message'], function () {
         Route::post('list', 'Api\v1\MessageController@list');
-        Route::post('create', 'Api\v1\MessageController@create');
     });
-
-    Route::get('errors', 'Api\v1\HomeController@handleErrors')->name('api-errors');
 
     Route::middleware('auth:api')->group(function () {
         Route::group(['prefix' => 'user'], function () {
@@ -49,6 +48,12 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('delete_image', 'Api\v1\UserController@deleteImage');
             Route::post('show', 'Api\v1\UserController@show');
             Route::post('update', 'Api\v1\UserController@update');
+            Route::post('set_address', 'Api\v1\UserController@setAddress');
+        });
+
+        Route::group(['prefix' => 'message'], function () {
+            Route::post('create', 'Api\v1\MessageController@create');
+            Route::post('question', 'Api\v1\MessageController@question');
         });
     });
 });
