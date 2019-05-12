@@ -27,6 +27,14 @@ class Product extends Model
     }
 
     /**
+     * Get all of the colors for the product.
+     */
+    public function colors()
+    {
+        return $this->morphToMany(Color::class, 'color_able');
+    }
+
+    /**
      * Get all of the prices for the product.
      */
     public function prices()

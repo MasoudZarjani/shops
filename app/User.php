@@ -54,11 +54,11 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the user's address.
+     * Get the user's addresses.
      */
-    public function address()
+    public function addresses()
     {
-        return $this->morphOne(PersonalAddress::class, 'address_able');
+        return $this->morphMany(PersonalAddress::class, 'address_able');
     }
 
     /**
@@ -244,11 +244,7 @@ class User extends Authenticatable
      */
     public function setAddress()
     {
-        if (!$this->address) {
-            $address = new PersonalAddress();
-        } else {
-            $address = $this->address;
-        }
+        $address = new PersonalAddress();
         $address->set();
         $this->address()->save($address);
         return $address;

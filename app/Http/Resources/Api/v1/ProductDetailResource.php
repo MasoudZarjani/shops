@@ -17,19 +17,14 @@ class ProductDetailResource extends JsonResource
     public function toArray($request)
     {      
         $rating = Utility::rounded($this->actions ?? []);
-        $prices = $this->prices->map(function($item) {
-            return [
-                'price' => $item->price,
-                'discount' => $item->discount,
-            ];
-        });
         return [
             'title' => $this->describe->title ?? "",
             'description' => $this->describe->description ?? "",
             'image' => FileResource::collection($this->files()->ofPosition(config('constants.file.position.productSliderFile'))->get() ?? []),
             'rating' => $rating,
-            'price' => $prices,
-            'warrantors' => $this->warrantors
+            'price' => PriceResource::collection($this->prices ?? []),
+            'warrantors' => WarrantorResource::collection($this->warrantors ?? []),
+            'colors' => ColorResource::collection($this->colors),
         ];
     }
 }

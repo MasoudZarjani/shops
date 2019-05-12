@@ -20,8 +20,7 @@ class UserResource extends JsonResource
             'mobile' => $this->mobile ?? "",
             'phone' => $this->phone ?? "",
             'email' => $this->email ?? "",
-            'address' => $this->address->address ?? "",
-            'postal_code' => $this->address->postal_code ?? "",
+            'addresses' => AddressResource::collection($this->addresses ?? []),
             'avatar' => $this->file->path ?? "",
         ];
     }
