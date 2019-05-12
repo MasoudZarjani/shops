@@ -35,4 +35,19 @@ class Action extends Model
         $this->save();
         return $this;
     }
+
+    /**
+     * Create action with json data
+     */
+    public function setQuestionWithJson($question, $user_id)
+    {
+        $describe = Describe::ofUuid(request('describe_uuid'))->first();
+        $this->value = $question['count'] ?? 0;
+        $this->user_id = $user_id ?? 0;
+        $this->describe_id = $describe->id ?? 0;
+        $this->type = config('constants');
+        $this->status = config('constants.action.type.question');
+        $this->save();
+        return $this;
+    }
 }

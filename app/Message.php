@@ -55,8 +55,12 @@ class Message extends Model
         $describe = new Describe();
         $describe->set();
 
-        $action = new Action();
-        $action->set($user_id);
+        $questions = json_decode(request('questions'));
+
+        foreach ($questions as $question) {
+            $action = new Action();
+            $action->setQuestionWithJson($question, $user_id);
+        }
 
         $this->user_id = $user_id ?? 0;
         $this->type = request('type') ?? 0;

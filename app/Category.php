@@ -118,7 +118,7 @@ class Category extends Model
             ->ofType(config('constants.category.type.main'))
             ->active()
             ->ordered()
-            ->get();
+            ->paginate(10);
     }
 
     public static function getQuestion($category)
