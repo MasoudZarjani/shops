@@ -35,13 +35,44 @@ class Message extends Model
     }
 
     /**
+     * Get the user's user.
+     */
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    /**
+     * Scope a query to return type from message.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  mixed $type
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfType($query, $type)
+    {
+        return $query->where('type', $type);
+    }
+
+    /**
+     * Scope a query to return user_id from messages.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  mixed $user_id
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfUser($query, $user_id)
+    {
+        return $query->where('user_id', $user_id);
+    }
+
+    /**
      * Get message information
      */
-    public static function getWithProduct()
+    public static function getWithProduct($product)
     {
-        $product = Product::getWithUuid();
         if ($product)
-            return $product->messages;
+            return $product->messages()->paginate(config('constants.default.pagination.limited'));
         return false;
     }
 
@@ -52,24 +83,41 @@ class Message extends Model
     {
         $product = Product::getWithUuid();
 
+        $this->user_id = $user_id ?? 0;
+        $this->type = request('type') ?? 0;
+        $this->save();
+
         $describe = new Describe();
         $describe->set();
+        $this->describe()->save($describe);
 
         $questions = json_decode(request('questions'));
 
         foreach ($questions as $question) {
             $action = new Action();
             $action->setQuestionWithJson($question, $user_id);
+            $this->actions()->save($action);
         }
-
-        $this->user_id = $user_id ?? 0;
-        $this->type = request('type') ?? 0;
-        $this->save();
-
-        $this->actions()->save($action);
-        $this->describe()->save($describe);
 
         $product->messages()->save($this);
         return true;
+    }
+
+    public static function checkQuestion($user_id)
+    {
+        if ($message = Message::ofUser($user_id)->first()) {
+            if ($message->message_able->uuid == request('product_uuid'))
+                return true;
+        }
+        return false;
+    }
+
+    public static function checkQuestionWithUuid($user_id)
+    {
+        if ($message = Message::ofUser($user_id)->first()) {
+            if ($message->message_able->uuid == request('product_uuid'))
+                return $message->uuid;
+        }
+        return '';
     }
 }

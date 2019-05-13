@@ -81,7 +81,7 @@ class User extends Authenticatable
      */
     public function messages()
     {
-        return $this->morphMany(Message::class, 'message_able');
+        return $this->hasMany(Message::class);
     }
 
     /**
@@ -202,7 +202,7 @@ class User extends Authenticatable
     public function checkFirstLogin()
     {
         return response()->json([
-            'status' => ($this->name == null && $this->family == null) ? false : true,
+            'status' => ($this->profile->name == null && $this->profile->family == null) ? false : true,
             'api_token' => $this->api_token,
             'uuid' => $this->uuid,
         ]);

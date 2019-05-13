@@ -96,6 +96,10 @@ return [
         'status' => [
             'inactive' => 0,
             'active' => 1
+        ],
+        'likeType' => [
+            'like' => 1,
+            'dislike' => -1
         ]
     ],
     'device' => [
@@ -139,6 +143,9 @@ return [
             'link' => '',
             'type' => 0,
             'size' => 0
+        ],
+        'pagination' => [
+            'limited' => 10
         ]
     ],
     'server' => [
