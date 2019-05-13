@@ -8,6 +8,7 @@ use App\Http\Resources\Api\v1\MessageResource;
 use App\User;
 use App\Product;
 use App\Category;
+use App\Helpers\Utility;
 
 class MessageController extends Controller
 {
@@ -35,9 +36,10 @@ class MessageController extends Controller
         if ($this->user)
             $message = Message::checkQuestionWithUuid($this->user->id);
         if (request('type') == config('constants.message.type.comment'))
-            if (Message::getWithProduct($product))
+            if ($messages = Message::getWithProduct($product))
                 return response()->json([
-                    'data' => MessageResource::collection(Message::getWithProduct($product)),
+                    'data' => MessageResource::collection($messages),
+                    'meta' => Utility::meta($messages),
                     'message_uuid' => $message,
                     'product_title' => $product->describe->title,
                     'rate' => $rate

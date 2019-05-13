@@ -104,18 +104,15 @@ class Utility
         });
     }
 
-    public static function paginate_collection($items, $perPage)
+    public static function meta($list)
     {
-        $pageStart = request('page', 1);
-        $offSet = ($pageStart * $perPage) - $perPage;
-        $itemsForCurrentPage = $items->slice($offSet, $perPage)->flatten();
-        return new \Illuminate\Pagination\LengthAwarePaginator(
-            $itemsForCurrentPage,
-            $items->count(),
-            $perPage,
-            \Illuminate\Pagination\Paginator::resolveCurrentPage(),
-            ['path' => \Illuminate\Pagination\Paginator::resolveCurrentPath()]
-        );
+        return $list->pagination = [
+            'total' => $list->total(),
+            'count' => $list->count(),
+            'per_page' => $list->perPage(),
+            'current_page' => $list->currentPage(),
+            'total_pages' => $list->lastPage()
+        ];
     }
 
     public static function rounded($items)
