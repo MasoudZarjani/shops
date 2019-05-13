@@ -79,7 +79,7 @@ class MessageController extends Controller
     {
         if ($this->user) {
             $message = new Message();
-            if (!Message::checkQuestion($this->user->id))
+            //if (!Message::checkQuestion($this->user->id))
                 if ($message->set($this->user->id))
                     return response()->json(["status" => true]);
             return response()->json(["status" => false]);

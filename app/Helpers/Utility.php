@@ -115,6 +115,20 @@ class Utility
         ];
     }
 
+    public static function paginate_collection($items, $perPage)
+    {
+        $pageStart = request('page', 1);
+        $offSet = ($pageStart * $perPage) - $perPage;
+        $itemsForCurrentPage = $items->slice($offSet, $perPage)->flatten();
+        return new \Illuminate\Pagination\LengthAwarePaginator(
+            $itemsForCurrentPage,
+            $items->count(),
+            $perPage,
+            \Illuminate\Pagination\Paginator::resolveCurrentPage(),
+            ['path' => \Illuminate\Pagination\Paginator::resolveCurrentPath()]
+        );
+    }
+    
     public static function rounded($items)
     {
         $avg = 0;
