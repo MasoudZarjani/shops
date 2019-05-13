@@ -43,7 +43,29 @@ class MessageController extends Controller
                     'meta' => Utility::meta($messages),
                     'message_uuid' => $message,
                     'product_title' => $product->describe->title,
-                    'rate' => $rate
+                    'rate' => $rate,
+                    'action' => [
+                        [
+                            'value' => 5,
+                            'title' => 'ارزش خرید در برابر قیمت',
+                            'count' => 5
+                        ],
+                        [
+                            'value' => 3,
+                            'title' => 'کیفیت ساخت"',
+                            'count' => 5
+                        ],
+                        [
+                            'value' => 1,
+                            'title' => 'کارایی و عملکرد"',
+                            'count' => 5
+                        ],
+                        [
+                            'value' => 2,
+                            'title' => 'طراحی و ظاهر"',
+                            'count' => 5
+                        ],
+                    ]
                 ]);
         return response()->json('No Content', 204);
     }
