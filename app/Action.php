@@ -35,6 +35,18 @@ class Action extends Model
     }
 
     /**
+     * Scope a query to return user_id from action.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  mixed $user_id
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfUserId($query, $user_id)
+    {
+        return $query->where('user_id', $user_id);
+    }
+
+    /**
      * Scope a query to return like from action.
      *
      * @param  \Illuminate\Database\Eloquent\Builder $query
@@ -64,8 +76,8 @@ class Action extends Model
         $this->value = request('value') ?? "";
         $this->user_id = $user_id ?? 0;
         $this->describe_id = request('describe_uuid') ?? 0;
-        $this->type = request('action_type') ?? 0;
-        $this->status = config('constants.action.type.question');
+        $this->type = request('type') ?? 0;
+        $this->status = config('constants.action.status.inactive');
         $this->save();
         return $this;
     }

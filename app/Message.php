@@ -67,7 +67,19 @@ class Message extends Model
     }
 
     /**
-     * Get message information
+     * Scope a query to return uuid from message.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  mixed $uuid
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfUuid($query, $uuid)
+    {
+        return $query->where('uuid', $uuid);
+    }
+
+    /**
+     * Get message information with product uuid
      */
     public static function getWithProduct($product)
     {
@@ -119,5 +131,23 @@ class Message extends Model
                 return $message->uuid;
         }
         return '';
+    }
+
+    public static function setMessageAction($user_id)
+    {
+        if ($message = Message::ofUuid(request('message_uuid'))->first()) {
+            $actionMessage = $message->actions()->ofUserId($user_id)->ofType(request('type'))->first();
+            if (!$actionMessage) {
+                $action = new Action();
+                $action = $action->set($user_id);
+                if ($message->actions()->save($action))
+                    return true;
+            } else if ($actionMessage->value != request('value')) {
+                $actionMessage = $actionMessage->set($user_id);
+                if ($message->actions()->save($actionMessage))
+                    return true;
+            }
+        }
+        return false;
     }
 }

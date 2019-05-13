@@ -54,6 +54,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::group(['prefix' => 'message'], function () {
             Route::post('create', 'Api\v1\MessageController@create');
             Route::post('question', 'Api\v1\MessageController@question');
+            Route::post('like', 'Api\v1\MessageController@like');
         });
     });
 });

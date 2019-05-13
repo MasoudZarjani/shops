@@ -9,6 +9,7 @@ use App\User;
 use App\Product;
 use App\Category;
 use App\Helpers\Utility;
+use App\Action;
 
 class MessageController extends Controller
 {
@@ -74,6 +75,13 @@ class MessageController extends Controller
             $category = $product->product_able;
             return Category::getQuestion($category);
         }
+        return response()->json(["status" => false]);
+    }
+
+    public function like()
+    {
+        if (Message::setMessageAction($this->user->id))
+            return response()->json(["status" => true]);
         return response()->json(["status" => false]);
     }
 }
