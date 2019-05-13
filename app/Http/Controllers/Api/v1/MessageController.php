@@ -10,6 +10,7 @@ use App\Product;
 use App\Category;
 use App\Helpers\Utility;
 use App\Action;
+use App\Http\Resources\Api\v1\RateResource;
 
 class MessageController extends Controller
 {
@@ -31,9 +32,8 @@ class MessageController extends Controller
     {
         $message = "";
         $product = Product::getWithUuid();
-        $rate = 0;
         if ($product)
-            $rate = round($product->actions()->ofType(config('constants.action.type.rate'))->avg('value'));
+            $rate = new RateResource($product->actions()->ofType(config('constants.action.type.rate')));
         if ($this->user)
             $message = Message::checkQuestionWithUuid($this->user->id);
         if (request('type') == config('constants.message.type.comment'))
