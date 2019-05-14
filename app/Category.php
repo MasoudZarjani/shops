@@ -126,4 +126,9 @@ class Category extends Model
         $questions = $category->describes()->ofType(config('constants.describe.type.question'))->get();
         return QuestionResource::collection($questions ?? []);
     }
+
+    public function getDescribe()
+    {
+        return $this->describes()->ofType(config('constants.describe.type.text'))->first()->title ?? "";
+    }
 }

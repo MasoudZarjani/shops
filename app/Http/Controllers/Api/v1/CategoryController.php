@@ -35,7 +35,8 @@ class CategoryController extends Controller
         
         return response()->json([
             'sub_categories' => $subCategory,
-            'products' => $productsResource
+            'products' => $productsResource,
+            'meta' => Utility::meta($productsResource)
         ]);
     }
 

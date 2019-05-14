@@ -25,7 +25,7 @@ class UserController extends Controller
         if (request('mobile'))
             $this->mobile = Utility::checkMobile(request('mobile') ?? "");
         if (request('uuid') && request('api_token')) {
-            $this->user = User::ofUuid(request('uuid') ?? "")->ofApiToken(request('api_token') ?? "")->first();
+            $this->user = User::getWithRequest();
         }
     }
 

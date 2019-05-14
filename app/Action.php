@@ -102,6 +102,16 @@ class Action extends Model
         return $actions->ofType(config('constants.action.type.like'))->like()->count();
     }
 
+    public static function checkLike($actions, $user_id)
+    {
+        return $actions->ofType(config('constants.action.type.like'))->ofUserId($user_id)->first();
+    }
+
+    public static function checkBookmark($actions, $user_id)
+    {
+        return $actions->ofType(config('constants.action.type.bookmark'))->ofUserId($user_id)->first();
+    }
+
     public static function getDislikes($actions)
     {
         return $actions->ofType(config('constants.action.type.like'))->dislike()->count();

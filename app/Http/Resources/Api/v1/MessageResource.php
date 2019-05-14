@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Product;
 use App\Describe;
 use App\Action;
+use App\User;
 
 class MessageResource extends JsonResource
 {
@@ -17,8 +18,11 @@ class MessageResource extends JsonResource
      */
     public function toArray($request)
     {
+        $user_id = 0;
+        if (request('uuid') && request('api_token'))
+            $user_id = User::getWithRequest()->id;
+
         $product = Product::getWithUuid()->product_able;
-        $describeAction = $product->describes()->ofType(config('constants.describe.type.question'))->get();
         $actions = $this->actions->map(function ($item) use ($product) {
             $describe = Describe::ofId($item->describe_id)->first();
             $checkParent = self::checkParent($product, $describe->describe_able ?? 0, $item->describe_id);
@@ -44,6 +48,7 @@ class MessageResource extends JsonResource
             'description' => $this->describe->description ?? "",
             'actions' => $actions,
             'like' => Action::getLikes($this->actions()) ?? 0,
+            'like_status' => (Action::checkLike($this->actions(), $user_id)) ? 1 : 0,
             'dislike' => Action::getDislikes($this->actions()) ?? 0,
             'name' => $name ?? '',
             'avatar' => $avatar ?? ''

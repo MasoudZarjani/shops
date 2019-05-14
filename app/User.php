@@ -201,8 +201,14 @@ class User extends Authenticatable
      */
     public function checkFirstLogin()
     {
+        $status = false;
+        if ($this->profile) {
+            if ($this->profile->name == null && $this->profile->family == null) {
+                $status = true;
+            }
+        }
         return response()->json([
-            'status' => ($this->profile->name == null && $this->profile->family == null) ? false : true,
+            'status' => $status,
             'api_token' => $this->api_token,
             'uuid' => $this->uuid,
         ]);
@@ -282,5 +288,10 @@ class User extends Authenticatable
             return true;
         }
         return false;
+    }
+
+    public static function getWithRequest()
+    {
+        return User::ofUuid(request('uuid') ?? "")->ofApiToken(request('api_token') ?? "")->first();
     }
 }
