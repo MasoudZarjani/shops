@@ -80,8 +80,8 @@ class MessageController extends Controller
         if ($this->user) {
             $message = new Message();
             //if (!Message::checkQuestion($this->user->id))
-                if ($message->set($this->user->id))
-                    return response()->json(["status" => true]);
+            if ($message->set($this->user->id))
+                return response()->json(["status" => true]);
             return response()->json(["status" => false]);
         }
         return response()->json(["status" => false], 203);
@@ -102,8 +102,17 @@ class MessageController extends Controller
 
     public function like()
     {
-        if (Message::setMessageAction($this->user->id))
-            return response()->json(["status" => true]);
+        $message = Message::getWithUuid();
+        if ($actionMessage = $message->setMessageAction($this->user->id)) {
+            $like = Action::getLikes($message->actions());
+            $dislike = Action::getDislikes($message->actions());
+            return response()->json([
+                "status" => true,
+                'like' => $like,
+                'dislike' => $dislike,
+                'value' => (int) $actionMessage->value
+            ]);
+        }
         return response()->json(["status" => false]);
     }
 }

@@ -35,6 +35,18 @@ class Action extends Model
     }
 
     /**
+     * Scope a query to return value from action.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  mixed $value
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfNotValue($query, $value)
+    {
+        return $query->where('value', '<>', $value);
+    }
+
+    /**
      * Scope a query to return user_id from action.
      *
      * @param  \Illuminate\Database\Eloquent\Builder $query
@@ -80,6 +92,18 @@ class Action extends Model
         $this->status = config('constants.action.status.inactive');
         $this->save();
         return $this;
+    }
+
+    public static function create($type, $model_id, $user_id)
+    {
+        dd(Action::firstOrCreate([
+            'user_id' => $user_id,
+            'type' => config('constants.action.type.bookmark'),
+            'value' => 1,
+            'status' => config('constants.action.status.active'),
+            'action_able_type' => 'App\\'.$type,
+            'action_able_id' => $model_id
+        ]));
     }
 
     /**

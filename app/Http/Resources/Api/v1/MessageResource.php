@@ -41,14 +41,14 @@ class MessageResource extends JsonResource
             if ($this->user->file)
                 $avatar = $this->user->file->path;
         }
-
+        $actionLike = Action::checkLike($this->actions(), $user_id);
         return [
             'uuid' => $this->uuid,
             'title' => $this->describe->title ?? "",
             'description' => $this->describe->description ?? "",
             'actions' => $actions,
             'like' => Action::getLikes($this->actions()) ?? 0,
-            'like_status' => (Action::checkLike($this->actions(), $user_id)) ? 1 : 0,
+            'like_value' => $actionLike->value ?? 0,
             'dislike' => Action::getDislikes($this->actions()) ?? 0,
             'name' => $name ?? '',
             'avatar' => $avatar ?? ''

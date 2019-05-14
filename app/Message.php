@@ -81,6 +81,14 @@ class Message extends Model
     /**
      * Get message information with product uuid
      */
+    public static function getWithUuid()
+    {
+        return Message::ofUuid(request('message_uuid'))->first();
+    }
+
+    /**
+     * Get message information with product uuid
+     */
     public static function getWithProduct($product)
     {
         if ($product)
@@ -133,20 +141,22 @@ class Message extends Model
         return '';
     }
 
-    public static function setMessageAction($user_id)
+    public function setMessageAction($user_id)
     {
-        if ($message = Message::ofUuid(request('message_uuid'))->first()) {
-            $actionMessage = $message->actions()->ofUserId($user_id)->ofType(request('type'))->first();
-            if (!$actionMessage) {
-                $action = new Action();
-                $action = $action->set($user_id);
-                if ($message->actions()->save($action))
-                    return true;
-            } else if ($actionMessage->value != request('value')) {
-                $actionMessage = $actionMessage->set($user_id);
-                if ($message->actions()->save($actionMessage))
-                    return true;
-            }
+        $actionMessage = $this->actions()->ofUserId($user_id)->ofType(request('type'))->first();
+        if (!$actionMessage) {
+            $action = new Action();
+            $action = $action->set($user_id);
+            if ($this->actions()->save($action))
+                return $actionMessage;
+        } else if ($actionMessage->value != request('value')) {
+            $actionMessage = $actionMessage->set($user_id);
+            if ($this->actions()->save($actionMessage))
+                return $actionMessage;
+        } else {
+            $actionMessage->value = config('constants.action.likeType.nothing');
+            $actionMessage->save();
+            return $actionMessage;
         }
         return false;
     }

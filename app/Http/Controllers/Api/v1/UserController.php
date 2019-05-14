@@ -165,5 +165,5 @@ class UserController extends Controller
         $address->set();
         $this->user->addresses()->save($address);
         return response()->json(['status' => true]);
-    }
+    }  
 }

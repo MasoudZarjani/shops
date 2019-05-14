@@ -97,7 +97,7 @@ class Product extends Model
     {
         return $this->morphMany('App\Action', 'action_able');
     }
-    
+
     /**
      * Scope a query to return active from product.
      *
@@ -131,5 +131,11 @@ class Product extends Model
     public static function getWithUuid()
     {
         return Product::ofUuid(request('product_uuid'))->active()->first();
+    }
+
+    public static function setBookmark($user)
+    {
+        $product = Product::getWithUuid();
+        return Action::create('Product', $product->id, $user->id);
     }
 }

@@ -99,7 +99,8 @@ return [
         ],
         'likeType' => [
             'like' => 1,
-            'dislike' => -1
+            'dislike' => -1,
+            'nothing' => 0
         ]
     ],
     'device' => [

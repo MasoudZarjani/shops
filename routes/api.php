@@ -43,6 +43,10 @@ Route::group(['prefix' => 'v1'], function () {
     });
 
     Route::middleware('auth:api')->group(function () {
+        Route::group(['prefix' => 'product'], function () {
+            Route::post('bookmark', 'Api\v1\ProductController@bookmark');
+        });
+
         Route::group(['prefix' => 'user'], function () {
             Route::post('upload', 'Api\v1\UserController@upload');
             Route::post('delete_image', 'Api\v1\UserController@deleteImage');
