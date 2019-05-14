@@ -31,9 +31,9 @@ class Category extends Model
     /**
      * Get the category's product.
      */
-    public function product()
+    public function products()
     {
-        return $this->morphOne(Product::class, 'product_able');
+        return $this->morphMany(Product::class, 'product_able');
     }
 
     /**

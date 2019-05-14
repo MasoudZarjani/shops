@@ -20,17 +20,41 @@ class ProductDetailResource extends JsonResource
         $user_id = 0;
         if (request('uuid') && request('api_token'))
             $user_id = User::getWithRequest()->id;
-        $rating = Utility::rounded($this->actions ?? []);
+        $rate = new RateResource($this->actions()->ofType(config('constants.action.type.rate')));
         return [
             'title' => $this->describe->title ?? "",
             'description' => $this->describe->description ?? "",
             'category' => $this->product_able->getDescribe(),
             'bookmark' => Action::checkBookmark($this->actions(), $user_id) ? 1 : 0,
-            'rating' => $rating,
+            'share_link' => "",
+            'rating' => $rate,
             'image' => FileResource::collection($this->files()->ofPosition(config('constants.file.position.productSliderFile'))->get() ?? []),
             'price' => PriceResource::collection($this->prices ?? []),
             'warrantors' => WarrantorResource::collection($this->warrantors ?? []),
             'colors' => ColorResource::collection($this->colors),
+            'similar' => ProductResource::collection($this->product_able->products()->where('id', '<>', $this->id)->get() ?? []),
+            'action' => [
+                [
+                    'value' => 5,
+                    'title' => 'ارزش خرید در برابر قیمت',
+                    'count' => 5
+                ],
+                [
+                    'value' => 3,
+                    'title' => 'کیفیت ساخت"',
+                    'count' => 5
+                ],
+                [
+                    'value' => 1,
+                    'title' => 'کارایی و عملکرد"',
+                    'count' => 5
+                ],
+                [
+                    'value' => 2,
+                    'title' => 'طراحی و ظاهر"',
+                    'count' => 5
+                ],
+            ]
         ];
     }
 }
