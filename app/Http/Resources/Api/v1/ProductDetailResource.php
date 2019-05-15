@@ -29,7 +29,7 @@ class ProductDetailResource extends JsonResource
             'share_link' => "",
             'rating' => $rate,
             'image' => FileResource::collection($this->files()->ofPosition(config('constants.file.position.productSliderFile'))->get() ?? []),
-            'price' => PriceResource::collection($this->prices ?? []),
+            'price' => new PriceResource($this->prices ?? ""),
             'warrantors' => WarrantorResource::collection($this->warrantors ?? []),
             'colors' => ColorResource::collection($this->colors),
             'similar' => ProductResource::collection($this->product_able->products()->where('id', '<>', $this->id)->get() ?? []),
