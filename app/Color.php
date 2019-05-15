@@ -13,4 +13,12 @@ class Color extends Model
     {
         return $this->morphedByMany(Product::class, 'color_able');
     }
+
+    /**
+     * Get all of the files that are assigned this color.
+     */
+    public function files()
+    {
+        return $this->morphedByMany(File::class, 'color_able');
+    }
 }

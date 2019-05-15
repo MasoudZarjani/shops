@@ -19,6 +19,14 @@ class File extends Model
     }
 
     /**
+     * Get all of the colors for the file.
+     */
+    public function colors()
+    {
+        return $this->morphToMany(Color::class, 'color_able');
+    }
+    
+    /**
      * Get the file's describe.
      */
     public function describe()

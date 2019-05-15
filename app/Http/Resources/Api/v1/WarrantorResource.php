@@ -16,7 +16,7 @@ class WarrantorResource extends JsonResource
     {
         return [
             'name' => $this->name ?? "",
-            'price' => PriceResource::collection($this->prices ?? [])
+            'price' => new PriceResource($this->prices()->first())
         ];
     }
 }

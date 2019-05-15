@@ -3,7 +3,6 @@
 namespace App\Http\Resources\Api\v1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Helpers\Utility;
 use App\User;
 use App\Action;
 
@@ -27,11 +26,14 @@ class ProductDetailResource extends JsonResource
             'category' => $this->product_able->getDescribe(),
             'bookmark' => Action::checkBookmark($this->actions(), $user_id) ? 1 : 0,
             'share_link' => "",
+            'brand' => "سامسونگ",
+            'status' => 1,
             'rating' => $rate,
             'image' => FileResource::collection($this->files()->ofPosition(config('constants.file.position.productSliderFile'))->get() ?? []),
             'price' => new PriceResource($this->prices()->first() ?? ""),
             'warrantors' => WarrantorResource::collection($this->warrantors ?? []),
             'colors' => ColorResource::collection($this->colors),
+            'sliders' => new ProductSliderResource($this),
             'similar' => ProductResource::collection($this->product_able->products()->where('id', '<>', $this->id)->get() ?? []),
             'action' => [
                 [
