@@ -201,10 +201,10 @@ class User extends Authenticatable
      */
     public function checkFirstLogin()
     {
-        $status = false;
+        $status = true;
         if ($this->profile) {
             if ($this->profile->name == null && $this->profile->family == null) {
-                $status = true;
+                $status = false;
             }
         }
         return response()->json([
