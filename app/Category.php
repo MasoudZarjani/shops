@@ -37,6 +37,14 @@ class Category extends Model
     }
 
     /**
+     * Get the category's product.
+     */
+    public function product()
+    {
+        return $this->morphOne(Product::class, 'product_able');
+    }
+
+    /**
      * Get all of the categories for the children.
      */
     public function children()

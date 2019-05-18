@@ -35,7 +35,7 @@ class Message extends Model
     }
 
     /**
-     * Get the user's user.
+     * Get the message's user.
      */
     public function user()
     {

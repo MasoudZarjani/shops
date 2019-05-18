@@ -85,6 +85,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the user's baskets.
+     */
+    public function baskets()
+    {
+        return $this->hasMany(Basket::class);
+    }
+
+    /**
      * Scope a query to return uuid from users.
      *
      * @param  \Illuminate\Database\Eloquent\Builder $query

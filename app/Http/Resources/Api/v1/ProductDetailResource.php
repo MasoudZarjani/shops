@@ -27,7 +27,7 @@ class ProductDetailResource extends JsonResource
             'bookmark' => Action::checkBookmark($this->actions(), $user_id) ? 1 : 0,
             'share_link' => "",
             'brand' => "سامسونگ",
-            'status' => 1,
+            'exist' => 1,
             'rating' => $rate,
             'image' => FileResource::collection($this->files()->ofPosition(config('constants.file.position.productSliderFile'))->get() ?? []),
             'price' => new PriceResource($this->prices()->first() ?? ""),

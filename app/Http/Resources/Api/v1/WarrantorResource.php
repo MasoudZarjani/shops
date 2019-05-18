@@ -15,6 +15,7 @@ class WarrantorResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'uuid' => $this->uuid ?? 0,
             'name' => $this->name ?? "",
             'price' => PriceResource::collection($this->prices)
         ];

@@ -89,10 +89,8 @@ class MessageController extends Controller
 
     public function question()
     {
-        if (!$this->user) {
+        if (!$this->user)
             return response()->json(["status" => false], 203);
-        }
-
         if ($product = Product::getWithUuid()) {
             $category = $product->product_able;
             return Category::getQuestion($category);
@@ -110,7 +108,7 @@ class MessageController extends Controller
                 "status" => true,
                 'like' => $like,
                 'dislike' => $dislike,
-                'value' => (int) $actionMessage->value
+                'value' => (int)$actionMessage->value
             ]);
         }
         return response()->json(["status" => false]);

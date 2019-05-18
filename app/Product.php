@@ -63,7 +63,15 @@ class Product extends Model
      */
     public function messages()
     {
-        return $this->morphMany('App\Message', 'message_able');
+        return $this->morphMany(Message::class, 'message_able');
+    }
+
+    /**
+     * Get all of the product's baskets.
+     */
+    public function baskets()
+    {
+        return $this->morphMany(Basket::class, 'basket_able');
     }
 
     /**

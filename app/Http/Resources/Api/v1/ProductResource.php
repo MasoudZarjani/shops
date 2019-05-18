@@ -20,6 +20,7 @@ class ProductResource extends JsonResource
             'title' => $this->describe->title ?? "",
             'image' => $image ?? "",
             'price' => PriceResource::collection($this->prices ?? []),
+            'exist' => 1
         ];
     }
 }

@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Helpers\Database\Relations;
 
-class CreateWarrantorsTable extends Migration
+class CreateBasketsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +14,17 @@ class CreateWarrantorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('warrantors', function (Blueprint $table) {
+        Schema::create('baskets', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique()->nullable();
-            $table->string('name');
-            $table->nullableMorphs('warrantor_able');
-            $table->softDeletes();
+            $table->integer('count')->default(0);
+
+            Relations::pointer($table, 'color');
+            Relations::pointer($table, 'user');
+            Relations::pointer($table, 'warrantor');
+
+            $table->nullableMorphs('basket_able');
+
             $table->timestamps();
         });
     }
@@ -30,6 +36,6 @@ class CreateWarrantorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('warrantors');
+        Schema::dropIfExists('baskets');
     }
 }
