@@ -36,11 +36,12 @@ class MessageResource extends JsonResource
             ];
         });
 
-        if ($this->user->profile) {
-            $name = $this->user->profile->name . ' ' . $this->user->profile->family;
-            if ($this->user->file)
-                $avatar = $this->user->file->path;
-        }
+        if ($this->user)
+            if ($this->user->profile) {
+                $name = $this->user->profile->name . ' ' . $this->user->profile->family;
+                if ($this->user->file)
+                    $avatar = $this->user->file->path;
+            }
         $actionLike = Action::checkLike($this->actions(), $user_id);
         return [
             'uuid' => $this->uuid,
