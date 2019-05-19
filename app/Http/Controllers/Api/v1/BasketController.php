@@ -51,9 +51,11 @@ class BasketController extends Controller
     {
         if (!$this->user)
             return response()->json(['status' => false], 203);
-        if ($basket = Basket::getWithUuid())
-            
+        if ($basket = Basket::getWithUuid()) {
+            $basket->delete();
             return response()->json(['status' => true]);
+        }
+
         return response()->json(['status' => false], 204);
     }
 }
