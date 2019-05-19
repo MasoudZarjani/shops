@@ -19,7 +19,7 @@ class ProductResource extends JsonResource
             'uuid' => $this->uuid ?? "",
             'title' => $this->describe->title ?? "",
             'image' => $image ?? "",
-            'price' => PriceResource::collection($this->prices ?? []),
+            'price' => new PriceResource($this->prices()->first() ?? ""),
             'exist' => 1
         ];
     }
