@@ -11,6 +11,6 @@ $factory->define(PersonalAddress::class, function (Faker $faker) {
         'postal_code' => $faker->postcode,
         'city_id' => 153,
         'address_able_type' => "App\\User",
-        'address_able_id' => 1,
+        'address_able_id' => mt_rand(1, 5),
     ];
 });

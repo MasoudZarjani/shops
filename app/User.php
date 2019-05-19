@@ -214,6 +214,8 @@ class User extends Authenticatable
             if ($this->profile->name == null && $this->profile->family == null) {
                 $status = false;
             }
+        } else {
+            $status = false;
         }
         return response()->json([
             'status' => $status,
