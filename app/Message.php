@@ -135,8 +135,9 @@ class Message extends Model
     public static function checkQuestionWithUuid($user_id)
     {
         if ($message = Message::ofUser($user_id)->first()) {
-            if ($message->message_able->uuid == request('product_uuid'))
-                return $message->uuid;
+            if ($message->message_able)
+                if ($message->message_able->uuid == request('product_uuid'))
+                    return $message->uuid;
         }
         return '';
     }

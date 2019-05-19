@@ -29,7 +29,6 @@ class ProductDetailResource extends JsonResource
             'brand' => "سامسونگ",
             'exist' => 1,
             'rating' => $rate,
-            'image' => FileResource::collection($this->files()->ofPosition(config('constants.file.position.productSliderFile'))->get() ?? []),
             'price' => new PriceResource($this->prices()->first() ?? ""),
             'warrantors' => WarrantorResource::collection($this->warrantors ?? []),
             'colors' => ColorResource::collection($this->colors),

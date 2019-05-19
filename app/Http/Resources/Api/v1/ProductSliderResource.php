@@ -18,7 +18,7 @@ class ProductSliderResource extends JsonResource
             return [
                 'name' => $item->name,
                 'code' => $item->code,
-                'images' => new FileResource($item->files()->where('file_able_type', 'App\Product')->where('file_able_id', $this->id)->where('position', 3)->first()),
+                'images' => FileResource::collection($item->files()->where('file_able_type', 'App\Product')->where('file_able_id', $item->id)->where('position', 3)->get()),
             ];
         });
     }
