@@ -29,7 +29,7 @@ class BasketController extends Controller
         if (!$this->user)
             return response()->json(['status' => false], 203);
         if ($product = Product::getWithUuid()) {
-            $basket = Basket::add($product->id, $this->user->id);
+            $basket = Basket::check($product->id, $this->user->id);
             if ($basket->set($this->user->id))
                 if ($product->baskets()->save($basket))
                     return response()->json(['status' => true]);

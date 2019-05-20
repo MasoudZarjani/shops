@@ -60,6 +60,42 @@ class Basket extends Model
     }
 
     /**
+     * Scope a query to return color_id from baskets.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  mixed $color_id
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfColor($query, $color_id)
+    {
+        return $query->where('color_id', $color_id);
+    }
+
+    /**
+     * Scope a query to return warrantor_id from baskets.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  mixed $warrantor_id
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfWarrantor($query, $warrantor_id)
+    {
+        return $query->where('warrantor_id', $warrantor_id);
+    }
+
+    /**
+     * Scope a query to return user_id from baskets.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  mixed $user_id
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfUser($query, $user_id)
+    {
+        return $query->where('user_id', $user_id);
+    }
+
+    /**
      * Scope a query to return user_id from baskets.
      *
      * @param  \Illuminate\Database\Eloquent\Builder $query
@@ -71,23 +107,22 @@ class Basket extends Model
         return $query->where('user_id', $user_id);
     }
 
-    public static function add($product_id, $user_id)
+    public static function check($product_id, $user_id)
     {
-        return Basket::firstOrCreate([
-            'color_id' => Color::getWithUuid(),
-            'warrantor_id' => Warrantor::getWithUuid(),
-            'user_id' => $user_id,
-            'basket_able_id' => $product_id,
-            'basket_able_type' => 'App\Product',
-        ]);
+        return Basket::ofColor(($color = Color::getWithUuid()) ? $color->id : 0)
+            ->ofWarrantor(($warrantor = Warrantor::getWithUuid()) ? $warrantor->id : 0)
+            ->ofUser($user_id ?? 0)
+            ->where('basket_able_type', 'App\Product')
+            ->where('basket_able_id', $product_id ?? 0)
+            ->first();
     }
 
     public function set($user_id)
     {
         $this->count = request('count') ?? ($this->count ?? 1);
-        $this->color_id = Color::getWithUuid() ?? ($this->color_id ?? 0);
+        $this->color_id = ($color = Color::getWithUuid()) ? $color->id : ($this->color_id ?? 0);
         $this->user_id = $user_id ?? ($this->user_id ?? 0);
-        $this->warrantor_id = Warrantor::getWithUuid() ?? ($this->warrantor_id ?? 0);
+        $this->warrantor_id = ($warrantor = Warrantor::getWithUuid()) ? $warrantor->id : ($this->warrantor_id ?? 0);
         $this->save();
         return $this;
     }
