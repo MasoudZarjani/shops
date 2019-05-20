@@ -132,14 +132,14 @@ return [
             ''
         ],
         'slider' => [
-            'path' => 'http://lorempixel.com/output/sports-q-c-640-480-6.jpg',
+            'path' => 'http://shop.noonmikhay.ir/uploads/images/banner.png',
             'title' => '',
             'link' => '',
             'type' => 0,
             'size' => 0
         ],
         'banner' => [
-            'path' => 'http://lorempixel.com/output/sports-q-c-640-480-6.jpg',
+            'path' => 'http://shop.noonmikhay.ir/uploads/images/banner.png',
             'title' => '',
             'link' => '',
             'type' => 0,

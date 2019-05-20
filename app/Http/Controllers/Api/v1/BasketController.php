@@ -43,7 +43,7 @@ class BasketController extends Controller
         if (!$this->user)
             return response()->json(['status' => false], 203);
         if ($basket = Basket::getWithUserId($this->user->id))
-            return BasketResource::collection($basket);
+            return response()->json(['data' => BasketResource::collection($basket), 'sum_price' => 0]);
         return response()->json(['status' => false], 204);
     }
 

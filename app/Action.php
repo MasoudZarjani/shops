@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Action extends Model
 {
+    protected $fillable = ['user_id', 'type', 'value', 'status', 'action_able_type', 'action_able_id'];
     /**
      * Get all of the owning action_able models.
      */
@@ -85,25 +86,25 @@ class Action extends Model
      */
     public function set($user_id)
     {
-        $this->value = request('value') ?? "";
-        $this->user_id = $user_id ?? 0;
-        $this->describe_id = request('describe_uuid') ?? 0;
-        $this->type = request('type') ?? 0;
+        $this->value = request('value') ?? ($this->value ?? 0);
+        $this->user_id = $user_id ?? ($this->user_id ?? 0);
+        $this->describe_id = request('describe_uuid') ?? ($this->describe_id ?? 0);
+        $this->type = request('type')  ?? ($this->type ?? 0);
         $this->status = config('constants.action.status.inactive');
         $this->save();
         return $this;
     }
 
-    public static function create($type, $model_id, $user_id)
+    public static function createAndCheck($type, $model_id, $user_id)
     {
-        dd(Action::firstOrCreate([
+        return Action::firstOrCreate([
             'user_id' => $user_id,
             'type' => config('constants.action.type.bookmark'),
             'value' => 1,
             'status' => config('constants.action.status.active'),
-            'action_able_type' => 'App\\'.$type,
+            'action_able_type' => 'App\\' . $type,
             'action_able_id' => $model_id
-        ]));
+        ]);
     }
 
     /**

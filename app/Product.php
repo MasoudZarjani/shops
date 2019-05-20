@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
+
     use CreateUuid, SoftDeletes;
 
     /**
@@ -144,6 +145,14 @@ class Product extends Model
     public static function setBookmark($user)
     {
         $product = Product::getWithUuid();
-        return Action::create('Product', $product->id, $user->id);
+        if ($action = Action::checkBookmark($product->actions(), $user->id)) {
+            $action->delete();
+            return false;
+        } else {
+            $action = new Action();
+            $action->set($user->id);
+            $product->actions()->save($action);
+            return true;
+        }
     }
 }

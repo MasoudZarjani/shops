@@ -23,7 +23,8 @@ class MessageResource extends JsonResource
             $user_id = User::getWithRequest()->id;
 
         $product = Product::getWithUuid()->product_able;
-        $actions = $this->actions->map(function ($item) use ($product) {
+        $actions = $this->actions()->ofType(config('constants.action.type.question'))->get();
+        $actions = $actions->map(function ($item) use ($product) {
             $describe = Describe::ofId($item->describe_id)->first();
             $checkParent = self::checkParent($product, $describe->describe_able ?? 0, $item->describe_id);
             $count = 0;

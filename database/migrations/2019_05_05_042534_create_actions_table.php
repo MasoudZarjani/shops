@@ -16,9 +16,9 @@ class CreateActionsTable extends Migration
     {
         Schema::create('actions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->tinyInteger('value');
-            $table->bigInteger('user_id');
-            $table->bigInteger('describe_id');
+            $table->tinyInteger('value')->default(0);
+            $table->bigInteger('user_id')->default(0);
+            $table->bigInteger('describe_id')->default(0);
 
             Relations::constant($table, 'type', 'action.type.question');
             Relations::status($table, 'status', 'action.status.active');

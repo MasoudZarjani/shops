@@ -112,7 +112,6 @@ class Message extends Model
         $this->describe()->save($describe);
 
         $questions = json_decode(request('questions'));
-
         foreach ($questions as $question) {
             $action = new Action();
             $action->setQuestionWithJson($question, $user_id);
@@ -148,8 +147,8 @@ class Message extends Model
         if (!$actionMessage) {
             $action = new Action();
             $action = $action->set($user_id);
-            if ($this->actions()->save($action))
-                return $actionMessage;
+            $this->actions()->save($action);
+            return $this->actions()->ofUserId($user_id)->ofType(request('type'))->first();
         } else if ($actionMessage->value != request('value')) {
             $actionMessage = $actionMessage->set($user_id);
             if ($this->actions()->save($actionMessage))

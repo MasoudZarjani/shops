@@ -24,7 +24,7 @@ class CreateBasketsTable extends Migration
             Relations::pointer($table, 'warrantor');
 
             $table->nullableMorphs('basket_able');
-
+            
             $table->timestamps();
         });
     }
