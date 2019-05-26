@@ -5,31 +5,16 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\CreateUuid;
 
-class Basket extends Model
+class Cart extends Model
 {
     use CreateUuid;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['color_id', 'user_id', 'warrantor_id', 'basket_able_id', 'basket_able_type'];
-
-    /**
-     * Get all of the owning basket_able models.
-     */
-    public function basket_able()
-    {
-        return $this->morphTo();
-    }
-
-    /**
-     * Get the basket's user.
-     */
-    public function user()
-    {
-        return $this->hasOne(User::class, 'id', 'user_id');
-    }
+    protected $guarded = [];
 
     /**
      * Get the basket's color.
@@ -83,30 +68,6 @@ class Basket extends Model
         return $query->where('warrantor_id', $warrantor_id);
     }
 
-    /**
-     * Scope a query to return user_id from baskets.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
-     * @param  mixed $user_id
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeOfUser($query, $user_id)
-    {
-        return $query->where('user_id', $user_id);
-    }
-
-    /**
-     * Scope a query to return user_id from baskets.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
-     * @param  mixed $user_id
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeOfUserId($query, $user_id)
-    {
-        return $query->where('user_id', $user_id);
-    }
-
     public static function check($product_id, $user_id)
     {
         return Basket::ofColor(($color = Color::getWithUuid()) ? $color->id : 0)
@@ -121,7 +82,6 @@ class Basket extends Model
     {
         $this->count = request('count') ?? ($this->count ?? 1);
         $this->color_id = ($color = Color::getWithUuid()) ? $color->id : ($this->color_id ?? 0);
-        $this->user_id = $user_id ?? ($this->user_id ?? 0);
         $this->warrantor_id = ($warrantor = Warrantor::getWithUuid()) ? $warrantor->id : ($this->warrantor_id ?? 0);
         $this->save();
         return $this;

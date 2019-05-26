@@ -29,10 +29,11 @@ class DatabaseSeeder extends Seeder
             MessagesTableSeeder::class,
             DevicesTableSeeder::class,
             PricesTableSeeder::class,
-            CitiesTableSeeder::class,
             WarrantorsTableSeeder::class,
             ColorsTableSeeder::class,
-            BasketsTableSeeder::class,
+            CartsTableSeeder::class,
+            CartAblesTableSeeder::class,
+            CitiesTableSeeder::class,
         ]);
         $group = Group::find(2);
         $products = Product::all();

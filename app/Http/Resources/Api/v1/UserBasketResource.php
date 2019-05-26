@@ -4,7 +4,7 @@ namespace App\Http\Resources\Api\v1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class BasketResource extends JsonResource
+class UserBasketResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,11 +15,10 @@ class BasketResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'uuid' => $this->uuid,
-            'color' => new ColorResource($this->color),
-            'warrantor' => new WarrantorResource($this->warrantor),
-            'product' => new ProductResource($this->basket_able),
-            'count' => $this->count
+            'name' => $this->profile->name,
+            'family' => $this->profile->family,
+            'phone' => $this->phone,
+            'email' => $this->email,
         ];
     }
 }

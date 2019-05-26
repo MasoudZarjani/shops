@@ -30,7 +30,6 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('check_code', 'Api\v1\UserController@checkCode');
     });
 
-
     Route::group(['prefix' => 'category'], function () {
         Route::post('list', 'Api\v1\CategoryController@list');
         Route::post('detail', 'Api\v1\CategoryController@detail');
@@ -65,6 +64,7 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('add', 'Api\v1\BasketController@add');
             Route::post('list', 'Api\v1\BasketController@list');
             Route::post('delete', 'Api\v1\BasketController@delete');
+            Route::post('getPersonalData', 'Api\v1\BasketController@getPersonalData');
         });
     });
 });

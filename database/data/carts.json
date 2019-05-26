@@ -1,0 +1,86 @@
+[
+    {
+        "id": 1,
+        "count": 1,
+        "color_id": 1,
+        "warrantor_id": 2,
+        "product_id": 1
+    },
+    {
+        "id": 1,
+        "count": 5,
+        "color_id": 2,
+        "warrantor_id": 2,
+        "product_id": 2
+    },
+    {
+        "id": 1,
+        "count": 2,
+        "color_id": 3,
+        "warrantor_id": 2,
+        "product_id": 3
+    },
+    {
+        "id": 1,
+        "count": 1,
+        "color_id": 2,
+        "warrantor_id": 2,
+        "product_id": 4
+    },
+    {
+        "id": 1,
+        "count": 1,
+        "color_id": 1,
+        "warrantor_id": 5,
+        "product_id": 1
+    },
+    {
+        "id": 1,
+        "count": 1,
+        "color_id": 4,
+        "warrantor_id": 2,
+        "product_id": 4
+    },
+    {
+        "id": 1,
+        "count": 1,
+        "color_id": 4,
+        "warrantor_id": 4,
+        "product_id": 3
+    },
+    {
+        "id": 2,
+        "count": 1,
+        "color_id": 5,
+        "warrantor_id": 3,
+        "product_id": 2
+    },
+    {
+        "id": 3,
+        "count": 1,
+        "color_id": 2,
+        "warrantor_id": 1,
+        "product_id": 2
+    },
+    {
+        "id": 3,
+        "count": 1,
+        "color_id": 3,
+        "warrantor_id": 1,
+        "product_id": 5
+    },
+    {
+        "id": 4,
+        "count": 1,
+        "color_id": 5,
+        "warrantor_id": 1,
+        "product_id": 3
+    },
+    {
+        "id": 5,
+        "count": 1,
+        "color_id": 4,
+        "warrantor_id": 1,
+        "product_id": 10
+    }
+]

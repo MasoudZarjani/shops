@@ -18,7 +18,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['phone', 'mobile', 'name', 'family', 'verification_code'];
+    protected $guarded = [];
 
     /**
      * Get the user's city.
@@ -85,11 +85,11 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the user's baskets.
+     * Get the user's carts.
      */
-    public function baskets()
+    public function carts()
     {
-        return $this->hasMany(Basket::class);
+        return $this->hasMany(Cart::class);
     }
 
     /**

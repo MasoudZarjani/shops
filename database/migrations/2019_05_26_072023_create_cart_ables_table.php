@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use App\Helpers\Database\Relations;
 
-class CreateColorAblesTable extends Migration
+class CreateCartAblesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,9 @@ class CreateColorAblesTable extends Migration
      */
     public function up()
     {
-        Schema::create('color_ables', function (Blueprint $table) {
-            Relations::pointer($table, 'color');
-            $table->nullableMorphs('color_able');
+        Schema::create('cart_ables', function (Blueprint $table) {
+            Relations::pointer($table, 'cart');
+            $table->nullableMorphs('cart_able');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateColorAblesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('color_ables');
+        Schema::dropIfExists('cart_ables');
     }
 }

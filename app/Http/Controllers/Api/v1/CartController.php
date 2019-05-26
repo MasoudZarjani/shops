@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Basket;
-use App\Product;
 use App\User;
-use App\Http\Resources\Api\v1\BasketResource;
+use App\Cart;
 
-class BasketController extends Controller
+class CartController extends Controller
 {
     protected $user;
 
@@ -29,10 +28,10 @@ class BasketController extends Controller
         if (!$this->user)
             return response()->json(['status' => false], 203);
         if ($product = Product::getWithUuid()) {
-            if (!$basket = Basket::check($product->id, $this->user->id))
-                $basket = new Basket();
-            if ($basket->set($this->user->id))
-                if ($product->baskets()->save($basket))
+            if (!$cart = Cart::check($product->id, $this->user->id))
+                $cart = new Cart();
+            if ($cart->set($this->user->id))
+                if ($product->baskets()->save($cart))
                     return response()->json(['status' => true]);
             return response()->json(['status' => false]);
         }
@@ -43,8 +42,8 @@ class BasketController extends Controller
     {
         if (!$this->user)
             return response()->json(['status' => false], 203);
-        if ($basket = Basket::getWithUserId($this->user->id))
-            return response()->json(['data' => BasketResource::collection($basket), 'sum_price' => 0]);
+        if ($cart = Cart::getWithUserId($this->user->id))
+            return response()->json(['data' => CartResource::collection($cart), 'sum_price' => 0]);
         return response()->json(['status' => false], 204);
     }
 
@@ -52,11 +51,30 @@ class BasketController extends Controller
     {
         if (!$this->user)
             return response()->json(['status' => false], 203);
-        if ($basket = Basket::getWithUuid()) {
-            $basket->delete();
+        if ($cart = Cart::getWithUuid()) {
+            $cart->delete();
             return response()->json(['status' => true]);
         }
 
+        return response()->json(['status' => false], 204);
+    }
+
+    public function setCartList()
+    {
+        if (!$this->user)
+            return response()->json(['status' => false], 203);
+    }
+
+    public function getPersonalData()
+    {
+        if (!$this->user)
+            return response()->json(['status' => false], 203);
+        if ($cart = Cart::getWithUserId($this->user->id))
+            return response()->json([
+                'user' => new UserCartResource($this->user),
+                'data' => CartResource::collection($cart),
+                'meta' => Utility::meta($cart)
+            ]);
         return response()->json(['status' => false], 204);
     }
 }
