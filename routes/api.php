@@ -60,11 +60,11 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('like', 'Api\v1\MessageController@like');
         });
 
-        Route::group(['prefix' => 'basket'], function () {
-            Route::post('add', 'Api\v1\BasketController@add');
-            Route::post('list', 'Api\v1\BasketController@list');
-            Route::post('delete', 'Api\v1\BasketController@delete');
-            Route::post('getPersonalData', 'Api\v1\BasketController@getPersonalData');
-        });
+        //Route::group(['prefix' => 'basket'], function () {
+        //    Route::post('add', 'Api\v1\BasketController@add');
+        //    Route::post('list', 'Api\v1\BasketController@list');
+        //    Route::post('delete', 'Api\v1\BasketController@delete');
+        //    Route::post('getPersonalData', 'Api\v1\BasketController@getPersonalData');
+        //});
     });
 });

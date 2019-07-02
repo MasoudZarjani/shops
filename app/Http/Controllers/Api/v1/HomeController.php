@@ -61,6 +61,6 @@ class HomeController extends Controller
 
     public function handleErrors()
     {
-        return response()->json('Unauthorized', 401);;
+        return response()->json('Unauthorized', 401);
     }
 }

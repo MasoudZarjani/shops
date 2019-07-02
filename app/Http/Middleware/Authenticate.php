@@ -15,7 +15,7 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if ($request->is('api/*')) {
-            return route('api-errors', ['error' => 'Unauthorized']);
+            return route('api-errors');
         } else {
             return route('admin.login');
         }
