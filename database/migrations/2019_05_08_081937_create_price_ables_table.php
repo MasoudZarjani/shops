@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Helpers\Database\Relations;
+use App\Helpers\Database\Relation;
 
 class CreatePriceAblesTable extends Migration
 {
@@ -15,10 +15,8 @@ class CreatePriceAblesTable extends Migration
     public function up()
     {
         Schema::create('price_ables', function (Blueprint $table) {
-            Relations::pointer($table, 'price');
-
+            Relation::pointer($table, 'price');
             $table->nullableMorphs('price_able');
-
             $table->timestamps();
         });
     }

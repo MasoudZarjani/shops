@@ -19,7 +19,7 @@ class CartController extends Controller
     public function __construct()
     {
         if (request('uuid') && request('api_token')) {
-            $this->user = User::getWithRequest();
+            $this->user = User::checkAuthenticate();
         }
     }
 

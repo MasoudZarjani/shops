@@ -9,6 +9,8 @@ use App\User;
 use App\Helpers\Upload;
 use App\Http\Resources\Api\v1\UserResource;
 use App\PersonalAddress;
+use App\Http\Resources\Api\v1\InformationResource;
+use App\UserCommunication;
 
 class UserController extends Controller
 {
@@ -25,7 +27,7 @@ class UserController extends Controller
         if (request('mobile'))
             $this->mobile = Utility::checkMobile(request('mobile') ?? "");
         if (request('uuid') && request('api_token')) {
-            $this->user = User::getWithRequest();
+            $this->user = User::checkAuthenticate();
         }
     }
 
@@ -37,15 +39,16 @@ class UserController extends Controller
      */
     public function storeNumber()
     {
-        $ipCheck = Utility::checkIp(request()->ip());
-        if ($ipCheck == true) {
+        if (!$this->mobile)
+            return response()->json(['status' => false, 'message' => config('constants.server.message.mobileNumberWrong')], 405);
+        $ipCheck = Utility::checkIp();
+        if ($ipCheck) {
             $user = User::createOrGetWithMobile($this->mobile);
-            if (!$user) {
+            if (!$user)
                 return response()->json(['status' => false, 'message' => config('constants.server.message.blockUser')], 401);
-            }
-            if ($user->sendVerificationCode() == true)
-                return response()->json(['status' => true]);
-            return response()->json(['status' => false], 500);
+            if ($user->sendVerificationCode())
+                return response()->json(['status' => true], 201);
+            return response()->json(['status' => false], 502);
         }
         return response()->json(['status' => false, 'message' => config('constants.server.message.limitedIp')], 413);
     }
@@ -58,11 +61,11 @@ class UserController extends Controller
      */
     public function checkCode()
     {
-        $user = User::createOrGetDeviceWithMobile($this->mobile);
-        if ($user) {
+        if (!$this->mobile)
+            return response()->json(['status' => false, 'message' => config('constants.server.message.mobileNumberWrong')], 405);
+        if ($user = User::createOrGetDeviceWithMobile($this->mobile))
             return $user;
-        }
-        return response()->json(["status" => false], 203);
+        return response()->json(['status' => false], 401);
     }
 
     /**
@@ -114,10 +117,9 @@ class UserController extends Controller
      */
     public function show()
     {
-        if (!$this->user) {
-            return response()->json(["status" => false], 203);
-        }
-        return new UserResource($this->user);
+        if (!$this->user)
+            return response()->json(['status' => false], 401);
+        return new InformationResource($this->user);
     }
 
     /**
@@ -131,11 +133,20 @@ class UserController extends Controller
      */
     public function update()
     {
-        if (!$this->user) {
-            return response()->json(["status" => false], 203);
-        }
-        $this->user->edit();
-        return response()->json(['status' => true]);
+        if (!$this->user)
+            return response()->json(['status' => false], 401);
+        if (request('reagent_code'))
+            if (!$this->user->reagentAction())
+                return response()->json([
+                    'status' => false,
+                    'message' => config('constants.server.message.reagentCodeFailed')
+                ], 203);
+        if (!$profile = $this->user->profile)
+            $profile = new UserProfile();
+        $profile->set();
+        if ($this->user->profile()->save($profile))
+            return response()->json(['status' => true]);
+        return response()->json(['status' => false]);
     }
 
     /**
@@ -152,8 +163,12 @@ class UserController extends Controller
         if (!$this->user) {
             return response()->json(["status" => false], 203);
         }
-        $this->user->edit();
-        return response()->json(['status' => true]);
+        if (!$communication = $this->user->communication)
+            $communication = new UserCommunication();
+        $communication->set();
+        if ($this->user->communication()->save($communication))
+            return response()->json(['status' => true]);
+        return response()->json(['status' => false]);
     }
 
     public function setAddress()
@@ -165,5 +180,5 @@ class UserController extends Controller
         $address->set();
         $this->user->addresses()->save($address);
         return response()->json(['status' => true]);
-    }  
+    }
 }

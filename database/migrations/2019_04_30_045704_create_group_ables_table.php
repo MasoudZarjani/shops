@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Helpers\Database\Relations;
+use App\Helpers\Database\Relation;
 
 class CreateGroupAblesTable extends Migration
 {
@@ -15,7 +15,7 @@ class CreateGroupAblesTable extends Migration
     public function up()
     {
         Schema::create('group_ables', function (Blueprint $table) {
-            Relations::pointer($table, 'group');
+            Relation::pointer($table, 'group');
 
             $table->nullableMorphs('group_able');
 

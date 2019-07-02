@@ -17,6 +17,17 @@ return [
             'bot' => 2,
         ],
     ],
+    'device' => [
+        'status' => [
+            'inactive' => 0,
+            'active' => 1,
+            'block' => 2,
+        ],
+        'os' => [
+            'android' => 0,
+            'ios' => 1,
+        ]
+    ],
     'category' => [
         'type' => [
             'main' => 0,
@@ -103,17 +114,6 @@ return [
             'nothing' => 0
         ]
     ],
-    'device' => [
-        'status' => [
-            'inactive' => 0,
-            'active' => 1,
-            'block' => 2,
-        ],
-        'os' => [
-            'android' => 0,
-            'ios' => 1,
-        ]
-    ],
     'price' => [
         'type' => [
             'noWarranty' => 0,
@@ -150,13 +150,17 @@ return [
         ]
     ],
     'server' => [
+        'addWalletForReagentCode' => 1000,
+        'limitedDevice' => 2,
         'message' => [
-            'limitedIp' => 'به مدت 5 دقیقه امکان دریافت پیامک ندارید.',
             'blockUser' => 'کاربری شما مسدود شده است.',
+            'limitedIp' => 'تعداد درخواست های شما بیش از حد مجاز می باشد.',
+            'blockDevice' => 'دستگاه شما مسدود شده است.',
             'limitedDevice' => 'تعداد دستگاه های شما بیش از حد مجاز است.',
-            'verificationCode' => 'کد تایید معتبر نمی باشد.'
-        ],
-        'limitedDevice' => 2
+            'verificationCode' => 'کد تایید معتبر نمی باشد.',
+            'mobileNumberWrong' => 'شماره موبایل معتبر نمی باشد.',
+            'reagentCodeFailed' => 'کد معرف اشتباه می باشد.'
+        ]
     ],
     'error' => [
         'http' => [

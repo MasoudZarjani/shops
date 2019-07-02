@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Helpers\Database;
+namespace App\Database\Helpers;
 
-class Relations
+class Relation
 {
     public static function morph($table, $name)
     {
@@ -12,7 +12,12 @@ class Relations
 
     public static function pointer($table, $name)
     {
-        $table->integer($name . '_id')->unsigned()->default(0);
+        $table->bigInteger($name . '_id')->unsigned()->nullable();
+    }
+
+    public static function Foreign($table, $name, $referenceTable)
+    {
+        $table->foreign($name . '_id')->references('id')->on($referenceTable)->onDelete('cascade')->onUpdate('cascade');
     }
 
     public static function constant($table, $name, $default)

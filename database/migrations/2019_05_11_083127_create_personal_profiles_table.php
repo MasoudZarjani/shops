@@ -17,9 +17,7 @@ class CreatePersonalProfilesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('family');
-
             $table->nullableMorphs('profile_able');
-
             $table->timestamps();
         });
     }

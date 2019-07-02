@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 use Keygen\Keygen;
 
-class SendSMS
+class Mobile
 {
     /**
      * Create 5 numeric random code for send sms

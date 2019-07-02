@@ -78,7 +78,7 @@ class Cart extends Model
             ->first();
     }
 
-    public function set($user_id)
+    public function set()
     {
         $this->count = request('count') ?? ($this->count ?? 1);
         $this->color_id = ($color = Color::getWithUuid()) ? $color->id : ($this->color_id ?? 0);

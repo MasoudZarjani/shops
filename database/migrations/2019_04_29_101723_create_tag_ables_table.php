@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Helpers\Database\Relations;
+use App\Helpers\Database\Relation;
 
 class CreateTagAblesTable extends Migration
 {
@@ -15,7 +15,7 @@ class CreateTagAblesTable extends Migration
     public function up()
     {
         Schema::create('tag_ables', function (Blueprint $table) {
-            Relations::pointer($table, 'tag');
+            Relation::pointer($table, 'tag');
 
             $table->nullableMorphs('tag_able');
 

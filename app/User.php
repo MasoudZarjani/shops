@@ -2,94 +2,63 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Traits\CreateUuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-use App\Helpers\SendSMS;
+use Webpatser\Uuid\Uuid;
+use App\Helpers\Utility;
+use App\Helpers\Mobile;
 
 class User extends Authenticatable
 {
-    use CreateUuid, SoftDeletes, Notifiable;
+    use CreateUuid, SoftDeletes;
 
     /**
-     * The attributes that are mass assignable.
+     * The attributes that aren't mass assignable.
      *
      * @var array
      */
     protected $guarded = [];
 
     /**
-     * Get the user's city.
-     */
-    public function city()
-    {
-        return $this->hasOne('App\City', 'id');
-    }
-
-    /**
-     * Get the user's province.
-     */
-    public function province()
-    {
-        return $this->hasOne('App\Province', 'id');
-    }
-
-    /**
-     * Get the user's detail.
+     * Get the device that owns the user.
      */
     public function devices()
     {
-        return $this->morphMany(Device::class, 'device_able');
+        return $this->hasMany(UserDevice::class);
     }
 
     /**
-     * Get the user's file.
+     * Get the communication that owns the user.
      */
-    public function file()
+    public function communication()
     {
-        return $this->morphOne(File::class, 'file_able');
+        return $this->hasOne(UserCommunication::class);
     }
 
     /**
-     * Get the user's addresses.
-     */
-    public function addresses()
-    {
-        return $this->morphMany(PersonalAddress::class, 'address_able');
-    }
-
-    /**
-     * Get the user's contact.
-     */
-    public function contact()
-    {
-        return $this->morphOne(PersonalContact::class, 'contact_able');
-    }
-
-    /**
-     * Get the user's profile.
+     * Get the profile that owns the user.
      */
     public function profile()
     {
-        return $this->morphOne(PersonalProfile::class, 'profile_able');
+        return $this->hasOne(UserProfile::class);
     }
 
     /**
-     * Get the user's messages.
+     * Get the account that owns the user.
      */
-    public function messages()
+    public function account()
     {
-        return $this->hasMany(Message::class);
+        return $this->hasOne(UserAccount::class);
     }
 
     /**
-     * Get the user's carts.
+     * Get the socials that owns the user.
      */
-    public function carts()
+    public function social()
     {
-        return $this->hasMany(Cart::class);
+        return $this->hasOne(UserSocial::class);
     }
 
     /**
@@ -118,32 +87,35 @@ class User extends Authenticatable
     }
 
     /**
+     * Scope a query to return reagent_code from users.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  mixed $reagent_code
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+
+    public function scopeOfReagentCode($query, $reagent_code)
+    {
+        return $query->where('reagent_code', $reagent_code);
+    }
+
+    /**
      * Scope a query to return active from users.
      *
      * @param  \Illuminate\Database\Eloquent\Builder $query
      * @param  mixed $active
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeOfActive($query)
+    public function scopeActive($query)
     {
         return $query->where('status', config('constants.user.status.active'));
     }
 
     /**
-     * Create random code and send verification code 
-     */
-    public function sendVerificationCode()
-    {
-        $this->verification_code = SendSMS::RandomCode();
-        $this->save();
-        return SendSMS::sendSMS($this->mobile, $this->verification_code);
-    }
-
-    /**
      * Get user info or create it
-     * 
+     *
      * @param string mobile
-     * @return json user
+     * @return array user
      */
     public static function createOrGetWithMobile($mobile)
     {
@@ -154,118 +126,87 @@ class User extends Authenticatable
     }
 
     /**
-     * Check verification send code to user with save verification code in user model
+     * Send verification code via sms panel
      * 
-     * @param string verificationCode
-     * @return boolean status
+     * @return boolean
      */
-    public function checkMatchVerificationCode($verificationCode)
+    public function sendVerificationCode()
     {
-        return ($this->verification_code == $verificationCode) ? true : false;
+        $this->verification_code = Mobile::RandomCode();
+        $this->save();
+        return Mobile::sendSMS($this->mobile, $this->verification_code);
     }
 
     /**
-     * Get user info or create it with devices information
+     * Create or find mobile number in user model
      * 
      * @param string mobile
-     * @return json user information
      */
     public static function createOrGetDeviceWithMobile($mobile)
     {
         $user = User::firstOrCreate(['mobile' => $mobile]);
-        $check = $user->checkMatchVerificationCode(request('active_code'));
-        if ($check) {
-            $devices = $user->devices;
-            $count = 0;
-            if (count($devices) > 0) {
-                foreach ($devices as $device) {
-                    if ($device->device_id != request('device_id')) {
-                        $count++;
-                    } else {
-                        $device->set();
-                        return $user->checkFirstLogin();
-                    }
-                }
-                if ($count >= config('constants.server.limitedDevice')) {
-                    return response()->json([
-                        'status' => false,
-                        'message' => config('constants.server.message.limitedDevice')
-                    ], 413);
-                }
-            }
-            $device = new Device();
-            $device->set();
-            $user->devices()->save($device);
-            $user->set();
-            return $user->checkFirstLogin();
-        }
+        $check = $user->checkMatchVerificationCode();
+        if ($check)
+            return UserDevice::checkLimited($user);
         return response()->json(['status' => false, 'message' => config('constants.server.message.verificationCode')], 406);
     }
 
-    /** 
-     * Check login status, first login or  active user
+    /**
+     * Check verification code from client with verification code in database
      * 
-     * @return json user information
+     * @param string verification_code
+     * @return boolean
      */
-    public function checkFirstLogin()
+    public function checkMatchVerificationCode()
     {
-        $status = true;
-        if ($this->profile) {
-            if ($this->profile->name == null && $this->profile->family == null) {
-                $status = false;
-            }
-        } else {
-            $status = false;
-        }
-        return response()->json([
-            'status' => $status,
-            'api_token' => $this->api_token,
-            'uuid' => $this->uuid,
-        ]);
+        return ($this->verification_code == request('verification_code')) ? true : false;
     }
 
     /**
-     * Set user information
-     * @param string uuid
-     * @param string api_token
-     * @param string reagent_code
+     * Set user field in the model
+     * 
+     * @return array user
      */
     public function set()
     {
+        $this->uuid = $this->uuid ?? (Uuid::generate(4)->string ?? null);
         $this->api_token = $this->api_token ?? Str::random(150);
-        $this->save();
+        $this->reagent_code = Utility::ReagentRandomCode() ?? 0;
+        $this->role = config('constants.user.role.user');
+        $this->status = config('constants.user.status.active');
+        return $this->save();
     }
 
-    /**
-     * Edit user information
-     * @param string name
-     * @param string family
-     * @param integer city_id
-     * @param integer status
-     */
-    public function edit()
+    public static function checkAuthenticate()
     {
-        $this->setProfile();
-        $this->phone = request('phone') ?? ($this->phone ?? null);
-        $this->email = request('email') ?? ($this->email ?? null);
-        $this->status = config('constants.user.status.active') ?? 0;
-        $this->save();
+        return User::ofUuid(request('uuid'))->ofApiToken(request('api_token'))->first();
     }
 
-    /**
-     * Set contact from this user in the model
-     * 
-     */
-    public function setProfile()
+    public function checkDevice()
     {
-        if (!$this->profile) {
-            $profile = new PersonalProfile();
-        } else {
-            $profile = $this->profile;
-        }
-        $profile->set();
-        $this->profile()->save($profile);
-        return $profile;
+        if ($device = $this->devices()->ofDeviceId(request('device_id'))->first())
+            if ($device->status == config('constants.userDevice.status.active'))
+                return true;
+        return false;
+    }
+
+    public function reagentAction()
+    {
+        if (!$userRevealed = User::ofReagentCode(request('reagent_code'))->active()->first())
+            return false;
+        if (!$userAddWallet = $userRevealed->account)
+            $userAddWallet = new UserAccount();
+        if ($addWallet = Describe::ofType(config('constants.describe.type.setting'))
+            ->ofTitle('addWalletForReagentCode')
+            ->first()
+        )
+            $addWallet = $addWallet->description;
+        else
+            $addWallet = config('constants.server.addWalletForReagentCode');
+        $userAddWallet->addWallet($addWallet);
+        if ($userRevealed->account()->save($userAddWallet))
+            return true;
+        return false;
     }
 
     /**
@@ -298,10 +239,5 @@ class User extends Authenticatable
             return true;
         }
         return false;
-    }
-
-    public static function getWithRequest()
-    {
-        return User::ofUuid(request('uuid') ?? "")->ofApiToken(request('api_token') ?? "")->first();
     }
 }

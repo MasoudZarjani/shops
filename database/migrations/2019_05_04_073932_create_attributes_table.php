@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Helpers\Database\Relations;
+use App\Helpers\Database\Relation;
 
 class CreateAttributesTable extends Migration
 {
@@ -17,7 +17,7 @@ class CreateAttributesTable extends Migration
         Schema::create('attributes', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            Relations::constant($table, 'input_field_type', 'attribute.inputFieldType.text');
+            Relation::constant($table, 'input_field_type', 'attribute.inputFieldType.text');
             
             $table->timestamps();
         });

@@ -19,12 +19,9 @@ class CreateActionsTable extends Migration
             $table->tinyInteger('value')->default(0);
             $table->bigInteger('user_id')->default(0);
             $table->bigInteger('describe_id')->default(0);
-
-            Relations::constant($table, 'type', 'action.type.question');
-            Relations::status($table, 'status', 'action.status.active');
-
+            Relation::constant($table, 'type', 'action.type.question');
+            Relation::status($table, 'status', 'action.status.active');
             $table->nullableMorphs('action_able');
-            
             $table->timestamps();
         });
     }

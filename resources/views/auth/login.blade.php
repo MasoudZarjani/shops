@@ -1,73 +1,67 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Vesam24</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+</head>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+<body>
+    <div class="parent">
+        <div class="login-wrap">
+            <div class="login-html">
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
+                <div class="logo-name-container">
+                    <img src="{{ asset('images/vesam-logo.jpg') }}" />
+                    <label class="tab">وسام 24</label>
                 </div>
+                @if ($errors->has('email'))
+                <div class="login-error-text text-center">{{ $errors->first('email') }}</div>
+                @endif
+                <form class="login-form" method="POST" action="{{ route('login') }}">
+                    {{ csrf_field() }}
+                    <div class="sign-in-htm">
+                        <div class="group">
+                            <label for="email" class="label">پست الکترونیکی</label>
+
+
+
+                            <input id="email" type="email" name="email" value="" required="required"
+                                autofocus="autofocus" class="input">
+                        </div>
+                        <div class="group">
+
+                            @if ($errors->has('password'))
+                            <span>
+                                <strong>{{ $errors->first('password') }}</strong>
+                            </span>
+                            @endif
+
+                            <label for="password" class="label">رمز عبور</label>
+                            <input id="password" type="password" name="password" required="required" class="input"
+                                data-type="password">
+                        </div>
+                        <div class="group">
+                            <input id="check" type="checkbox" name="remember" class="check"
+                                {{ old('remember') ? 'checked' : '' }}>
+                            <label for="check" class="remember-me-text"><span class="icon"></span>
+                                مرا به خاطر بسپار
+                            </label>
+                        </div>
+                        <div class="group">
+                            <input type="submit" class="button" value="ورود">
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</div>
-@endsection
+</body>
+
+</html>

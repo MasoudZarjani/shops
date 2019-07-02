@@ -18,13 +18,9 @@ class CreatePersonalAddressesTable extends Migration
             $table->bigIncrements('id');
             $table->text('address')->nullable();
             $table->string('postal_code', 15)->nullable();
-
-            Relations::pointer($table, 'city');
-
-            Relations::constant($table, 'type', 'address.type.home');            
-
+            Relation::pointer($table, 'city');
+            Relation::constant($table, 'type', 'address.type.home');            
             $table->nullableMorphs('address_able');
-
             $table->timestamps();
         });
     }

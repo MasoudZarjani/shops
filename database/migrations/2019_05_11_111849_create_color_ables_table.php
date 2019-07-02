@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Helpers\Database\Relations;
+use App\Helpers\Database\Relation;
 
 class CreateColorAblesTable extends Migration
 {
@@ -15,7 +15,7 @@ class CreateColorAblesTable extends Migration
     public function up()
     {
         Schema::create('color_ables', function (Blueprint $table) {
-            Relations::pointer($table, 'color');
+            Relation::pointer($table, 'color');
             $table->nullableMorphs('color_able');
             $table->timestamps();
         });

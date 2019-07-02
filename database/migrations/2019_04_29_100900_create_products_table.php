@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Helpers\Database\Relations;
+use App\Helpers\Database\Relation;
 
 class CreateProductsTable extends Migration
 {
@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique();
-            Relations::constant($table, 'status', 'product.status.active');
+            Relation::constant($table, 'status', 'product.status.active');
 
             $table->nullableMorphs('product_able');
 

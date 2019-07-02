@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Helpers\Database\Relations;
+use App\Helpers\Database\Relation;
 
 class CreateCategoriesTable extends Migration
 {
@@ -17,15 +17,10 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique()->nullable();
-
-            Relations::pointer($table, 'parent');
-
             $table->integer('sort')->default(0);
-
-            Relations::constant($table, 'type', 'category.type.main');
-
-            Relations::status($table, 'status', 'category.status.active');
-
+            Relation::pointer($table, 'parent');
+            Relation::constant($table, 'type', 'category.type.main');
+            Relation::status($table, 'status', 'category.status.active');
             $table->softDeletes();
             $table->timestamps();
         });

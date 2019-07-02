@@ -45,23 +45,23 @@ class Utility
      *
      * @return integer counter ip counter of use
      */
-    public static function checkIp($ip)
+    public static function checkIp()
     {
         $date = new \DateTime();
         $date->modify('-5 minutes');
         $formatted_date = $date->format('Y-m-d H:i:s');
-        $checkIp = Session::where([['ip_address', $ip], ['created_at', '>=', $formatted_date]])->first();
+        $checkIp = Session::where([['ip', request()->ip()], ['created_at', '>=', $formatted_date]])->first();
         if (is_null($checkIp)) {
-            Session::where('ip_address', $ip)->delete();
+            Session::where('ip', request()->ip())->delete();
             $session = new Session();
-            $session->ip_address = $ip;
+            $session->ip = request()->ip();
             $session->counter = 0;
             $session->save();
             $counter = 1;
         } else
             $counter = $checkIp->counter;
         if ($counter < config('constants.session.register.count')) {
-            self::incrementIpCounter($ip);
+            self::incrementIpCounter();
             return true;
         }
         return false;
@@ -72,9 +72,9 @@ class Utility
      *
      * @return string type
      */
-    public static function incrementIpCounter($ip)
+    public static function incrementIpCounter()
     {
-        Session::where([['ip_address', $ip]])->increment('counter', 1);
+        Session::where([['ip', request()->ip()]])->increment('counter', 1);
     }
 
 
@@ -128,7 +128,7 @@ class Utility
             ['path' => \Illuminate\Pagination\Paginator::resolveCurrentPath()]
         );
     }
-    
+
     public static function rounded($items)
     {
         $avg = 0;

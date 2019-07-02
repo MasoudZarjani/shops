@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Helpers\Database\Relations;
+use App\Helpers\Database\Relation;
 
 class CreateDevicesTable extends Migration
 {
@@ -21,13 +21,9 @@ class CreateDevicesTable extends Migration
             $table->string('os')->default(0);
             $table->string('version')->nullable();
             $table->string('push_token')->nullable();
-
-            Relations::Constant($table, 'status', 'device.status.inactive');
-
+            Relation::Constant($table, 'status', 'device.status.inactive');
             $table->nullableMorphs('device_able');
-
             $table->softDeletes();
-
             $table->timestamps();
         });
     }
