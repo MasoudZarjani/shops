@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Database\Helpers\Relation;
+use App\Helpers\Relation;
 
 class CreateUserCommunicationsTable extends Migration
 {

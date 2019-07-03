@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserSocial extends Model
 {
+    use SoftDeletes;
+    
     /**
      * Get the socials for the user.
      */

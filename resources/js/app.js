@@ -14,7 +14,6 @@ Vue.config.productionTip = false;
 
 Vue.use(VueI18n);
 Vue.use(VueRouter);
-moment.locale('fa');
 
 const app = new Vue({
     el: "#app",

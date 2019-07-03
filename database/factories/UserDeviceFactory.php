@@ -4,9 +4,9 @@
 
 use Faker\Generator as Faker;
 use App\User;
-use App\Device;
+use App\UserDevice;
 
-$factory->define(Device::class, function (Faker $faker) {
+$factory->define(UserDevice::class, function (Faker $faker) {
 
     return [
         'device_id' => $faker->unique()->randomDigit,

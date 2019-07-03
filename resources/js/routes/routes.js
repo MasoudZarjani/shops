@@ -1,6 +1,7 @@
 import Index from '../views/panel/Index'
 import User from '../views/panel/User'
 import NotFound from '../views/panel/NotFound'
+import Setting from '../views/panel/Setting'
 
 export default [{
         path: '*',
@@ -16,5 +17,10 @@ export default [{
         path: '/user',
         name: 'کاربران',
         component: User
+    },
+    {
+        path: '/setting',
+        name: 'تنظیمات',
+        component: Setting
     }
 ]

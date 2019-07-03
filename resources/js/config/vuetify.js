@@ -1,3 +1,4 @@
+import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
 import Vue from 'vue'
 import Vuetify from "vuetify";
 import fa from "vuetify/es5/locale/fa";
@@ -13,6 +14,6 @@ Vue.use(Vuetify, {
         },
         current: "fa"
     },
-    iconfont: "md",
+    iconfont: "mdi",
     rtl: true
 });

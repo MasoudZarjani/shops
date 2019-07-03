@@ -65,6 +65,10 @@ __webpack_require__.r(__webpack_exports__);
         title: "کاربران",
         icon: "mdi-account-group",
         to: "/user"
+      }, {
+        title: "تنظیمات",
+        icon: "mdi-account-group",
+        to: "/setting"
       }],
       logo: "/images/vesam-logo.jpg"
     };
@@ -206,7 +210,7 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("v-divider"),
-          _vm._v("\n    masoud"),
+          _vm._v(" "),
           _vm._l(_vm.links, function(link, i) {
             return _c(
               "v-list-tile",

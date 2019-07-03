@@ -27,13 +27,16 @@ class DatabaseSeeder extends Seeder
             ProvincesTableSeeder::class,
             ActionsTableSeeder::class,
             MessagesTableSeeder::class,
-            DevicesTableSeeder::class,
             PricesTableSeeder::class,
             WarrantorsTableSeeder::class,
             ColorsTableSeeder::class,
             CartsTableSeeder::class,
             CartAblesTableSeeder::class,
-            CitiesTableSeeder::class,
+            UsersTableSeeder::class,
+            UserDevicesTableSeeder::class,
+            UserProfilesTableSeeder::class,
+            UserCommunicationsTableSeeder::class,
+            CitiesTableSeeder::class
         ]);
         $group = Group::find(2);
         $products = Product::all();

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Database\Helpers;
+namespace App\Helpers;
 
 class Relation
 {

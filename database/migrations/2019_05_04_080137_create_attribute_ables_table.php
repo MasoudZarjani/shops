@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Helpers\Database\Relation;
+use App\Helpers\Relation;
 
 class CreateAttributeAblesTable extends Migration
 {

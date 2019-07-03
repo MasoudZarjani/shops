@@ -3,9 +3,9 @@
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
 use Faker\Generator as Faker;
-use App\PersonalAddress;
+use App\UserCommunication;
 
-$factory->define(PersonalAddress::class, function (Faker $faker) {
+$factory->define(UserCommunication::class, function (Faker $faker) {
     return [
         'address' => $faker->address,
         'postal_code' => $faker->postcode,

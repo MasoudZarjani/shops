@@ -26,7 +26,7 @@
         </v-list>
       </v-toolbar>
       <v-divider></v-divider>
-      masoud<v-list-tile
+      <v-list-tile
         v-for="(link, i) in links"
         :key="i"
         :to="link.to"
@@ -49,6 +49,7 @@ export default {
     links: [
       { title: "صفحه اصلی", icon: "mdi-view-dashboard", to: "/" },
       { title: "کاربران", icon: "mdi-account-group", to: "/user" },
+      { title: "تنظیمات", icon: "mdi-account-group", to: "/setting" },
     ],
     logo: "/images/vesam-logo.jpg"
   })

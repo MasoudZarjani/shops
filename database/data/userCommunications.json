@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "address": "sajad st.",
+        "phone": "423566666",
+        "fax": "422222222",
+        "postal_code": 51,
+        "city_id": 153,
+        "type": 0,
+        "user_id": 1
+    }
+]
