@@ -10,17 +10,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', function () {
             return view('panel');
         });
-
-        Route::get('user', function () {
-            return "UserTest";
+        Route::group(['prefix' => 'user'], function () {
+            Route::post('index', 'Admin\UserController@index');
+            Route::post('order', 'Admin\UserController@order');
+            Route::post('filter', 'Admin\UserController@filter');
+            Route::delete('delete/{id}', 'Admin\UserController@delete');
+            Route::put('update', 'Admin\UserController@update');
+            Route::post('create', 'Admin\UserController@create');
+            Route::get('changeState/{id}', 'Admin\UserController@changeState');
         });
-
-        Route::post('setting', function () {
-            return request("message");
-        });
-        //Route::group(['prefix' => 'users'], function () {
-            //Route::get('get', 'Admin\UserController@get');
-        //});
     });
 });
 

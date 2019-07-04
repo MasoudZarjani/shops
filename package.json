@@ -28,6 +28,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "jalali-moment": "^3.3.3",
         "vuetify": "^1.5.16"
     }
 }

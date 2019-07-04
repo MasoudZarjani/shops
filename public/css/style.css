@@ -226,3 +226,7 @@ blockquote {
 .application {
 	font-family: iranyekan !important
 }
+
+.v-input__slot {
+	margin-bottom: 0px !important
+  }

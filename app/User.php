@@ -22,6 +22,14 @@ class User extends Authenticatable
     protected $guarded = [];
 
     /**
+     * Get the user's files.
+     */
+    public function files()
+    {
+        return $this->morphMany(File::class, 'file_able');
+    }
+
+    /**
      * Get the device that owns the user.
      */
     public function devices()
@@ -239,5 +247,30 @@ class User extends Authenticatable
             return true;
         }
         return false;
+    }
+
+    public function avatar()
+    {
+        return $this->files()->ofPosition(config('constants.file.position.avatar'))->first();
+    }
+
+    public static function get()
+    {
+        $per_page = empty(request('per_page')) ? 10 : (int) request('per_page');
+        return User::latest()->paginate($per_page);
+    }
+
+    public static function getByFilter()
+    {
+        $per_page = empty(request('per_page')) ? 10 : (int) request('per_page');
+        return User::search(request('query'))->paginate($per_page);
+    }
+
+    public static function getByOrder()
+    {
+        $per_page = empty(request('per_page')) ? 10 : (int) request('per_page');
+        $direction = request('direction')  ?? 'asc';
+        $sortBy = request('sortBy') ?? 'id';
+        return User::orderBy($sortBy, $direction)->paginate($per_page);
     }
 }

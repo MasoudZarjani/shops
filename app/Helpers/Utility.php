@@ -38,6 +38,18 @@ class Utility
         return $mobileArray[0] . $mobileArray[1];
     }
 
+    public static function convertMobileFormatToDefault($mobile)
+    {
+        if ($mobile) {
+            if (substr($mobile, 0, 2) == '98') {
+                $mobile = substr_replace($mobile, '0', 0, 2);
+                return $mobile;
+            }
+            return $mobile;
+        }
+        return false;
+    }
+
     /**
      * Check IP and block for 5 min if request is more than 5 times
      *

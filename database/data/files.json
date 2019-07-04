@@ -470,5 +470,13 @@
         "position": 1,
         "file_able_type": null,
         "file_able_id": null
+    },
+    {
+        "path": "http://lorempixel.com/output/people-q-c-250-250-9.jpg",
+        "size": "5000",
+        "type": 0,
+        "position": 5,
+        "file_able_type": "App\\User",
+        "file_able_id": 1
     }
 ]
