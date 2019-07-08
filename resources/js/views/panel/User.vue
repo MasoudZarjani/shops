@@ -199,7 +199,7 @@ export default {
 
     deleteItem(item) {
       const index = this.results.indexOf(item);
-      if (confirm("از حذف کد هدیه مطمئن هستید؟")) {
+      if (confirm("از حذف کاربر مطمئن هستید؟")) {
         Api.delete(item.id)
           .then(() => {
             this.results.splice(index, 1);
