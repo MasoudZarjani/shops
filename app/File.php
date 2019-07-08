@@ -9,7 +9,7 @@ use App\Http\Resources\Api\v1\FileResource;
 class File extends Model
 {
     use  SoftDeletes;
-
+    protected $guarded = [];
     /**
      * Get all of the owning file_able models.
      */

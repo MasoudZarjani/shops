@@ -17,7 +17,7 @@ class Authenticate extends Middleware
         if ($request->is('api/*')) {
             return route('api-errors');
         } else {
-            return route('admin.login');
+            return route('login');
         }
     }
 }

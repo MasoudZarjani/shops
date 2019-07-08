@@ -81,6 +81,11 @@ class User extends Authenticatable
         return $query->where('uuid', $uuid);
     }
 
+    public function scopeOfId($query, $id)
+    {
+        return $query->where('id', $id);
+    }
+
     /**
      * Scope a query to return api_token from users.
      *
