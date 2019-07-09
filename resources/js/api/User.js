@@ -14,7 +14,7 @@ export default {
         return axios.delete('user/delete/' + id)
     },
     update(data) {
-        return axios.post('user/update', data)
+        return axios.put('user/update', data)
     },
     create(data) {
         return axios.post('user/create', data)

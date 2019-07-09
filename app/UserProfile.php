@@ -22,8 +22,8 @@ class UserProfile extends Model
      */
     public function set()
     {
-        $this->first_name = request('name') ?? ($this->first_name ?? "");
-        $this->last_name = request('family') ?? ($this->last_name ?? "");
+        $this->first_name = request('first_name') ?? ($this->first_name ?? "");
+        $this->last_name = request('last_name') ?? ($this->last_name ?? "");
         $this->father_name = request('father_name') ?? ($this->father_name ?? "");
         $this->national_code = request('national_code') ?? ($this->national_code ?? "");
         return $this->save();

@@ -2247,8 +2247,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2393,7 +2391,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var index = this.results.indexOf(item);
 
-      if (confirm("از حذف کاربر مطمئن هستید؟")) {
+      if (confirm("از حذف کد هدیه مطمئن هستید؟")) {
         _api_User_js__WEBPACK_IMPORTED_MODULE_0__["default"]["delete"](item.id).then(function () {
           _this2.results.splice(index, 1);
 
@@ -2422,6 +2420,7 @@ __webpack_require__.r(__webpack_exports__);
       this.editedItem.avatar = this.file;
 
       if (this.editedIndex > -1) {
+        console.log(this.editedItem);
         _api_User_js__WEBPACK_IMPORTED_MODULE_0__["default"].update(this.editedItem).then(function () {
           _this4.snackColor = "success";
           _this4.snackText = _this4.$t("message.update.success");
@@ -40660,24 +40659,6 @@ var render = function() {
                               _vm._v(" "),
                               _c(
                                 "v-flex",
-                                { attrs: { xs12: "", sm6: "", md6: "" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: { label: "تلفن همراه*" },
-                                    model: {
-                                      value: _vm.editedItem.mobile,
-                                      callback: function($$v) {
-                                        _vm.$set(_vm.editedItem, "mobile", $$v)
-                                      },
-                                      expression: "editedItem.mobile"
-                                    }
-                                  })
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-flex",
                                 { attrs: { xs12: "", sm4: "", md4: "" } },
                                 [
                                   _c("v-switch", {
@@ -40692,28 +40673,6 @@ var render = function() {
                                   })
                                 ],
                                 1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "", sm8: "", md8: "" } },
-                                [
-                                  _c("input", {
-                                    attrs: { type: "file" },
-                                    on: { change: _vm.onFileChange }
-                                  })
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "", sm4: "", md4: "" } },
-                                [
-                                  _c("img", {
-                                    staticClass: "img-responsive",
-                                    attrs: { src: _vm.file }
-                                  })
-                                ]
                               )
                             ],
                             1
@@ -81817,7 +81776,7 @@ __webpack_require__.r(__webpack_exports__);
     return _config_axios_js__WEBPACK_IMPORTED_MODULE_0__["default"]["delete"]('user/delete/' + id);
   },
   update: function update(data) {
-    return _config_axios_js__WEBPACK_IMPORTED_MODULE_0__["default"].post('user/update', data);
+    return _config_axios_js__WEBPACK_IMPORTED_MODULE_0__["default"].put('user/update', data);
   },
   create: function create(data) {
     return _config_axios_js__WEBPACK_IMPORTED_MODULE_0__["default"].post('user/create', data);
@@ -82653,7 +82612,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\works\laravel\vesam_shop\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\__laravel\shops\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })

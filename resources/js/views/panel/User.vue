@@ -20,18 +20,16 @@
                 <v-flex xs12 sm6 md6>
                   <v-text-field v-model="editedItem.last_name" label="نام خانوادگی*"></v-text-field>
                 </v-flex>
-                <v-flex xs12 sm6 md6>
-                  <v-text-field v-model="editedItem.mobile" label="تلفن همراه*"></v-text-field>
-                </v-flex>
+                
                 <v-flex xs12 sm4 md4>
                   <v-switch v-model="editedItem.status" label="وضعیت"></v-switch>
                 </v-flex>
-                <v-flex xs12 sm8 md8>
+                <!-- <v-flex xs12 sm8 md8>
                   <input type="file" v-on:change="onFileChange" />
                 </v-flex>
                 <v-flex xs12 sm4 md4>
                   <img :src="file" class="img-responsive" />
-                </v-flex>
+                </v-flex> -->
               </v-layout>
             </v-container>
             <small>* فیلدهای الزامی را مشخص می نماید.</small>
@@ -113,12 +111,7 @@ export default {
     },
     headers: [
       { text: "ردیف", value: "id", align: "center" },
-      {
-        text: "تصویر پروفایل",
-        value: "avatar",
-        align: "center",
-        sortable: false
-      },
+      {text: "تصویر پروفایل",value: "avatar",align: "center",sortable: false},
       { text: "نام و نام خانوادگی", value: "full_name", align: "center" },
       { text: "شماره همراه", value: "mobile", align: "center" },
       { text: "وضعیت", value: "status", align: "center" },
@@ -199,7 +192,7 @@ export default {
 
     deleteItem(item) {
       const index = this.results.indexOf(item);
-      if (confirm("از حذف کاربر مطمئن هستید؟")) {
+      if (confirm("از حذف کد هدیه مطمئن هستید؟")) {
         Api.delete(item.id)
           .then(() => {
             this.results.splice(index, 1);
@@ -226,6 +219,7 @@ export default {
     save() {
       this.editedItem.avatar = this.file;
       if (this.editedIndex > -1) {
+        console.log(this.editedItem);
         Api.update(this.editedItem)
           .then(() => {
             this.snackColor = "success";
