@@ -34,9 +34,9 @@ class UserDevice extends Model
     {
         $this->uuid = $this->uuid ?? (Uuid::generate(4)->string ?? null);
         $this->device_id = request('device_id') ?? ($this->device_id ?? null);
-        $this->name = request('name') ?? ($this->name ?? null);
-        $this->os = request('os') ?? ($this->os ?? null);
-        $this->version = request('version') ?? ($this->version ?? null);
+        $this->name = request('device_name') ?? ($this->name ?? null);
+        $this->os = request('device_os') ?? ($this->os ?? null);
+        $this->version = request('device_version') ?? ($this->version ?? null);
         $this->push_token = request('push_token') ?? ($this->push_token ?? null);
         $this->status = config('constants.device.status.active');
         return $this->save();
@@ -44,7 +44,7 @@ class UserDevice extends Model
 
     /**
      * Check limitations on authorized devices
-     * 
+     *
      * @param array user
      * @return collection user
      */
