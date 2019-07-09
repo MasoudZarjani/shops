@@ -4,6 +4,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
 Route::group(['prefix' => 'panel'], function () {
     Route::get('/', function () {
         return view('panel');
@@ -17,9 +18,6 @@ Route::group(['prefix' => 'panel'], function () {
         Route::post('create', 'Admin\UserController@create');
         Route::get('changeState/{id}', 'Admin\UserController@changeState');
     });
-});
-Route::middleware(['auth'])->group(function () {
-   
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
