@@ -34,7 +34,7 @@ class CategoryController extends Controller
 
     public function delete($id)
     {
-        
+        return Category::ofId($id)->delete();
     }
 
     public function update()

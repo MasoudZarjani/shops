@@ -176,15 +176,12 @@ class Category extends Model
         $id = 1;
         $category = Category::ofId($id)->first();
         $category->sort = request('sort');
-        $category->parent_id = request('parentId');
-        $category->type = config("constants.category.type.main");
         $category->status = request('status');
         $category->save();
 
         $describe = $category->describes()->ofType(config("constants.describe.type.text"))->first();
         $describe->title = request('title');
         $describe->description = request('description');
-        $describe->type = config("constants.describe.type.text");
         $describe->save;
     }
 }
