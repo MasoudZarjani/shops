@@ -2645,6 +2645,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2852,6 +2863,7 @@ __webpack_require__.r(__webpack_exports__);
     changeState: function changeState(item) {
       var _this5 = this;
 
+      this.snack = false;
       _api_User_js__WEBPACK_IMPORTED_MODULE_0__["default"].changeState(item).then(function () {
         _this5.snack = true;
         _this5.snackColor = "success";
@@ -7397,7 +7409,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.v-sheet--offset {\r\n  top: -24px;\r\n  position: relative;\n}\r\n", ""]);
+exports.push([module.i, "\n.v-sheet--offset {\n  top: -24px;\n  position: relative;\n}\n", ""]);
 
 // exports
 
@@ -41254,7 +41266,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-layout", { attrs: { wrap: "" } })
+  return _c("v-layout", { attrs: { wrap: "" } }, [_vm._v("\n    test\n")])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -41396,6 +41408,22 @@ var render = function() {
                   fn: function(ref) {
                     var on = ref.on
                     return [
+                      _c("v-text-field", {
+                        attrs: {
+                          "append-icon": "search",
+                          label: "جستجو",
+                          "single-line": "",
+                          "hide-details": ""
+                        },
+                        model: {
+                          value: _vm.search,
+                          callback: function($$v) {
+                            _vm.search = $$v
+                          },
+                          expression: "search"
+                        }
+                      }),
+                      _vm._v(" "),
                       _c("v-spacer"),
                       _vm._v(" "),
                       _c(
@@ -41596,6 +41624,7 @@ var render = function() {
                   { staticClass: "text-xs-center" },
                   [
                     _c("v-switch", {
+                      attrs: { color: "primary" },
                       on: {
                         change: function($event) {
                           return _vm.changeState(props.item.id)
@@ -41624,7 +41653,7 @@ var render = function() {
                       "v-icon",
                       {
                         staticClass: "mr-2",
-                        attrs: { small: "", color: "blue" },
+                        attrs: { small: "" },
                         on: {
                           click: function($event) {
                             return _vm.editItem(props.item)
@@ -41637,7 +41666,7 @@ var render = function() {
                     _c(
                       "v-icon",
                       {
-                        attrs: { small: "", color: "red" },
+                        attrs: { small: "" },
                         on: {
                           click: function($event) {
                             return _vm.deleteItem(props.item)
@@ -41679,7 +41708,7 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("Close")]
+            [_vm._v("بستن")]
           )
         ],
         1
@@ -41812,7 +41841,7 @@ function normalizeComponent (
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /*!
-  * vue-router v3.0.6
+  * vue-router v3.0.7
   * (c) 2019 Evan You
   * @license MIT
   */
@@ -43200,10 +43229,8 @@ function createMatcher (
         }
       }
 
-      if (record) {
-        location.path = fillParams(record.path, location.params, ("named route \"" + name + "\""));
-        return _createRoute(record, location, redirectedFrom)
-      }
+      location.path = fillParams(record.path, location.params, ("named route \"" + name + "\""));
+      return _createRoute(record, location, redirectedFrom)
     } else if (location.path) {
       location.params = {};
       for (var i = 0; i < pathList.length; i++) {
@@ -43358,7 +43385,12 @@ var positionStore = Object.create(null);
 function setupScroll () {
   // Fix for #1585 for Firefox
   // Fix for #2195 Add optional third attribute to workaround a bug in safari https://bugs.webkit.org/show_bug.cgi?id=182678
-  window.history.replaceState({ key: getStateKey() }, '', window.location.href.replace(window.location.origin, ''));
+  // Fix for #2774 Support for apps loaded from Windows file shares not mapped to network drives: replaced location.origin with
+  // window.location.protocol + '//' + window.location.host
+  // location.host contains the port and location.hostname doesn't
+  var protocolAndPath = window.location.protocol + '//' + window.location.host;
+  var absolutePath = window.location.href.replace(protocolAndPath, '');
+  window.history.replaceState({ key: getStateKey() }, '', absolutePath);
   window.addEventListener('popstate', function (e) {
     saveScrollPosition();
     if (e.state && e.state.key) {
@@ -43930,7 +43962,6 @@ function bindEnterGuard (
 ) {
   return function routeEnterGuard (to, from, next) {
     return guard(to, from, function (cb) {
-      next(cb);
       if (typeof cb === 'function') {
         cbs.push(function () {
           // #750
@@ -43941,6 +43972,7 @@ function bindEnterGuard (
           poll(cb, match.instances, key, isValid);
         });
       }
+      next(cb);
     })
   }
 }
@@ -44475,7 +44507,7 @@ function createHref (base, fullPath, mode) {
 }
 
 VueRouter.install = install;
-VueRouter.version = '3.0.6';
+VueRouter.version = '3.0.7';
 
 if (inBrowser && window.Vue) {
   window.Vue.use(VueRouter);
@@ -83040,6 +83072,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
+  //history: true,
+  //mode: 'history',
   routes: _routes__WEBPACK_IMPORTED_MODULE_1__["default"]
 }));
 
@@ -83563,7 +83597,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! E:\__laravel\shops\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\works\laravel\vesam_shop\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })

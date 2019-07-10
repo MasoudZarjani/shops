@@ -3,6 +3,13 @@
     <v-toolbar flat>
       <v-dialog v-model="dialog" max-width="600px">
         <template v-slot:activator="{ on }">
+          <v-text-field
+            v-model="search"
+            append-icon="search"
+            label="جستجو"
+            single-line
+            hide-details
+          ></v-text-field>
           <v-spacer></v-spacer>
           <v-btn color="primary" class="mb-2" v-on="on">افزودن</v-btn>
         </template>
@@ -20,7 +27,7 @@
                 <v-flex xs12 sm6 md6>
                   <v-text-field v-model="editedItem.last_name" label="نام خانوادگی*"></v-text-field>
                 </v-flex>
-                
+
                 <v-flex xs12 sm4 md4>
                   <v-switch v-model="editedItem.status" label="وضعیت"></v-switch>
                 </v-flex>
@@ -29,7 +36,7 @@
                 </v-flex>
                 <v-flex xs12 sm4 md4>
                   <img :src="file" class="img-responsive" />
-                </v-flex> -->
+                </v-flex>-->
               </v-layout>
             </v-container>
             <small>* فیلدهای الزامی را مشخص می نماید.</small>
@@ -60,18 +67,22 @@
         <td class="text-xs-center">{{ props.item.full_name }}</td>
         <td class="text-xs-center">{{ props.item.mobile }}</td>
         <td class="text-xs-center">
-          <v-switch v-model="props.item.status" @change="changeState(props.item.id)"></v-switch>
+          <v-switch
+            v-model="props.item.status"
+            color="primary"
+            @change="changeState(props.item.id)"
+          ></v-switch>
         </td>
         <td class="text-xs-center">{{ props.item.created_at }}</td>
         <td>
-          <v-icon small class="mr-2" color="blue" @click="editItem(props.item)">mdi-pencil</v-icon>
-          <v-icon small color="red" @click="deleteItem(props.item)">mdi-delete</v-icon>
+          <v-icon small class="mr-2" @click="editItem(props.item)">mdi-pencil</v-icon>
+          <v-icon small @click="deleteItem(props.item)">mdi-delete</v-icon>
         </td>
       </template>
     </v-data-table>
     <v-snackbar v-model="snack" :timeout="3000" :color="snackColor">
       {{ snackText }}
-      <v-btn flat @click="snack = false">Close</v-btn>
+      <v-btn flat @click="snack = false">بستن</v-btn>
     </v-snackbar>
   </v-container>
 </template>
@@ -111,7 +122,12 @@ export default {
     },
     headers: [
       { text: "ردیف", value: "id", align: "center" },
-      {text: "تصویر پروفایل",value: "avatar",align: "center",sortable: false},
+      {
+        text: "تصویر پروفایل",
+        value: "avatar",
+        align: "center",
+        sortable: false
+      },
       { text: "نام و نام خانوادگی", value: "full_name", align: "center" },
       { text: "شماره همراه", value: "mobile", align: "center" },
       { text: "وضعیت", value: "status", align: "center" },
@@ -252,6 +268,7 @@ export default {
     },
 
     changeState(item) {
+      this.snack = false;
       Api.changeState(item)
         .then(() => {
           this.snack = true;

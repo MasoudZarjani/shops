@@ -140,7 +140,7 @@ class User extends Authenticatable
 
     /**
      * Send verification code via sms panel
-     * 
+     *
      * @return boolean
      */
     public function sendVerificationCode()
@@ -152,7 +152,7 @@ class User extends Authenticatable
 
     /**
      * Create or find mobile number in user model
-     * 
+     *
      * @param string mobile
      */
     public static function createOrGetDeviceWithMobile($mobile)
@@ -166,7 +166,7 @@ class User extends Authenticatable
 
     /**
      * Check verification code from client with verification code in database
-     * 
+     *
      * @param string verification_code
      * @return boolean
      */
@@ -177,7 +177,7 @@ class User extends Authenticatable
 
     /**
      * Set user field in the model
-     * 
+     *
      * @return array user
      */
     public function set()
@@ -224,7 +224,7 @@ class User extends Authenticatable
 
     /**
      * Set avatar from this user in the model
-     * 
+     *
      * @param string path
      * @param integer mime
      * @param integer type
@@ -268,7 +268,7 @@ class User extends Authenticatable
     public static function getByFilter()
     {
         $per_page = empty(request('per_page')) ? 10 : (int) request('per_page');
-        return User::search(request('query'))->paginate($per_page);
+        return User::where('mobile', 'LIKE', '%' . request('query') . '%')->paginate($per_page);
     }
 
     public static function getByOrder()
