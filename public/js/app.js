@@ -7342,7 +7342,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.headline[data-v-4af67f56] {\n  font-family: iranyekan !important;\n}\nimg[data-v-4af67f56] {\n  max-height: 100px;\n}\n", ""]);
+exports.push([module.i, "\n.headline[data-v-4af67f56] {\r\n  font-family: iranyekan !important;\n}\nimg[data-v-4af67f56] {\r\n  max-height: 100px;\n}\r\n", ""]);
 
 // exports
 
