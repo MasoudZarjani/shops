@@ -67,8 +67,12 @@ __webpack_require__.r(__webpack_exports__);
         to: "/user"
       }, {
         title: "تنظیمات",
-        icon: "mdi-account-group",
+        icon: "mdi-settings",
         to: "/setting"
+      }, {
+        title: "دسته بندی",
+        icon: "mdi-dropbox",
+        to: "/category"
       }],
       logo: "/images/vesam-logo.jpg"
     };

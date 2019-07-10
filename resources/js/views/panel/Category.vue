@@ -15,21 +15,21 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12 sm6 md6>
-                  <v-text-field v-model="editedItem.first_name" label="نام*"></v-text-field>
+                  <v-text-field v-model="editedItem.first_name" label="عنوان*"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md6>
-                  <v-text-field v-model="editedItem.last_name" label="نام خانوادگی*"></v-text-field>
+                  <v-text-field v-model="editedItem.last_name" label="توضیحات*"></v-text-field>
                 </v-flex>
                 
                 <v-flex xs12 sm4 md4>
                   <v-switch v-model="editedItem.status" label="وضعیت"></v-switch>
                 </v-flex>
-                <!-- <v-flex xs12 sm8 md8>
+                <v-flex xs12 sm8 md8>
                   <input type="file" v-on:change="onFileChange" />
                 </v-flex>
                 <v-flex xs12 sm4 md4>
                   <img :src="file" class="img-responsive" />
-                </v-flex> -->
+                </v-flex>
               </v-layout>
             </v-container>
             <small>* فیلدهای الزامی را مشخص می نماید.</small>
@@ -55,17 +55,16 @@
       <template v-slot:items="props">
         <td>{{ props.index+1 }}</td>
         <td class="text-xs-center">
-          <v-img width="80" :src="props.item.avatar"></v-img>
+          <v-img width="80" :src="props.item.image"></v-img>
         </td>
-        <td class="text-xs-center">{{ props.item.full_name }}</td>
-        <td class="text-xs-center">{{ props.item.mobile }}</td>
+        <td class="text-xs-center">{{ props.item.title }}</td>
         <td class="text-xs-center">
           <v-switch v-model="props.item.status" @change="changeState(props.item.id)"></v-switch>
         </td>
-        <td class="text-xs-center">{{ props.item.created_at }}</td>
         <td>
           <v-icon small class="mr-2" color="blue" @click="editItem(props.item)">mdi-pencil</v-icon>
           <v-icon small color="red" @click="deleteItem(props.item)">mdi-delete</v-icon>
+          <v-icon small color="red" @click="get(props.item)">mdi-clipboard-text</v-icon>
         </td>
       </template>
     </v-data-table>
@@ -77,7 +76,7 @@
 </template>
 
 <script>
-import Api from "../../api/User.js";
+import Api from "../../api/Category.js";
 
 export default {
   data: () => ({
@@ -94,28 +93,22 @@ export default {
     dialog: false,
     editedIndex: -1,
     editedItem: {
-      avatar: "",
-      first_name: "",
-      last_name: "",
-      mobile: "",
+      image: "",
+      title: "",
+      description: "",
       status: 0,
-      created_at: ""
     },
     defaultItem: {
-      avatar: "",
-      first_name: "",
-      last_name: "",
-      mobile: "",
+      image: "",
+      title: "",
+      description: "",
       status: 0,
-      created_at: ""
     },
     headers: [
       { text: "ردیف", value: "id", align: "center" },
-      {text: "تصویر پروفایل",value: "avatar",align: "center",sortable: false},
-      { text: "نام و نام خانوادگی", value: "full_name", align: "center" },
-      { text: "شماره همراه", value: "mobile", align: "center" },
+      {text: "تصویر ",value: "image",align: "center",sortable: false},
+      { text: "عنوان", value: "title", align: "center" },
       { text: "وضعیت", value: "status", align: "center" },
-      { text: "تاریخ ثبت نام", value: "created_at", align: "center" },
       { text: "عملیات", value: "action", align: "center" }
     ],
     rowsPerPageItems: [5, 10, 20, 50, 100]
@@ -172,7 +165,7 @@ export default {
       if (!this.search && !this.pagination.sortBy) {
         Api.get({
           page: this.pagination.page,
-          per_page: this.pagination.rowsPerPage
+          per_page: this.pagination.rowsPerPage,
         })
           .then(res => {
             this.loading = false;
@@ -217,7 +210,7 @@ export default {
     },
 
     save() {
-      this.editedItem.avatar = this.file;
+      this.editedItem.image = this.file;
       if (this.editedIndex > -1) {
         console.log(this.editedItem);
         Api.update(this.editedItem)
@@ -279,6 +272,8 @@ export default {
       };
       reader.readAsDataURL(file);
     }
+
+    
   }
 };
 </script>

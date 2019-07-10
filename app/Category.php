@@ -23,9 +23,9 @@ class Category extends Model
     /**
      * Get the category's describes.
      */
-    public function describes()
+    public function describe()
     {
-        return $this->morphMany(Describe::class, 'describe_able');
+        return $this->morphOne(Describe::class, 'describe_able');
     }
 
     /**

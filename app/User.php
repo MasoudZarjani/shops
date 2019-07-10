@@ -276,6 +276,6 @@ class User extends Authenticatable
         $per_page = empty(request('per_page')) ? 10 : (int) request('per_page');
         $direction = request('direction')  ?? 'asc';
         $sortBy = request('sortBy') ?? 'id';
-        return User::orderBy($sortBy, $direction)->paginate($per_page);
+        return Category::orderBy($sortBy, $direction)->paginate($per_page);
     }
 }
