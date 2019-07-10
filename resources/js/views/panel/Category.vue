@@ -1,10 +1,23 @@
 <template>
   <v-container>
     <v-toolbar flat>
-      <v-dialog v-model="dialog" max-width="600px">
+      <v-dialog
+        v-model="dialog"
+        max-width="600px"
+      >
         <template v-slot:activator="{ on }">
           <v-spacer></v-spacer>
-          <v-btn color="primary" class="mb-2" v-on="on">افزودن</v-btn>
+          <v-btn
+            color="primary"
+            class="mb-2"
+            @click="getParent()"
+            v-if="currentIdParent>0"
+          >بازگشت</v-btn>
+          <v-btn
+            color="primary"
+            class="mb-2"
+            v-on="on"
+          >افزودن</v-btn>
         </template>
         <v-card>
           <v-card-title>
@@ -14,21 +27,56 @@
           <v-card-text>
             <v-container grid-list-md>
               <v-layout wrap>
-                <v-flex xs12 sm6 md6>
-                  <v-text-field v-model="editedItem.first_name" label="عنوان*"></v-text-field>
+                <v-flex
+                  xs12
+                  sm6
+                  md6
+                >
+                  <v-text-field
+                    v-model="editedItem.first_name"
+                    label="عنوان*"
+                  ></v-text-field>
                 </v-flex>
-                <v-flex xs12 sm6 md6>
-                  <v-text-field v-model="editedItem.last_name" label="توضیحات*"></v-text-field>
+                <v-flex
+                  xs12
+                  sm6
+                  md6
+                >
+                  <v-text-field
+                    v-model="editedItem.last_name"
+                    label="توضیحات*"
+                  ></v-text-field>
                 </v-flex>
-                
-                <v-flex xs12 sm4 md4>
-                  <v-switch v-model="editedItem.status" label="وضعیت"></v-switch>
+
+                <v-flex
+                  xs12
+                  sm4
+                  md4
+                >
+                  <v-switch
+                    v-model="editedItem.status"
+                    label="وضعیت"
+                  ></v-switch>
                 </v-flex>
-                <v-flex xs12 sm8 md8>
-                  <input type="file" v-on:change="onFileChange" />
+                <v-flex
+                  xs12
+                  sm8
+                  md8
+                >
+                  <input
+                    type="file"
+                    v-on:change="onFileChange"
+                  />
                 </v-flex>
-                <v-flex xs12 sm4 md4>
-                  <img :src="file" class="img-responsive" />
+                <v-flex
+                  xs12
+                  sm4
+                  md4
+                >
+                  <img
+                    :src="file"
+                    class="img-responsive"
+                  />
                 </v-flex>
               </v-layout>
             </v-container>
@@ -37,8 +85,16 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary darken-1" flat @click="close">رد</v-btn>
-            <v-btn color="primary darken-1" flat @click="save">ذخیره</v-btn>
+            <v-btn
+              color="primary darken-1"
+              flat
+              @click="close"
+            >رد</v-btn>
+            <v-btn
+              color="primary darken-1"
+              flat
+              @click="save"
+            >ذخیره</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -55,22 +111,36 @@
       <template v-slot:items="props">
         <td>{{ props.index+1 }}</td>
         <td class="text-xs-center">
-          <v-img width="80" :src="props.item.image"></v-img>
+          <v-img
+            width="80"
+            :src="props.item.image"
+          ></v-img>
         </td>
         <td class="text-xs-center">{{ props.item.title }}</td>
+        <td class="text-xs-center">{{ props.item.countChildren }}</td>
         <td class="text-xs-center">
-          <v-switch v-model="props.item.status" @change="changeState(props.item.id)"></v-switch>
+          <v-switch
+            v-model="props.item.status"
+            @change="changeState(props.item.id)"
+          ></v-switch>
         </td>
         <td>
-          <v-icon small class="mr-2" color="blue" @click="editItem(props.item)">mdi-pencil</v-icon>
-          <v-icon small color="red" @click="deleteItem(props.item)">mdi-delete</v-icon>
-          <v-icon small color="red" @click="get(props.item)">mdi-clipboard-text</v-icon>
+          <v-icon small class="mr-2" color="blue" @click="editItem(props.item)" >mdi-pencil</v-icon>
+          <v-icon small color="red" @click="deleteItem(props.item)" >mdi-delete</v-icon>
+          <v-icon small color="blue" @click="getChildren(props.item.id)" v-if='(props.item.countChildren>0)'>mdi-clipboard-text</v-icon>
         </td>
       </template>
     </v-data-table>
-    <v-snackbar v-model="snack" :timeout="3000" :color="snackColor">
+    <v-snackbar
+      v-model="snack"
+      :timeout="3000"
+      :color="snackColor"
+    >
       {{ snackText }}
-      <v-btn flat @click="snack = false">Close</v-btn>
+      <v-btn
+        flat
+        @click="snack = false"
+      >Close</v-btn>
     </v-snackbar>
   </v-container>
 </template>
@@ -92,22 +162,25 @@ export default {
     pagination: {},
     dialog: false,
     editedIndex: -1,
+    id_parent: 0,
+    currentIdParent: 0,
     editedItem: {
       image: "",
       title: "",
       description: "",
-      status: 0,
+      status: 0
     },
     defaultItem: {
       image: "",
       title: "",
       description: "",
-      status: 0,
+      status: 0
     },
     headers: [
       { text: "ردیف", value: "id", align: "center" },
-      {text: "تصویر ",value: "image",align: "center",sortable: false},
+      { text: "تصویر ", value: "image", align: "center", sortable: false },
       { text: "عنوان", value: "title", align: "center" },
+      { text: "تعداد زیردسته", value: "countChildren", align: "center" },
       { text: "وضعیت", value: "status", align: "center" },
       { text: "عملیات", value: "action", align: "center" }
     ],
@@ -132,6 +205,16 @@ export default {
     }
   },
   methods: {
+    getParent() {
+      this.id_parent = this.currentIdParent;
+      this.getByPagination();
+    },
+    getChildren(parentId) {
+
+      this.currentIdParent = this.id_parent;
+      this.id_parent = parentId;
+      this.getByPagination();
+    },
     getByPagination() {
       this.loading = true;
       if (this.search) {
@@ -155,7 +238,8 @@ export default {
           direction: direction,
           sortBy: this.pagination.sortBy,
           page: this.pagination.page,
-          per_page: this.pagination.rowsPerPage
+          per_page: this.pagination.rowsPerPage,
+          id_parent: this.id_parent
         }).then(res => {
           this.loading = false;
           this.results = res.data.data;
@@ -165,7 +249,7 @@ export default {
       if (!this.search && !this.pagination.sortBy) {
         Api.get({
           page: this.pagination.page,
-          per_page: this.pagination.rowsPerPage,
+          per_page: this.pagination.rowsPerPage
         })
           .then(res => {
             this.loading = false;
@@ -272,8 +356,6 @@ export default {
       };
       reader.readAsDataURL(file);
     }
-
-    
   }
 };
 </script>

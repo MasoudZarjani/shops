@@ -23,9 +23,9 @@ class Category extends Model
     /**
      * Get the category's describes.
      */
-    public function describe()
+    public function describes()
     {
-        return $this->morphOne(Describe::class, 'describe_able');
+        return $this->morphMany(Describe::class, 'describe_able');
     }
 
     /**
@@ -145,6 +145,7 @@ class Category extends Model
         $per_page = empty(request('per_page')) ? 10 : (int) request('per_page');
         $direction = request('direction')  ?? 'asc';
         $sortBy = request('sortBy') ?? 'id';
-        return Category::orderBy($sortBy, $direction)->paginate($per_page);
+        $id_parent = request('id_parent') ?? 0;
+        return Category::ofCategoryId($id_parent)->orderBy($sortBy, $direction)->paginate($per_page);
     }
 }

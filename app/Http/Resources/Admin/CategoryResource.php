@@ -16,9 +16,10 @@ class CategoryResource extends JsonResource
     {
         return [
             'id' => $this->id ?? "",
-            'title' => $this->describe->title ?? "",
+            'title' => $this->describes()->ofType(config('constants.describe.type.text'))->first()->title ?? "",
             'status' => $this->status ?? "",
-            'image' => $this->file()->path ?? ""
+            'image' => $this->file()->path ?? "",
+            'countChildren' => $this->children()->count(),
         ];
     }
 }
