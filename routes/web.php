@@ -25,7 +25,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('index', 'Admin\CategoryController@index');
             Route::delete('delete/{id}', 'Admin\CategoryController@delete');
             Route::put('update', 'Admin\CategoryController@update');
-            Route::post('create/{id_parent}', 'Admin\CategoryController@create');
+            Route::post('create', 'Admin\CategoryController@create');
 
             Route::post('order', 'Admin\CategoryController@order');
         });

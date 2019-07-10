@@ -29,16 +29,16 @@ class CategoryController extends Controller
 
     public function create()
     {
-
+        return Category::set();
     }
 
     public function delete($id)
     {
-
+        
     }
 
     public function update()
     {
-
+        return Category::setUpdate(request('id'));
     }
 }

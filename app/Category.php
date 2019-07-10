@@ -96,6 +96,11 @@ class Category extends Model
         return $query->where('uuid', $uuid);
     }
 
+    public function scopeOfId($query, $id)
+    {
+        return $query->where('id', $id);
+    }
+
     /**
      * Scope a query to return active from category.
      *
@@ -145,7 +150,41 @@ class Category extends Model
         $per_page = empty(request('per_page')) ? 10 : (int) request('per_page');
         $direction = request('direction')  ?? 'asc';
         $sortBy = request('sortBy') ?? 'id';
-        $id_parent = request('id_parent') ?? 0;
-        return Category::ofCategoryId($id_parent)->orderBy($sortBy, $direction)->paginate($per_page);
+        $parentId = request('parentId') ?? 0;
+        return Category::ofCategoryId($parentId)->orderBy($sortBy, $direction)->paginate($per_page);
+    }
+
+    public static function set(){
+
+        $category = new Category();
+        $category->sort = request('sort');
+        $category->parent_id = request('parentId');
+        $category->type = config("constants.category.type.main");
+        $category->status = request('status');
+        $category->save();
+
+        $describe = new Describe();
+        $describe->title = request('title');
+        $describe->description = request('description');
+        $describe->type = config("constants.describe.type.text");
+        $describe->save;
+        $category->describes()->save($describe);
+    }
+
+    public static function setUpdate($id)
+    {
+        $id = 1;
+        $category = Category::ofId($id)->first();
+        $category->sort = request('sort');
+        $category->parent_id = request('parentId');
+        $category->type = config("constants.category.type.main");
+        $category->status = request('status');
+        $category->save();
+
+        $describe = $category->describes()->ofType(config("constants.describe.type.text"))->first();
+        $describe->title = request('title');
+        $describe->description = request('description');
+        $describe->type = config("constants.describe.type.text");
+        $describe->save;
     }
 }
