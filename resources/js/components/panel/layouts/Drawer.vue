@@ -50,7 +50,7 @@ export default {
       { title: "صفحه اصلی", icon: "mdi-view-dashboard", to: "/" },
       { title: "کاربران", icon: "mdi-account-group", to: "/user" },
       { title: "تنظیمات", icon: "mdi-settings", to: "/setting" },
-      { title: "دسته بندی", icon: "mdi-dropbox", to: "/category" },
+      { title: "دسته بندی", icon: "mdi-lan", to: "/category" },
     ],
     logo: "/images/vesam-logo.jpg"
   })

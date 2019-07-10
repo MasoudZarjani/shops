@@ -31,12 +31,13 @@
                 <v-flex xs12 sm4 md4>
                   <v-switch v-model="editedItem.status" label="وضعیت"></v-switch>
                 </v-flex>
-                <!-- <v-flex xs12 sm8 md8>
+                <v-flex xs12 sm8 md8>
                   <input type="file" v-on:change="onFileChange" />
                 </v-flex>
                 <v-flex xs12 sm4 md4>
-                  <img :src="file" class="img-responsive" />
-                </v-flex>-->
+                  <img v-if="file!==''" :src="file" class="img-responsive" />
+                  <img v-else :src="editedItem.avatar" class="img-responsive" />
+                </v-flex>
               </v-layout>
             </v-container>
             <small>* فیلدهای الزامی را مشخص می نماید.</small>
@@ -180,6 +181,7 @@ export default {
           page: this.pagination.page,
           per_page: this.pagination.rowsPerPage
         }).then(res => {
+          console.log(res);
           this.loading = false;
           this.results = res.data.data;
           this.total = res.data.meta.total;

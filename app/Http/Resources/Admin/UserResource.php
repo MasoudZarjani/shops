@@ -27,7 +27,7 @@ class UserResource extends JsonResource
             'mobile' => Utility::convertMobileFormatToDefault($this->mobile) ?? "",
             'status' => $this->status ?? "",
             'created_at' => $date ?? "",
-            //'avatar' => $this->avatar()->path ?? ""
+            'avatar' => $this->avatar()->path ?? ""
         ];
     }
 }

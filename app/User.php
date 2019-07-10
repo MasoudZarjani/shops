@@ -231,14 +231,10 @@ class User extends Authenticatable
      */
     public function setAvatar($path, $size, $type, $position)
     {
-        if (!$this->file) {
+        if (!$file = $this->files)
             $file = new File();
-        } else {
-            $file = $this->file;
-        }
         $file->set($path, $size, $type, $position);
-        $this->file()->save($file);
-        return $file;
+        return $this->files()->save($file);
     }
 
     public static function deleteAvatar($user)
