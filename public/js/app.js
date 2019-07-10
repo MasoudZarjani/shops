@@ -2116,6 +2116,76 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2132,6 +2202,8 @@ __webpack_require__.r(__webpack_exports__);
       pagination: {},
       dialog: false,
       editedIndex: -1,
+      id_parent: 0,
+      currentIdParent: 0,
       editedItem: {
         image: "",
         title: "",
@@ -2156,6 +2228,10 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         text: "عنوان",
         value: "title",
+        align: "center"
+      }, {
+        text: "تعداد زیردسته",
+        value: "countChildren",
         align: "center"
       }, {
         text: "وضعیت",
@@ -2188,6 +2264,15 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    getParent: function getParent() {
+      this.id_parent = this.currentIdParent;
+      this.getByPagination();
+    },
+    getChildren: function getChildren(parentId) {
+      this.currentIdParent = this.id_parent;
+      this.id_parent = parentId;
+      this.getByPagination();
+    },
     getByPagination: function getByPagination() {
       var _this = this;
 
@@ -2215,7 +2300,8 @@ __webpack_require__.r(__webpack_exports__);
           direction: direction,
           sortBy: this.pagination.sortBy,
           page: this.pagination.page,
-          per_page: this.pagination.rowsPerPage
+          per_page: this.pagination.rowsPerPage,
+          id_parent: this.id_parent
         }).then(function (res) {
           _this.loading = false;
           _this.results = res.data.data;
@@ -40819,6 +40905,22 @@ var render = function() {
                     return [
                       _c("v-spacer"),
                       _vm._v(" "),
+                      _vm.currentIdParent > 0
+                        ? _c(
+                            "v-btn",
+                            {
+                              staticClass: "mb-2",
+                              attrs: { color: "primary" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.getParent()
+                                }
+                              }
+                            },
+                            [_vm._v("بازگشت")]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
                       _c(
                         "v-btn",
                         _vm._g(
@@ -41030,6 +41132,10 @@ var render = function() {
                   _vm._v(_vm._s(props.item.title))
                 ]),
                 _vm._v(" "),
+                _c("td", { staticClass: "text-xs-center" }, [
+                  _vm._v(_vm._s(props.item.countChildren))
+                ]),
+                _vm._v(" "),
                 _c(
                   "td",
                   { staticClass: "text-xs-center" },
@@ -41082,18 +41188,20 @@ var render = function() {
                       [_vm._v("mdi-delete")]
                     ),
                     _vm._v(" "),
-                    _c(
-                      "v-icon",
-                      {
-                        attrs: { small: "", color: "red" },
-                        on: {
-                          click: function($event) {
-                            return _vm.get(props.item)
-                          }
-                        }
-                      },
-                      [_vm._v("mdi-clipboard-text")]
-                    )
+                    props.item.countChildren > 0
+                      ? _c(
+                          "v-icon",
+                          {
+                            attrs: { small: "", color: "blue" },
+                            on: {
+                              click: function($event) {
+                                return _vm.getChildren(props.item.id)
+                              }
+                            }
+                          },
+                          [_vm._v("mdi-clipboard-text")]
+                        )
+                      : _vm._e()
                   ],
                   1
                 )
