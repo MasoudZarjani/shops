@@ -139,4 +139,12 @@ class Category extends Model
     {
         return $this->describes()->ofType(config('constants.describe.type.text'))->first()->title ?? "";
     }
+
+    public static function getByOrder()
+    {
+        $per_page = empty(request('per_page')) ? 10 : (int) request('per_page');
+        $direction = request('direction')  ?? 'asc';
+        $sortBy = request('sortBy') ?? 'id';
+        return Category::orderBy($sortBy, $direction)->paginate($per_page);
+    }
 }
