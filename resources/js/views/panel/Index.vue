@@ -1,11 +1,11 @@
 <template>
   <v-layout wrap>
-    
+      test
   </v-layout>
 </template>
 <script>
 export default {
-  
+
 };
 </script>
 <style>

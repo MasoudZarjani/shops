@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\UserResource;
 use App\User;
-use Illuminate\Http\Request;
 use App\UserProfile;
 
 class UserController extends Controller
@@ -16,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        
+
         $users = User::get();
         return UserResource::collection($users);
     }
@@ -53,7 +52,7 @@ class UserController extends Controller
         elseif(request('avatar')!='') {
             //$user->setAvatar(request('avatar'),0,config("constants.file.type.image"),config("constants.file.position.avatar"));
         }
-        
+
         return $user;
     }
 

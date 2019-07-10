@@ -2247,6 +2247,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2454,6 +2465,7 @@ __webpack_require__.r(__webpack_exports__);
     changeState: function changeState(item) {
       var _this5 = this;
 
+      this.snack = false;
       _api_User_js__WEBPACK_IMPORTED_MODULE_0__["default"].changeState(item).then(function () {
         _this5.snack = true;
         _this5.snackColor = "success";
@@ -6980,7 +6992,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.v-sheet--offset {\r\n  top: -24px;\r\n  position: relative;\n}\r\n", ""]);
+exports.push([module.i, "\n.v-sheet--offset {\n  top: -24px;\n  position: relative;\n}\n", ""]);
 
 // exports
 
@@ -6999,7 +7011,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.headline[data-v-4af67f56] {\r\n  font-family: iranyekan !important;\n}\nimg[data-v-4af67f56] {\r\n  max-height: 100px;\n}\r\n", ""]);
+exports.push([module.i, "\n.headline[data-v-4af67f56] {\n  font-family: iranyekan !important;\n}\nimg[data-v-4af67f56] {\n  max-height: 100px;\n}\n", ""]);
 
 // exports
 
@@ -40427,7 +40439,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-layout", { attrs: { wrap: "" } })
+  return _c("v-layout", { attrs: { wrap: "" } }, [_vm._v("\n    test\n")])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -40569,6 +40581,22 @@ var render = function() {
                   fn: function(ref) {
                     var on = ref.on
                     return [
+                      _c("v-text-field", {
+                        attrs: {
+                          "append-icon": "search",
+                          label: "جستجو",
+                          "single-line": "",
+                          "hide-details": ""
+                        },
+                        model: {
+                          value: _vm.search,
+                          callback: function($$v) {
+                            _vm.search = $$v
+                          },
+                          expression: "search"
+                        }
+                      }),
+                      _vm._v(" "),
                       _c("v-spacer"),
                       _vm._v(" "),
                       _c(
@@ -40769,6 +40797,7 @@ var render = function() {
                   { staticClass: "text-xs-center" },
                   [
                     _c("v-switch", {
+                      attrs: { color: "primary" },
                       on: {
                         change: function($event) {
                           return _vm.changeState(props.item.id)
@@ -40797,7 +40826,7 @@ var render = function() {
                       "v-icon",
                       {
                         staticClass: "mr-2",
-                        attrs: { small: "", color: "blue" },
+                        attrs: { small: "" },
                         on: {
                           click: function($event) {
                             return _vm.editItem(props.item)
@@ -40810,7 +40839,7 @@ var render = function() {
                     _c(
                       "v-icon",
                       {
-                        attrs: { small: "", color: "red" },
+                        attrs: { small: "" },
                         on: {
                           click: function($event) {
                             return _vm.deleteItem(props.item)
@@ -40852,7 +40881,7 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("Close")]
+            [_vm._v("بستن")]
           )
         ],
         1
@@ -82185,6 +82214,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
+  //history: true,
+  //mode: 'history',
   routes: _routes__WEBPACK_IMPORTED_MODULE_1__["default"]
 }));
 
