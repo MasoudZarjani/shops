@@ -20,7 +20,7 @@ class CategoryResource extends JsonResource
             'description' => $this->describes()->ofType(config('constants.describe.type.text'))->first()->description ?? "",
             'status' => $this->status ?? "",
             'sort' => $this->sort ?? "",
-            'image' => $this->file()->path ?? "",
+            'image' => $this->file->path ?? '' ,
             'countChildren' => $this->children()->count(),
         ];
     }

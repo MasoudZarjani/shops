@@ -2171,7 +2171,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2295,6 +2294,7 @@ __webpack_require__.r(__webpack_exports__);
           parentId: this.parentId,
           currentParentId: this.currentParentId
         }).then(function (res) {
+          console.log(res);
           _this.loading = false;
           _this.results = res.data.data;
           _this.total = res.data.meta.total;
@@ -7423,7 +7423,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.headline[data-v-4af67f56] {\n  font-family: iranyekan !important;\n}\nimg[data-v-4af67f56] {\n  max-height: 100px;\n}\n", ""]);
+exports.push([module.i, "\n.headline[data-v-4af67f56] {\r\n  font-family: iranyekan !important;\n}\nimg[data-v-4af67f56] {\r\n  max-height: 100px;\n}\r\n", ""]);
 
 // exports
 
@@ -41122,7 +41122,14 @@ var render = function() {
             key: "items",
             fn: function(props) {
               return [
-                _c("td", [_vm._v(_vm._s(props.index + 1))]),
+                _c("td", [
+                  _vm._v(
+                    _vm._s(
+                      _vm.pagination.rowsPerPage * (_vm.pagination.page - 1) +
+                        (props.index + 1)
+                    )
+                  )
+                ]),
                 _vm._v(" "),
                 _c(
                   "td",

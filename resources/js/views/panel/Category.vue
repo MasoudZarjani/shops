@@ -96,8 +96,7 @@
       class="elevation-1"
     >
       <template v-slot:items="props">
-
-        <td>{{ props.index+1 }}</td>
+        <td>{{ (pagination.rowsPerPage*(pagination.page-1))+(props.index+1) }}</td>
         <td class="text-xs-center">
           <v-img
             width="80" :src="props.item.image"></v-img>
@@ -233,6 +232,7 @@ export default {
           parentId: this.parentId,
           currentParentId : this.currentParentId,
         }).then(res => {
+          console.log(res);
           this.loading = false;
           this.results = res.data.data;
           this.total = res.data.meta.total;

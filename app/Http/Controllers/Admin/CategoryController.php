@@ -17,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $parentId = request('parentId') ?? 0;
+        $parentId = request('id') ?? "";
         $categories = Category::ofCategoryId($parentId)->get();
         return CategoryResource::collection($categories);
     }
@@ -42,4 +42,5 @@ class CategoryController extends Controller
     {
         return Category::setUpdate(request('id'));
     }
+    
 }

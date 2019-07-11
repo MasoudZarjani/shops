@@ -7,7 +7,7 @@ use App\Traits\CreateUuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Http\Resources\Api\v1\CategoryResource;
 use App\Http\Resources\Api\v1\QuestionResource;
-use SebastianBergmann\CodeCoverage\Report\Xml\File;
+Use App\Helpers\UploadAdmin;
 
 class Category extends Model
 {
@@ -19,6 +19,11 @@ class Category extends Model
     public function file()
     {
         return $this->morphOne(File::class, 'file_able');
+    }
+
+    public function image()
+    {
+        return $this->file()->ofPosition(config('constants.file.position.category'))->first();
     }
 
     /**
@@ -119,6 +124,8 @@ class Category extends Model
         return $query->orderBy('sort', 'asc');
     }
 
+
+
     /**
      * Get category information
      * 
@@ -155,6 +162,14 @@ class Category extends Model
         return Category::ofCategoryId($parentId)->orderBy($sortBy, $direction)->paginate($per_page);
     }
 
+    public function setFile($path, $size, $type, $position)
+    {
+        if (!$file = $this->image())
+            $file = new File();
+        $file->set($path, $size, $type, $position);
+        return $this->file()->save($file);
+    }
+
     public static function set(){
 
         $category = new Category();
@@ -171,19 +186,13 @@ class Category extends Model
         $describe->save;
         $category->describes()->save($describe);
 
-        $file = new File();
-        if($user->avatar())
-        {
-            //$user->avatar()->update(['path'=>request('avatar')]);
-        }
-        elseif(request('avatar')!='') {
-            //$user->setAvatar(request('avatar'),0,config("constants.file.type.image"),config("constants.file.position.avatar"));
-        }
+        $uploadAdmin = new UploadAdmin();
+        if ($result = $uploadAdmin->image(request('image'), 'category'))
+            $category->setFile($result, 0, 0, config('constants.file.position.category'));
     }
 
     public static function setUpdate($id)
     {
-        $id = 1;
         $category = Category::ofId($id)->first();
         $category->sort = request('sort');
         $category->status = request('status');
@@ -193,5 +202,10 @@ class Category extends Model
         $describe->title = request('title');
         $describe->description = request('description');
         $describe->save;
+
+        $uploadAdmin = new UploadAdmin();
+        if ($result = $uploadAdmin->image(request('image'), 'category'))
+            $category->setFile($result, 0, 0, config('constants.file.position.category'));
+      
     }
 }
