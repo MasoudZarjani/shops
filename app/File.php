@@ -25,7 +25,7 @@ class File extends Model
     {
         return $this->morphToMany(Color::class, 'color_able');
     }
-    
+
     /**
      * Get the file's describe.
      */

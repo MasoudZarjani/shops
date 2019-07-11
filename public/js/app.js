@@ -2649,6 +2649,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2762,6 +2763,7 @@ __webpack_require__.r(__webpack_exports__);
           page: this.pagination.page,
           per_page: this.pagination.rowsPerPage
         }).then(function (res) {
+          console.log(res);
           _this.loading = false;
           _this.results = res.data.data;
           _this.total = res.data.meta.total;
@@ -7421,7 +7423,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.headline[data-v-4af67f56] {\r\n  font-family: iranyekan !important;\n}\nimg[data-v-4af67f56] {\r\n  max-height: 100px;\n}\r\n", ""]);
+exports.push([module.i, "\n.headline[data-v-4af67f56] {\n  font-family: iranyekan !important;\n}\nimg[data-v-4af67f56] {\n  max-height: 100px;\n}\n", ""]);
 
 // exports
 
@@ -41533,6 +41535,33 @@ var render = function() {
                                   })
                                 ],
                                 1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-flex",
+                                { attrs: { xs12: "", sm8: "", md8: "" } },
+                                [
+                                  _c("input", {
+                                    attrs: { type: "file" },
+                                    on: { change: _vm.onFileChange }
+                                  })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-flex",
+                                { attrs: { xs12: "", sm4: "", md4: "" } },
+                                [
+                                  _vm.file !== ""
+                                    ? _c("img", {
+                                        staticClass: "img-responsive",
+                                        attrs: { src: _vm.file }
+                                      })
+                                    : _c("img", {
+                                        staticClass: "img-responsive",
+                                        attrs: { src: _vm.editedItem.avatar }
+                                      })
+                                ]
                               )
                             ],
                             1

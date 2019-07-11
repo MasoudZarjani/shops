@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\UserResource;
 use App\User;
 use App\UserProfile;
+use App\Helpers\UploadAdmin;
 
 class UserController extends Controller
 {
@@ -34,25 +35,17 @@ class UserController extends Controller
 
     public function delete($id)
     {
-
         return User::ofId($id)->delete();
     }
 
     public function update()
     {
         $user = User::ofId(request('id'))->first();
-        $user->update([
-                'status'=>request('status')
-                ]);
-        $user->profile()->set();
-        if($user->avatar())
-        {
-            //$user->avatar()->update(['path'=>request('avatar')]);
+        if ($user->profile->set()) {
+            $uploadAdmin = new UploadAdmin();
+            if ($result = $uploadAdmin->image(request('avatar'), 'avatar'))
+                $user->setAvatar($result, 0, 0, config('constants.file.position.avatar'));
         }
-        elseif(request('avatar')!='') {
-            //$user->setAvatar(request('avatar'),0,config("constants.file.type.image"),config("constants.file.position.avatar"));
-        }
-
         return $user;
     }
 
@@ -70,19 +63,18 @@ class UserController extends Controller
         $user->avatar()->save($avatar);
 
         return $user;
-
     }
 
     public function changeState($id)
     {
         $user = User::ofId($id)->first();
-        if($user->status == 1)
+        if ($user->status == 1)
             $status = 0;
         else {
             $status = 1;
         }
         $user->update([
-            'status'=> $status
+            'status' => $status
         ]);
 
         return $user;

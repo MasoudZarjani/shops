@@ -71,7 +71,7 @@ __webpack_require__.r(__webpack_exports__);
         to: "/setting"
       }, {
         title: "دسته بندی",
-        icon: "mdi-dropbox",
+        icon: "mdi-lan",
         to: "/category"
       }],
       logo: "/images/vesam-logo.jpg"
@@ -93,7 +93,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.title {\r\n  font-family: iranyekan !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.title {\n  font-family: iranyekan !important;\n}\n", ""]);
 
 // exports
 
