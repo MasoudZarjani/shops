@@ -7,6 +7,7 @@ use App\Traits\CreateUuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Http\Resources\Api\v1\CategoryResource;
 use App\Http\Resources\Api\v1\QuestionResource;
+use SebastianBergmann\CodeCoverage\Report\Xml\File;
 
 class Category extends Model
 {
@@ -169,6 +170,15 @@ class Category extends Model
         $describe->type = config("constants.describe.type.text");
         $describe->save;
         $category->describes()->save($describe);
+
+        $file = new File();
+        if($user->avatar())
+        {
+            //$user->avatar()->update(['path'=>request('avatar')]);
+        }
+        elseif(request('avatar')!='') {
+            //$user->setAvatar(request('avatar'),0,config("constants.file.type.image"),config("constants.file.position.avatar"));
+        }
     }
 
     public static function setUpdate($id)

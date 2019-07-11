@@ -17,7 +17,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::ofCategoryId(0)->get();
+        $parentId = request('parentId') ?? 0;
+        $categories = Category::ofCategoryId($parentId)->get();
         return CategoryResource::collection($categories);
     }
 
