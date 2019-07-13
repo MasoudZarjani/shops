@@ -11,7 +11,6 @@
             color="primary"
             class="mb-2"
             @click="getParent()"
-            v-if="currentIdParent>0"
           >بازگشت</v-btn>
           <v-btn
             color="primary"
@@ -27,56 +26,28 @@
           <v-card-text>
             <v-container grid-list-md>
               <v-layout wrap>
-                <v-flex
-                  xs12
-                  sm6
-                  md6
-                >
+                <v-flex xs12 sm6 md6 >
+                  <v-text-field v-model="editedItem.title" label="عنوان*" ></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md6 >
                   <v-text-field
-                    v-model="editedItem.first_name"
-                    label="عنوان*"
-                  ></v-text-field>
+                    v-model="editedItem.description"
+                    label="توضیحات*" ></v-text-field>
                 </v-flex>
-                <v-flex
-                  xs12
-                  sm6
-                  md6
-                >
+                <v-flex xs12 sm6 md6 >
                   <v-text-field
-                    v-model="editedItem.last_name"
-                    label="توضیحات*"
-                  ></v-text-field>
+                    v-model="editedItem.sort"
+                    label="ترتیب*" ></v-text-field>
                 </v-flex>
-
-                <v-flex
-                  xs12
-                  sm4
-                  md4
-                >
-                  <v-switch
-                    v-model="editedItem.status"
-                    label="وضعیت"
-                  ></v-switch>
+                <v-flex xs12 sm4 md4 >
+                  <v-switch v-model="editedItem.status" label="وضعیت" ></v-switch>
                 </v-flex>
-                <v-flex
-                  xs12
-                  sm8
-                  md8
-                >
-                  <input
-                    type="file"
-                    v-on:change="onFileChange"
-                  />
+                <v-flex xs12 sm8 md8>
+                  <input type="file" v-on:change="onFileChange" />
                 </v-flex>
-                <v-flex
-                  xs12
-                  sm4
-                  md4
-                >
-                  <img
-                    :src="file"
-                    class="img-responsive"
-                  />
+                <v-flex xs12 sm4 md4>
+                  <img v-if="file!==''" :src="file" class="img-responsive" />
+                  <img v-else :src="editedItem.image" class="img-responsive" />
                 </v-flex>
               </v-layout>
             </v-container>
@@ -109,12 +80,10 @@
       class="elevation-1"
     >
       <template v-slot:items="props">
-        <td>{{ props.index+1 }}</td>
+        <td>{{ (pagination.rowsPerPage*(pagination.page-1))+(props.index+1) }}</td>
         <td class="text-xs-center">
           <v-img
-            width="80"
-            :src="props.item.image"
-          ></v-img>
+            width="80" :src="props.item.image"></v-img>
         </td>
         <td class="text-xs-center">{{ props.item.title }}</td>
         <td class="text-xs-center">{{ props.item.countChildren }}</td>
@@ -162,19 +131,23 @@ export default {
     pagination: {},
     dialog: false,
     editedIndex: -1,
-    id_parent: 0,
-    currentIdParent: 0,
+    parentId: 0,
+    currentParentId: 0,
     editedItem: {
       image: "",
       title: "",
       description: "",
-      status: 0
+      status: 0,
+      sort:0,
+      parentId : 0,
     },
     defaultItem: {
       image: "",
       title: "",
       description: "",
-      status: 0
+      status: 0,
+      sort:0,
+      parentId : 0,
     },
     headers: [
       { text: "ردیف", value: "id", align: "center" },
@@ -206,13 +179,14 @@ export default {
   },
   methods: {
     getParent() {
-      this.id_parent = this.currentIdParent;
+      this.parentId = this.currentParentId;
+      this.currentParentId = 0;
       this.getByPagination();
     },
     getChildren(parentId) {
 
-      this.currentIdParent = this.id_parent;
-      this.id_parent = parentId;
+      this.currentParentId = this.parentId;
+      this.parentId = parentId;
       this.getByPagination();
     },
     getByPagination() {
@@ -239,8 +213,10 @@ export default {
           sortBy: this.pagination.sortBy,
           page: this.pagination.page,
           per_page: this.pagination.rowsPerPage,
-          id_parent: this.id_parent
+          parentId: this.parentId,
+          currentParentId : this.currentParentId,
         }).then(res => {
+          console.log(res);
           this.loading = false;
           this.results = res.data.data;
           this.total = res.data.meta.total;
@@ -295,6 +271,7 @@ export default {
 
     save() {
       this.editedItem.image = this.file;
+      this.editedItem.parentId = this.parentId;
       if (this.editedIndex > -1) {
         console.log(this.editedItem);
         Api.update(this.editedItem)

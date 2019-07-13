@@ -7,6 +7,7 @@ use App\Traits\CreateUuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Http\Resources\Api\v1\CategoryResource;
 use App\Http\Resources\Api\v1\QuestionResource;
+Use App\Helpers\UploadAdmin;
 
 class Category extends Model
 {
@@ -18,6 +19,11 @@ class Category extends Model
     public function file()
     {
         return $this->morphOne(File::class, 'file_able');
+    }
+
+    public function image()
+    {
+        return $this->file()->ofPosition(config('constants.file.position.category'))->first();
     }
 
     /**
@@ -96,6 +102,11 @@ class Category extends Model
         return $query->where('uuid', $uuid);
     }
 
+    public function scopeOfId($query, $id)
+    {
+        return $query->where('id', $id);
+    }
+
     /**
      * Scope a query to return active from category.
      *
@@ -112,6 +123,8 @@ class Category extends Model
     {
         return $query->orderBy('sort', 'asc');
     }
+
+
 
     /**
      * Get category information
@@ -145,7 +158,54 @@ class Category extends Model
         $per_page = empty(request('per_page')) ? 10 : (int) request('per_page');
         $direction = request('direction')  ?? 'asc';
         $sortBy = request('sortBy') ?? 'id';
-        $id_parent = request('id_parent') ?? 0;
-        return Category::ofCategoryId($id_parent)->orderBy($sortBy, $direction)->paginate($per_page);
+        $parentId = request('parentId') ?? 0;
+        return Category::ofCategoryId($parentId)->orderBy($sortBy, $direction)->paginate($per_page);
+    }
+
+    public function setFile($path, $size, $type, $position)
+    {
+        if (!$file = $this->image())
+            $file = new File();
+        $file->set($path, $size, $type, $position);
+        return $this->file()->save($file);
+    }
+
+    public static function set(){
+
+        $category = new Category();
+        $category->sort = request('sort');
+        $category->parent_id = request('parentId');
+        $category->type = config("constants.category.type.main");
+        $category->status = request('status');
+        $category->save();
+
+        $describe = new Describe();
+        $describe->title = request('title');
+        $describe->description = request('description');
+        $describe->type = config("constants.describe.type.text");
+        $describe->save;
+        $category->describes()->save($describe);
+
+        $uploadAdmin = new UploadAdmin();
+        if ($result = $uploadAdmin->image(request('image'), 'category'))
+            $category->setFile($result, 0, 0, config('constants.file.position.category'));
+    }
+
+    public static function setUpdate($id)
+    {
+        $category = Category::ofId($id)->first();
+        $category->sort = request('sort');
+        $category->status = request('status');
+        $category->save();
+
+        $describe = $category->describes()->ofType(config("constants.describe.type.text"))->first();
+        $describe->title = request('title');
+        $describe->description = request('description');
+        $describe->save;
+
+        $uploadAdmin = new UploadAdmin();
+        if ($result = $uploadAdmin->image(request('image'), 'category'))
+            $category->setFile($result, 0, 0, config('constants.file.position.category'));
+      
     }
 }

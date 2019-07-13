@@ -2155,37 +2155,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2202,19 +2171,23 @@ __webpack_require__.r(__webpack_exports__);
       pagination: {},
       dialog: false,
       editedIndex: -1,
-      id_parent: 0,
-      currentIdParent: 0,
+      parentId: 0,
+      currentParentId: 0,
       editedItem: {
         image: "",
         title: "",
         description: "",
-        status: 0
+        status: 0,
+        sort: 0,
+        parentId: 0
       },
       defaultItem: {
         image: "",
         title: "",
         description: "",
-        status: 0
+        status: 0,
+        sort: 0,
+        parentId: 0
       },
       headers: [{
         text: "ردیف",
@@ -2265,12 +2238,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getParent: function getParent() {
-      this.id_parent = this.currentIdParent;
+      this.parentId = this.currentParentId;
+      this.currentParentId = 0;
       this.getByPagination();
     },
     getChildren: function getChildren(parentId) {
-      this.currentIdParent = this.id_parent;
-      this.id_parent = parentId;
+      this.currentParentId = this.parentId;
+      this.parentId = parentId;
       this.getByPagination();
     },
     getByPagination: function getByPagination() {
@@ -2301,8 +2275,10 @@ __webpack_require__.r(__webpack_exports__);
           sortBy: this.pagination.sortBy,
           page: this.pagination.page,
           per_page: this.pagination.rowsPerPage,
-          id_parent: this.id_parent
+          parentId: this.parentId,
+          currentParentId: this.currentParentId
         }).then(function (res) {
+          console.log(res);
           _this.loading = false;
           _this.results = res.data.data;
           _this.total = res.data.meta.total;
@@ -2361,6 +2337,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       this.editedItem.image = this.file;
+      this.editedItem.parentId = this.parentId;
 
       if (this.editedIndex > -1) {
         console.log(this.editedItem);
@@ -7411,7 +7388,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.v-sheet--offset {\n  top: -24px;\n  position: relative;\n}\n", ""]);
+exports.push([module.i, "\n.v-sheet--offset {\r\n  top: -24px;\r\n  position: relative;\n}\r\n", ""]);
 
 // exports
 
@@ -7430,7 +7407,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.headline[data-v-4af67f56] {\n  font-family: iranyekan !important;\n}\nimg[data-v-4af67f56] {\n  max-height: 100px;\n}\n", ""]);
+exports.push([module.i, "\n.headline[data-v-4af67f56] {\r\n  font-family: iranyekan !important;\n}\nimg[data-v-4af67f56] {\r\n  max-height: 100px;\n}\r\n", ""]);
 
 // exports
 
@@ -40907,21 +40884,19 @@ var render = function() {
                     return [
                       _c("v-spacer"),
                       _vm._v(" "),
-                      _vm.currentIdParent > 0
-                        ? _c(
-                            "v-btn",
-                            {
-                              staticClass: "mb-2",
-                              attrs: { color: "primary" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.getParent()
-                                }
-                              }
-                            },
-                            [_vm._v("بازگشت")]
-                          )
-                        : _vm._e(),
+                      _c(
+                        "v-btn",
+                        {
+                          staticClass: "mb-2",
+                          attrs: { color: "primary" },
+                          on: {
+                            click: function($event) {
+                              return _vm.getParent()
+                            }
+                          }
+                        },
+                        [_vm._v("بازگشت")]
+                      ),
                       _vm._v(" "),
                       _c(
                         "v-btn",
@@ -40972,15 +40947,11 @@ var render = function() {
                                   _c("v-text-field", {
                                     attrs: { label: "عنوان*" },
                                     model: {
-                                      value: _vm.editedItem.first_name,
+                                      value: _vm.editedItem.title,
                                       callback: function($$v) {
-                                        _vm.$set(
-                                          _vm.editedItem,
-                                          "first_name",
-                                          $$v
-                                        )
+                                        _vm.$set(_vm.editedItem, "title", $$v)
                                       },
-                                      expression: "editedItem.first_name"
+                                      expression: "editedItem.title"
                                     }
                                   })
                                 ],
@@ -40994,15 +40965,33 @@ var render = function() {
                                   _c("v-text-field", {
                                     attrs: { label: "توضیحات*" },
                                     model: {
-                                      value: _vm.editedItem.last_name,
+                                      value: _vm.editedItem.description,
                                       callback: function($$v) {
                                         _vm.$set(
                                           _vm.editedItem,
-                                          "last_name",
+                                          "description",
                                           $$v
                                         )
                                       },
-                                      expression: "editedItem.last_name"
+                                      expression: "editedItem.description"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-flex",
+                                { attrs: { xs12: "", sm6: "", md6: "" } },
+                                [
+                                  _c("v-text-field", {
+                                    attrs: { label: "ترتیب*" },
+                                    model: {
+                                      value: _vm.editedItem.sort,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.editedItem, "sort", $$v)
+                                      },
+                                      expression: "editedItem.sort"
                                     }
                                   })
                                 ],
@@ -41042,10 +41031,15 @@ var render = function() {
                                 "v-flex",
                                 { attrs: { xs12: "", sm4: "", md4: "" } },
                                 [
-                                  _c("img", {
-                                    staticClass: "img-responsive",
-                                    attrs: { src: _vm.file }
-                                  })
+                                  _vm.file !== ""
+                                    ? _c("img", {
+                                        staticClass: "img-responsive",
+                                        attrs: { src: _vm.file }
+                                      })
+                                    : _c("img", {
+                                        staticClass: "img-responsive",
+                                        attrs: { src: _vm.editedItem.image }
+                                      })
                                 ]
                               )
                             ],
@@ -41117,7 +41111,14 @@ var render = function() {
             key: "items",
             fn: function(props) {
               return [
-                _c("td", [_vm._v(_vm._s(props.index + 1))]),
+                _c("td", [
+                  _vm._v(
+                    _vm._s(
+                      _vm.pagination.rowsPerPage * (_vm.pagination.page - 1) +
+                        (props.index + 1)
+                    )
+                  )
+                ]),
                 _vm._v(" "),
                 _c(
                   "td",
@@ -41870,7 +41871,7 @@ function normalizeComponent (
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /*!
-  * vue-router v3.0.7
+  * vue-router v3.0.6
   * (c) 2019 Evan You
   * @license MIT
   */
@@ -43258,8 +43259,10 @@ function createMatcher (
         }
       }
 
-      location.path = fillParams(record.path, location.params, ("named route \"" + name + "\""));
-      return _createRoute(record, location, redirectedFrom)
+      if (record) {
+        location.path = fillParams(record.path, location.params, ("named route \"" + name + "\""));
+        return _createRoute(record, location, redirectedFrom)
+      }
     } else if (location.path) {
       location.params = {};
       for (var i = 0; i < pathList.length; i++) {
@@ -43414,12 +43417,7 @@ var positionStore = Object.create(null);
 function setupScroll () {
   // Fix for #1585 for Firefox
   // Fix for #2195 Add optional third attribute to workaround a bug in safari https://bugs.webkit.org/show_bug.cgi?id=182678
-  // Fix for #2774 Support for apps loaded from Windows file shares not mapped to network drives: replaced location.origin with
-  // window.location.protocol + '//' + window.location.host
-  // location.host contains the port and location.hostname doesn't
-  var protocolAndPath = window.location.protocol + '//' + window.location.host;
-  var absolutePath = window.location.href.replace(protocolAndPath, '');
-  window.history.replaceState({ key: getStateKey() }, '', absolutePath);
+  window.history.replaceState({ key: getStateKey() }, '', window.location.href.replace(window.location.origin, ''));
   window.addEventListener('popstate', function (e) {
     saveScrollPosition();
     if (e.state && e.state.key) {
@@ -43991,6 +43989,7 @@ function bindEnterGuard (
 ) {
   return function routeEnterGuard (to, from, next) {
     return guard(to, from, function (cb) {
+      next(cb);
       if (typeof cb === 'function') {
         cbs.push(function () {
           // #750
@@ -44001,7 +44000,6 @@ function bindEnterGuard (
           poll(cb, match.instances, key, isValid);
         });
       }
-      next(cb);
     })
   }
 }
@@ -44536,7 +44534,7 @@ function createHref (base, fullPath, mode) {
 }
 
 VueRouter.install = install;
-VueRouter.version = '3.0.7';
+VueRouter.version = '3.0.6';
 
 if (inBrowser && window.Vue) {
   window.Vue.use(VueRouter);
@@ -83626,7 +83624,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\works\laravel\vesam_shop\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\__laravel\shops\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })
