@@ -40,30 +40,14 @@
                     label="ترتیب*" ></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm4 md4 >
-                  <v-switch
-                    v-model="editedItem.status"
-                    label="وضعیت"
-                  ></v-switch>
+                  <v-switch v-model="editedItem.status" label="وضعیت" ></v-switch>
                 </v-flex>
-                <v-flex
-                  xs12
-                  sm8
-                  md8
-                >
-                  <input
-                    type="file"
-                    v-on:change="onFileChange"
-                  />
+                <v-flex xs12 sm8 md8>
+                  <input type="file" v-on:change="onFileChange" />
                 </v-flex>
-                <v-flex
-                  xs12
-                  sm4
-                  md4
-                >
-                  <img
-                    :src="file"
-                    class="img-responsive"
-                  />
+                <v-flex xs12 sm4 md4>
+                  <img v-if="file!==''" :src="file" class="img-responsive" />
+                  <img v-else :src="editedItem.image" class="img-responsive" />
                 </v-flex>
               </v-layout>
             </v-container>

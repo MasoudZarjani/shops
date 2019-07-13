@@ -17,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $parentId = request('id') ?? "";
+        $parentId = request('id') ?? 0;
         $categories = Category::ofCategoryId($parentId)->get();
         return CategoryResource::collection($categories);
     }
@@ -26,6 +26,7 @@ class CategoryController extends Controller
     {
         $categories = Category::getByOrder();
         return CategoryResource::collection($categories);
+        //return response()->json(['data' => $data,'currentParentId'=>10]);
     }
 
     public function create()
@@ -42,5 +43,4 @@ class CategoryController extends Controller
     {
         return Category::setUpdate(request('id'));
     }
-    
 }

@@ -2155,22 +2155,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -41047,10 +41031,15 @@ var render = function() {
                                 "v-flex",
                                 { attrs: { xs12: "", sm4: "", md4: "" } },
                                 [
-                                  _c("img", {
-                                    staticClass: "img-responsive",
-                                    attrs: { src: _vm.file }
-                                  })
+                                  _vm.file !== ""
+                                    ? _c("img", {
+                                        staticClass: "img-responsive",
+                                        attrs: { src: _vm.file }
+                                      })
+                                    : _c("img", {
+                                        staticClass: "img-responsive",
+                                        attrs: { src: _vm.editedItem.image }
+                                      })
                                 ]
                               )
                             ],
