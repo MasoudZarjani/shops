@@ -13,9 +13,9 @@ class UploadAdmin
             $data = base64_decode($data);
             $fileName = mt_rand() . time() . '.jpg';
             file_put_contents('uploads/images/' . $path . '/' . $fileName, $data);
+            return 'uploads/images/' . $path . '/' . $fileName;
         } catch (\Exception $e) {
-            $msg = $e;
+            return $e;
         }
-        return 'uploads/images/' . $path . '/' . $fileName;
     }
 }

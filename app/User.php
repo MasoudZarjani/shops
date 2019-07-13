@@ -264,7 +264,12 @@ class User extends Authenticatable
     public static function getByFilter()
     {
         $per_page = empty(request('per_page')) ? 10 : (int) request('per_page');
-        return User::where('mobile', 'LIKE', '%' . request('query') . '%')->paginate($per_page);
+        return User::where(function ($query) {
+            $query->whereHas('profile', function ($query) {
+                $query->where('full_name', 'LIKE', '%' . request('query') . '%');
+            });
+            $query->orWhere('mobile', 'LIKE', '%' . request('query') . '%');
+        })->paginate($per_page);
     }
 
     public static function getByOrder()

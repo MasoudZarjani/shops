@@ -53,11 +53,67 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["drawer"],
   data: function data() {
     return {
-      links: [{
+      items: [{
         title: "صفحه اصلی",
         icon: "mdi-view-dashboard",
         to: "/"
@@ -66,13 +122,45 @@ __webpack_require__.r(__webpack_exports__);
         icon: "mdi-account-group",
         to: "/user"
       }, {
-        title: "تنظیمات",
-        icon: "mdi-settings",
-        to: "/setting"
-      }, {
         title: "دسته بندی",
         icon: "mdi-lan",
         to: "/category"
+      }, {
+        title: "محصولات",
+        icon: "mdi-package-variant-closed",
+        to: "/product"
+      }, {
+        title: "سفارشات",
+        icon: "mdi-cart",
+        to: "/cart"
+      }, {
+        title: "پیام ها",
+        icon: "mdi-message",
+        arrow_icon: "keyboard_arrow_up",
+        arrow_icon_alt: "keyboard_arrow_down",
+        children: [{
+          title: "نظرات",
+          to: "/comment",
+          icon: "mdi-message-text"
+        }, {
+          title: "پرسش و پاسخ",
+          to: "/discuss",
+          icon: "mdi-forum"
+        }]
+      }, {
+        title: "تنظیمات",
+        icon: "mdi-settings",
+        arrow_icon: "keyboard_arrow_up",
+        arrow_icon_alt: "keyboard_arrow_down",
+        children: [{
+          title: "رنگ",
+          to: "/color",
+          icon: "mdi-palette"
+        }, {
+          title: "اپلیکیشن",
+          to: "/setting",
+          icon: "mdi-cellphone-settings-variant"
+        }]
       }],
       logo: "/images/vesam-logo.jpg"
     };
@@ -93,7 +181,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.title {\r\n  font-family: iranyekan !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.title {\n  font-family: iranyekan !important;\n}\n", ""]);
 
 // exports
 
@@ -170,39 +258,32 @@ var render = function() {
     },
     [
       _c(
-        "v-layout",
-        { staticClass: "fill-height", attrs: { tag: "v-list", column: "" } },
+        "v-toolbar",
+        { staticClass: "transparent", attrs: { flat: "" } },
         [
           _c(
-            "v-toolbar",
-            { staticClass: "transparent", attrs: { flat: "" } },
+            "v-list",
             [
               _c(
-                "v-list",
+                "v-list-tile",
+                { attrs: { avatar: "" } },
                 [
                   _c(
-                    "v-list-tile",
-                    { attrs: { avatar: "" } },
+                    "v-list-tile-avatar",
                     [
-                      _c(
-                        "v-list-tile-avatar",
-                        [
-                          _c("v-img", {
-                            attrs: { src: _vm.logo, height: "34", contain: "" }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-list-tile-content",
-                        [
-                          _c("v-list-tile-title", { staticClass: "title" }, [
-                            _vm._v(_vm._s(_vm.$t("navigation.title")))
-                          ])
-                        ],
-                        1
-                      )
+                      _c("v-img", {
+                        attrs: { src: _vm.logo, height: "34", contain: "" }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile-content",
+                    [
+                      _c("v-list-tile-title", { staticClass: "title" }, [
+                        _vm._v(_vm._s(_vm.$t("navigation.title")))
+                      ])
                     ],
                     1
                   )
@@ -211,31 +292,115 @@ var render = function() {
               )
             ],
             1
-          ),
-          _vm._v(" "),
-          _c("v-divider"),
-          _vm._v(" "),
-          _vm._l(_vm.links, function(link, i) {
-            return _c(
-              "v-list-tile",
-              {
-                key: i,
-                staticClass: "v-list-item",
-                attrs: { to: link.to, avatar: "" }
-              },
-              [
-                _c(
-                  "v-list-tile-action",
-                  [_c("v-icon", [_vm._v(_vm._s(link.icon))])],
-                  1
-                ),
-                _vm._v(" "),
-                _c("v-list-tile-title", {
-                  domProps: { textContent: _vm._s(link.title) }
-                })
-              ],
-              1
-            )
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("v-divider"),
+      _vm._v(" "),
+      _c(
+        "v-list",
+        { attrs: { dense: "" } },
+        [
+          _vm._l(_vm.items, function(item) {
+            return [
+              item.children
+                ? _c(
+                    "v-list-group",
+                    {
+                      key: item.title,
+                      attrs: {
+                        "prepend-icon": item.icon,
+                        "append-icon": item.arrow_icon_alt
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "activator",
+                            fn: function() {
+                              return [
+                                _c(
+                                  "v-list-tile",
+                                  [
+                                    _c(
+                                      "v-list-tile-content",
+                                      [
+                                        _c("v-list-tile-title", [
+                                          _vm._v(_vm._s(item.title))
+                                        ])
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            },
+                            proxy: true
+                          }
+                        ],
+                        null,
+                        true
+                      ),
+                      model: {
+                        value: item.model,
+                        callback: function($$v) {
+                          _vm.$set(item, "model", $$v)
+                        },
+                        expression: "item.model"
+                      }
+                    },
+                    [
+                      _vm._v(" "),
+                      _vm._l(item.children, function(child, i) {
+                        return _c(
+                          "v-list-tile",
+                          { key: i, attrs: { to: child.to } },
+                          [
+                            child.icon
+                              ? _c(
+                                  "v-list-tile-action",
+                                  [_c("v-icon", [_vm._v(_vm._s(child.icon))])],
+                                  1
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c(
+                              "v-list-tile-content",
+                              [
+                                _c("v-list-tile-title", [
+                                  _vm._v(_vm._s(child.title))
+                                ])
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      })
+                    ],
+                    2
+                  )
+                : _c(
+                    "v-list-tile",
+                    { key: item.title, attrs: { to: item.to } },
+                    [
+                      _c(
+                        "v-list-tile-action",
+                        [_c("v-icon", [_vm._v(_vm._s(item.icon))])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-tile-content",
+                        [_c("v-list-tile-title", [_vm._v(_vm._s(item.title))])],
+                        1
+                      )
+                    ],
+                    1
+                  )
+            ]
           })
         ],
         2
