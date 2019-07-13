@@ -66,8 +66,8 @@
           v-if="item.children"
           :key="item.title"
           v-model="item.model"
-          :prepend-icon="item.model ? item.icon : item['icon-alt']"
-          append-icon
+          :prepend-icon="item.icon"
+          :append-icon="item.model ? item.arrow_icon : item['arrow_icon_alt']"
         >
           <template v-slot:activator>
             <v-list-tile>
@@ -110,8 +110,9 @@ export default {
       { title: "سفارشات", icon: "mdi-cart", to: "/cart" },
       {
         title: "پیام ها",
-        icon: "keyboard_arrow_up",
-        "icon-alt": "keyboard_arrow_down",
+        icon: "mdi-message",
+        arrow_icon: "keyboard_arrow_up",
+        arrow_icon_alt: "keyboard_arrow_down",
         model: false,
         children: [
           { title: "نظرات", to: "/comment", icon: "mdi-message-text" },
@@ -120,8 +121,9 @@ export default {
       },
       {
         title: "تنظیمات",
-        icon: "keyboard_arrow_up",
-        "icon-alt": "keyboard_arrow_down",
+        icon: "mdi-settings",
+        arrow_icon: "keyboard_arrow_up",
+        arrow_icon_alt: "keyboard_arrow_down",
         model: false,
         children: [
           { title: "رنگ", to: "/color", icon: "mdi-palette" },

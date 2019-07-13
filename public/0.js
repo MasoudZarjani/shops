@@ -135,8 +135,9 @@ __webpack_require__.r(__webpack_exports__);
         to: "/cart"
       }, {
         title: "پیام ها",
-        icon: "keyboard_arrow_up",
-        "icon-alt": "keyboard_arrow_down",
+        icon: "mdi-message",
+        arrow_icon: "keyboard_arrow_up",
+        arrow_icon_alt: "keyboard_arrow_down",
         model: false,
         children: [{
           title: "نظرات",
@@ -149,8 +150,9 @@ __webpack_require__.r(__webpack_exports__);
         }]
       }, {
         title: "تنظیمات",
-        icon: "keyboard_arrow_up",
-        "icon-alt": "keyboard_arrow_down",
+        icon: "mdi-settings",
+        arrow_icon: "keyboard_arrow_up",
+        arrow_icon_alt: "keyboard_arrow_down",
         model: false,
         children: [{
           title: "رنگ",
@@ -311,10 +313,10 @@ var render = function() {
                     {
                       key: item.title,
                       attrs: {
-                        "prepend-icon": item.model
-                          ? item.icon
-                          : item["icon-alt"],
-                        "append-icon": ""
+                        "prepend-icon": item.icon,
+                        "append-icon": item.model
+                          ? item.arrow_icon
+                          : item["arrow_icon_alt"]
                       },
                       scopedSlots: _vm._u(
                         [
