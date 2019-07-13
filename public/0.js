@@ -138,7 +138,6 @@ __webpack_require__.r(__webpack_exports__);
         icon: "mdi-message",
         arrow_icon: "keyboard_arrow_up",
         arrow_icon_alt: "keyboard_arrow_down",
-        model: false,
         children: [{
           title: "نظرات",
           to: "/comment",
@@ -153,7 +152,6 @@ __webpack_require__.r(__webpack_exports__);
         icon: "mdi-settings",
         arrow_icon: "keyboard_arrow_up",
         arrow_icon_alt: "keyboard_arrow_down",
-        model: false,
         children: [{
           title: "رنگ",
           to: "/color",
@@ -314,9 +312,7 @@ var render = function() {
                       key: item.title,
                       attrs: {
                         "prepend-icon": item.icon,
-                        "append-icon": item.model
-                          ? item.arrow_icon
-                          : item["arrow_icon_alt"]
+                        "append-icon": item.arrow_icon_alt
                       },
                       scopedSlots: _vm._u(
                         [
