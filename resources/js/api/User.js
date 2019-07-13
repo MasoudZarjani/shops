@@ -22,4 +22,7 @@ export default {
     changeState(id) {
         return axios.get('user/changeState/' + id)
     },
+    getDetail(id) {
+        return axios.get('user/detail/' + id)
+    },
 }

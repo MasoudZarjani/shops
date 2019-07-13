@@ -17,7 +17,6 @@
           <v-card-title>
             <span class="headline">{{ formTitle }}</span>
           </v-card-title>
-
           <v-card-text>
             <v-container grid-list-md>
               <v-layout wrap>
@@ -42,7 +41,6 @@
             </v-container>
             <small>* فیلدهای الزامی را مشخص می نماید.</small>
           </v-card-text>
-
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="primary darken-1" flat @click="close">رد</v-btn>
@@ -74,9 +72,12 @@
             @change="changeState(props.item.id)"
           ></v-switch>
         </td>
-        <td class="text-xs-center">{{ props.item.created_at }}</td>
         <td>
-          <v-icon small class="mr-2" @click="editItem(props.item)">mdi-pencil</v-icon>
+          <v-icon
+            small
+            @click="$router.push({ path: `/user/detail/${props.item.id}` })"
+          >mdi-account-card-details</v-icon>
+          <v-icon small @click="editItem(props.item)">mdi-pencil</v-icon>
           <v-icon small @click="deleteItem(props.item)">mdi-delete</v-icon>
         </td>
       </template>
@@ -93,8 +94,8 @@ import Api from "../../api/User.js";
 
 export default {
   data: () => ({
-    snack: false,
     modal: false,
+    snack: false,
     snackColor: "",
     snackText: "",
     file: "",
@@ -132,7 +133,6 @@ export default {
       { text: "نام و نام خانوادگی", value: "full_name", align: "center" },
       { text: "شماره همراه", value: "mobile", align: "center" },
       { text: "وضعیت", value: "status", align: "center" },
-      { text: "تاریخ ثبت نام", value: "created_at", align: "center" },
       { text: "عملیات", value: "action", align: "center" }
     ],
     rowsPerPageItems: [5, 10, 20, 50, 100]

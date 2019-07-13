@@ -7,6 +7,7 @@ use App\Http\Resources\Admin\UserResource;
 use App\User;
 use App\UserProfile;
 use App\Helpers\UploadAdmin;
+use App\Http\Resources\Admin\UserDetailResource;
 
 class UserController extends Controller
 {
@@ -78,5 +79,10 @@ class UserController extends Controller
         ]);
 
         return $user;
+    }
+
+    public function detail($id)
+    {
+        return new UserDetailResource(User::ofId($id)->first());
     }
 }

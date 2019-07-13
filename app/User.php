@@ -40,9 +40,9 @@ class User extends Authenticatable
     /**
      * Get the communication that owns the user.
      */
-    public function communication()
+    public function communications()
     {
-        return $this->hasOne(UserCommunication::class);
+        return $this->hasMany(UserCommunication::class);
     }
 
     /**
