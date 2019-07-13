@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\UserProfile;
 use App\Describe;
 use Validator;
+use App\Http\Resources\Admin\SettingResource;
+
 class SettingController extends Controller
 {
     /**
@@ -16,12 +18,14 @@ class SettingController extends Controller
      */
     public function index()
     {
-        return $describes = Describe::OfType(config('constants.describe.type.setting'))->select('title','description','id')->get();
+        $describes = Describe::OfType(config('constants.describe.type.setting'))->select('title','description','id')->get();
+        return SettingResource::collection($describes);
     }
 
     public function order()
     {
-        return $describes = Describe::getByOrder();
+        $describes = Describe::getByOrder();
+        return SettingResource::collection($describes);
     }
 
     public function create(Request $request)

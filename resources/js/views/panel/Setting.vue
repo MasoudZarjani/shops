@@ -175,6 +175,7 @@ export default {
           per_page: this.pagination.rowsPerPage
         })
           .then(res => {
+            console.log(res);
             this.loading = false;
             this.results = res.data.data;
             this.total = res.data.meta.total;

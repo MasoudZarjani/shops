@@ -161,4 +161,5 @@ class Describe extends Model
         $sortBy = request('sortBy') ?? 'id';
         return Describe::OfType(config('constants.describe.type.setting'))->select('title','description','id')->orderBy($sortBy, $direction)->paginate($per_page);
     }
+
 }
