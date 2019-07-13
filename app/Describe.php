@@ -141,4 +141,25 @@ class Describe extends Model
         $this->save();
         return $this;
     }
+
+        /**
+     * Create describe
+     */
+    public function setWithType($type)
+    {
+        $this->title = request('title') ?? "";
+        $this->description = request('description') ?? "";
+        $this->type = $type ?? 0;
+        $this->save();
+        return $this;
+    }
+
+    public static function getByOrder()
+    {
+        $per_page = empty(request('per_page')) ? 10 : (int) request('per_page');
+        $direction = request('direction')  ?? 'asc';
+        $sortBy = request('sortBy') ?? 'id';
+        return Describe::OfType(config('constants.describe.type.setting'))->select('title','description','id')->orderBy($sortBy, $direction)->paginate($per_page);
+    }
+
 }
