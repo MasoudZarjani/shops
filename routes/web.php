@@ -29,6 +29,14 @@ Route::middleware(['auth'])->group(function () {
 
             Route::post('order', 'Admin\CategoryController@order');
         });
+
+        Route::group(['prefix' => 'setting'], function () {
+            Route::post('index', 'Admin\SettingController@index');
+            Route::delete('delete/{id}', 'Admin\SettingController@delete');
+            Route::put('update', 'Admin\SettingController@update');
+            Route::post('create', 'Admin\SettingController@create');
+            Route::post('order', 'Admin\SettingController@order');
+        });
     });
 });
 Route::get('/home', 'HomeController@index')->name('home');
