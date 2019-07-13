@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('api_token')->unique()->nullable();
             $table->string('mobile', 64)->unique()->nullable();
             $table->string('email')->unique()->nullable();
+            $table->string('remember_token')->nullable();
             $table->string('user_name')->unique()->nullable();
             $table->string('password')->nullable();
             $table->string('reagent_code', 10)->unique()->nullable();

@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\CategoryResource;
-use App\User;
-use Illuminate\Http\Request;
-use App\UserProfile;
 use App\Category;
 
 class CategoryController extends Controller
