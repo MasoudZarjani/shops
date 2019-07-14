@@ -14,21 +14,20 @@
   </v-toolbar>
 </template>
 <script>
-
 export default {
   props: ["drawer"],
   data: () => ({
     title: null,
     darkTheme: false,
-    backgroundChoice: "primary",
+    backgroundChoice: "primary"
   }),
 
   mounted() {
-    this.title = this.$route.name;
+    this.title = this.$t("menu.list." + this.$route.name);
   },
   watch: {
     $route(val) {
-      this.title = val.name;
+      this.title = this.$t("menu.list." + val.name);
     }
   },
 

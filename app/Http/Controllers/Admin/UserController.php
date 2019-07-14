@@ -44,8 +44,8 @@ class UserController extends Controller
         $user = User::ofId(request('id'))->first();
         if ($user->profile->set()) {
             $uploadAdmin = new UploadAdmin();
-            if ($result = $uploadAdmin->image(request('avatar'), 'avatar'))
-                $user->setAvatar($result, 0, 0, config('constants.file.position.avatar'));
+            if ($result = $uploadAdmin->image(request('avatar'), 'avatars'))
+            $user->setAvatar($result, 0, 0, config('constants.file.position.avatar'));
         }
         return $user;
     }

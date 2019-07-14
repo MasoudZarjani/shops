@@ -2446,6 +2446,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -3063,34 +3067,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      active: "tab-information",
       rowsPerPageItems: [4, 8, 12],
       pagination: {
         rowsPerPage: 4
@@ -3098,28 +3078,7 @@ __webpack_require__.r(__webpack_exports__);
       snack: false,
       snackColor: "",
       snackText: "",
-      items: [],
-      tabInformations: [{
-        name: "information",
-        title: "اطلاعات شخصی",
-        icon: "mdi-account-card-details",
-        align: "center"
-      }, {
-        name: "communication",
-        title: "اطلاعات تماس",
-        icon: "mdi-contact-phone",
-        align: "center"
-      }, {
-        name: "device",
-        title: "دستگاه ها",
-        icon: "mdi-cellphone-link",
-        align: "center"
-      }, {
-        name: "payment",
-        title: "پرداخت ها",
-        icon: "mdi-credit-card-settings",
-        align: "center"
-      }]
+      items: []
     };
   },
   mounted: function mounted() {
@@ -7659,7 +7618,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.v-sheet--offset {\r\n  top: -24px;\r\n  position: relative;\n}\r\n", ""]);
+exports.push([module.i, "\n.v-sheet--offset {\n  top: -24px;\n  position: relative;\n}\n", ""]);
 
 // exports
 
@@ -7697,7 +7656,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.headline[data-v-4af67f56] {\r\n  font-family: iranyekan !important;\n}\nimg[data-v-4af67f56] {\r\n  max-height: 100px;\n}\r\n", ""]);
+exports.push([module.i, "\n.headline[data-v-4af67f56] {\n  font-family: iranyekan !important;\n}\nimg[data-v-4af67f56] {\n  max-height: 100px;\n}\n", ""]);
 
 // exports
 
@@ -41629,18 +41588,39 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "v-container",
+    {
+      attrs: {
+        bg: "",
+        "fill-height": "",
+        "grid-list-md": "",
+        "text-xs-center": ""
+      }
+    },
+    [
+      _c(
+        "v-layout",
+        {
+          attrs: {
+            row: "",
+            "align-center": "",
+            "justify-center": "",
+            "fill-height": ""
+          }
+        },
+        [
+          _c("v-flex", { attrs: { xs12: "" } }, [
+            _c("h1", [_vm._v(_vm._s(_vm.$t("server.error.404")))])
+          ])
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "hello" }, [
-      _c("h1", [_vm._v("(404) Page NotFound")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -42283,250 +42263,94 @@ var render = function() {
     "v-container",
     [
       _c(
-        "v-tabs",
-        {
-          attrs: { color: "primary", dark: "", "slider-color": "amber" },
-          model: {
-            value: _vm.active,
-            callback: function($$v) {
-              _vm.active = $$v
-            },
-            expression: "active"
-          }
-        },
-        _vm._l(_vm.tabInformations, function(tabInformation, key) {
-          return _c(
-            "v-tab",
-            {
-              key: key,
-              attrs: { ripple: "", href: "#tab-" + tabInformation.name }
-            },
-            [
-              _c("v-icon", [_vm._v(_vm._s(tabInformation.icon))]),
-              _vm._v("\n       " + _vm._s(tabInformation.title) + "\n    ")
-            ],
-            1
-          )
-        }),
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-tabs-items",
-        {
-          model: {
-            value: _vm.active,
-            callback: function($$v) {
-              _vm.active = $$v
-            },
-            expression: "active"
-          }
-        },
-        _vm._l(_vm.tabInformations, function(tabInformation, key) {
-          return _c(
-            "v-tab-item",
-            { key: key, attrs: { value: "tab-" + tabInformation.name } },
+        "v-card",
+        [
+          _c(
+            "v-layout",
+            { attrs: { row: "" } },
             [
               _c(
-                "v-card",
-                { attrs: { flat: "" } },
+                "v-layout",
+                {
+                  attrs: { xs3: "", "align-center": "", "justify-center": "" }
+                },
                 [
                   _c(
-                    "v-card-text",
+                    "v-flex",
+                    { attrs: { "12": "" } },
                     [
-                      _c("h2", [_vm._v(_vm._s(tabInformation.title))]),
-                      _vm._v(" "),
+                      _c("v-img", {
+                        attrs: {
+                          src: _vm.items.avatar,
+                          height: "125px",
+                          contain: ""
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                { attrs: { xs6: "" } },
+                [
+                  _c(
+                    "v-card-title",
+                    [
                       _c(
                         "v-flex",
                         { attrs: { xs12: "" } },
                         [
-                          tabInformation.name == "information"
-                            ? _c(
-                                "v-card",
+                          _c(
+                            "v-flex",
+                            {
+                              staticClass: "subheading font-weight-black mb-2",
+                              attrs: { xs12: "" }
+                            },
+                            [_vm._v(_vm._s(_vm.items.full_name))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-layout",
+                            { attrs: { xs12: "", row: "" } },
+                            [
+                              _c(
+                                "v-flex",
+                                { attrs: { xs4: "" } },
                                 [
-                                  _c(
-                                    "v-layout",
-                                    { attrs: { row: "" } },
-                                    [
-                                      _c(
-                                        "v-flex",
-                                        { attrs: { xs2: "" } },
-                                        [
-                                          _c("v-img", {
-                                            attrs: {
-                                              src:
-                                                "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
-                                              height: "125px",
-                                              contain: ""
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-flex",
-                                        { attrs: { xs4: "" } },
-                                        [
-                                          _c(
-                                            "v-card-title",
-                                            { attrs: { "primary-title": "" } },
-                                            [
-                                              _c("div", [
-                                                _c(
-                                                  "div",
-                                                  {
-                                                    staticClass: "headline",
-                                                    staticStyle: {
-                                                      "font-family":
-                                                        "iranyekan !important"
-                                                    }
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      _vm._s(
-                                                        _vm.items.full_name
-                                                      )
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c("div", [
-                                                  _vm._v(
-                                                    _vm._s(_vm.items.mobile)
-                                                  )
-                                                ]),
-                                                _vm._v(" "),
-                                                _c("div", [
-                                                  _vm._v(
-                                                    _vm._s(_vm.items.created_at)
-                                                  )
-                                                ])
-                                              ])
-                                            ]
-                                          )
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-flex",
-                                        { attrs: { xs6: "", row: "" } },
-                                        [
-                                          _c("v-flex", { attrs: { xs6: "" } }, [
-                                            _c(
-                                              "a",
-                                              {
-                                                attrs: {
-                                                  href:
-                                                    _vm.items.social.facebook,
-                                                  target: "_blank"
-                                                }
-                                              },
-                                              [
-                                                _c(
-                                                  "v-icon",
-                                                  { attrs: { large: "" } },
-                                                  [_vm._v("mdi-facebook")]
-                                                )
-                                              ],
-                                              1
-                                            )
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("v-flex", { attrs: { xs6: "" } }, [
-                                            _c(
-                                              "a",
-                                              {
-                                                attrs: {
-                                                  href:
-                                                    _vm.items.social.twitter,
-                                                  target: "_blank"
-                                                }
-                                              },
-                                              [
-                                                _c(
-                                                  "v-icon",
-                                                  { attrs: { large: "" } },
-                                                  [_vm._v("mdi-twitter")]
-                                                )
-                                              ],
-                                              1
-                                            )
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("v-flex", { attrs: { xs6: "" } }, [
-                                            _c(
-                                              "a",
-                                              {
-                                                attrs: {
-                                                  href:
-                                                    _vm.items.social.instagram,
-                                                  target: "_blank"
-                                                }
-                                              },
-                                              [
-                                                _c(
-                                                  "v-icon",
-                                                  { attrs: { large: "" } },
-                                                  [_vm._v("mdi-instagram")]
-                                                )
-                                              ],
-                                              1
-                                            )
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("v-flex", { attrs: { xs6: "" } }, [
-                                            _c(
-                                              "a",
-                                              {
-                                                attrs: {
-                                                  href:
-                                                    _vm.items.social.telegram,
-                                                  target: "_blank"
-                                                }
-                                              },
-                                              [
-                                                _c(
-                                                  "v-icon",
-                                                  { attrs: { large: "" } },
-                                                  [_vm._v("mdi-telegram")]
-                                                )
-                                              ],
-                                              1
-                                            )
-                                          ])
-                                        ],
-                                        1
-                                      )
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c("v-divider", { attrs: { light: "" } }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-card-actions",
-                                    { staticClass: "pa-3" },
-                                    [
-                                      _vm._v(
-                                        "\n                عملیات\n                "
-                                      ),
-                                      _c("v-spacer"),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-btn",
-                                        { attrs: { icon: "" } },
-                                        [_c("v-icon", [_vm._v("favorite")])],
-                                        1
-                                      )
-                                    ],
-                                    1
+                                  _c("v-icon", { attrs: { small: "" } }, [
+                                    _vm._v("mdi-deskphone")
+                                  ]),
+                                  _vm._v(
+                                    "\n                " +
+                                      _vm._s(_vm.items.mobile) +
+                                      "\n              "
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-flex",
+                                { attrs: { xs4: "" } },
+                                [
+                                  _c("v-icon", { attrs: { small: "" } }, [
+                                    _vm._v("mdi-calendar-plus")
+                                  ]),
+                                  _vm._v(
+                                    "\n                " +
+                                      _vm._s(_vm.items.created_at) +
+                                      "\n              "
                                   )
                                 ],
                                 1
                               )
-                            : _vm._e()
+                            ],
+                            1
+                          )
                         ],
                         1
                       )
@@ -42535,11 +42359,109 @@ var render = function() {
                   )
                 ],
                 1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                { attrs: { xs3: "" } },
+                [
+                  _c("v-flex", { attrs: { xs6: "" } }, [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: _vm.items.social.facebook,
+                          target: "_blank"
+                        }
+                      },
+                      [
+                        _c("v-icon", { attrs: { large: "" } }, [
+                          _vm._v("mdi-facebook")
+                        ])
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("v-flex", { attrs: { xs6: "" } }, [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: _vm.items.social.twitter,
+                          target: "_blank"
+                        }
+                      },
+                      [
+                        _c("v-icon", { attrs: { large: "" } }, [
+                          _vm._v("mdi-twitter")
+                        ])
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("v-flex", { attrs: { xs6: "" } }, [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: _vm.items.social.instagram,
+                          target: "_blank"
+                        }
+                      },
+                      [
+                        _c("v-icon", { attrs: { large: "" } }, [
+                          _vm._v("mdi-instagram")
+                        ])
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("v-flex", { attrs: { xs6: "" } }, [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: _vm.items.social.telegram,
+                          target: "_blank"
+                        }
+                      },
+                      [
+                        _c("v-icon", { attrs: { large: "" } }, [
+                          _vm._v("mdi-telegram")
+                        ])
+                      ],
+                      1
+                    )
+                  ])
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-divider", { attrs: { light: "" } }),
+          _vm._v(" "),
+          _c(
+            "v-card-actions",
+            { staticClass: "pa-3" },
+            [
+              _vm._v("\n      عملیات\n      "),
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                { attrs: { icon: "" } },
+                [_c("v-icon", [_vm._v("favorite")])],
+                1
               )
             ],
             1
           )
-        }),
+        ],
         1
       ),
       _vm._v(" "),
@@ -42700,7 +42622,7 @@ function normalizeComponent (
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /*!
-  * vue-router v3.0.6
+  * vue-router v3.0.7
   * (c) 2019 Evan You
   * @license MIT
   */
@@ -44088,10 +44010,8 @@ function createMatcher (
         }
       }
 
-      if (record) {
-        location.path = fillParams(record.path, location.params, ("named route \"" + name + "\""));
-        return _createRoute(record, location, redirectedFrom)
-      }
+      location.path = fillParams(record.path, location.params, ("named route \"" + name + "\""));
+      return _createRoute(record, location, redirectedFrom)
     } else if (location.path) {
       location.params = {};
       for (var i = 0; i < pathList.length; i++) {
@@ -44246,7 +44166,12 @@ var positionStore = Object.create(null);
 function setupScroll () {
   // Fix for #1585 for Firefox
   // Fix for #2195 Add optional third attribute to workaround a bug in safari https://bugs.webkit.org/show_bug.cgi?id=182678
-  window.history.replaceState({ key: getStateKey() }, '', window.location.href.replace(window.location.origin, ''));
+  // Fix for #2774 Support for apps loaded from Windows file shares not mapped to network drives: replaced location.origin with
+  // window.location.protocol + '//' + window.location.host
+  // location.host contains the port and location.hostname doesn't
+  var protocolAndPath = window.location.protocol + '//' + window.location.host;
+  var absolutePath = window.location.href.replace(protocolAndPath, '');
+  window.history.replaceState({ key: getStateKey() }, '', absolutePath);
   window.addEventListener('popstate', function (e) {
     saveScrollPosition();
     if (e.state && e.state.key) {
@@ -44818,7 +44743,6 @@ function bindEnterGuard (
 ) {
   return function routeEnterGuard (to, from, next) {
     return guard(to, from, function (cb) {
-      next(cb);
       if (typeof cb === 'function') {
         cbs.push(function () {
           // #750
@@ -44829,6 +44753,7 @@ function bindEnterGuard (
           poll(cb, match.instances, key, isValid);
         });
       }
+      next(cb);
     })
   }
 }
@@ -45363,7 +45288,7 @@ function createHref (base, fullPath, mode) {
 }
 
 VueRouter.install = install;
-VueRouter.version = '3.0.6';
+VueRouter.version = '3.0.7';
 
 if (inBrowser && window.Vue) {
   window.Vue.use(VueRouter);
@@ -83928,10 +83853,10 @@ module.exports = {};
 /*!**************************************!*\
   !*** ./resources/js/locales/fa.json ***!
   \**************************************/
-/*! exports provided: home, navigation, message, default */
+/*! exports provided: home, navigation, menu, message, server, default */
 /***/ (function(module) {
 
-module.exports = {"home":{"welcome":"خوش آمدید","brand":"M|Z"},"navigation":{"title":"پنل مدیریت"},"message":{"delete":{"success":"حذف با موفقیت انجام شد.","error":"حذف با خطا مواجه شد"},"changeState":{"success":"اطلاعات با موفقیت به روز شد.","error":"به روز رسانی اطلاعات با خطا مواجه شد."},"create":{"success":"اطلاعات با موفقیت ثبت گردید.","error":"در ثبت اطلاعات خطایی رخ داده است."},"update":{"success":"ویرایش با موفقیت انجام شد.","error":"ویرایش با خطا همراه شد."},"userDetail":{"error":"ارتباط با سرور با خطا روبرو شد."}}};
+module.exports = {"home":{"welcome":"خوش آمدید","brand":"M|Z"},"navigation":{"title":"پنل مدیریت"},"menu":{"list":{"Category":"دسته بندی ها","Index":"صفحه اصلی","User":"کاربران","UserDetail":"جزئیات کاربر","Setting":"تنظیمات","NotFound":"خطا"}},"message":{"delete":{"success":"حذف با موفقیت انجام شد.","error":"حذف با خطا مواجه شد"},"changeState":{"success":"اطلاعات با موفقیت به روز شد.","error":"به روز رسانی اطلاعات با خطا مواجه شد."},"create":{"success":"اطلاعات با موفقیت ثبت گردید.","error":"در ثبت اطلاعات خطایی رخ داده است."},"update":{"success":"ویرایش با موفقیت انجام شد.","error":"ویرایش با خطا همراه شد."},"userDetail":{"error":"ارتباط با سرور با خطا روبرو شد."}},"server":{"error":{"404":"خطای 404: صفحه یافت نشد"}}};
 
 /***/ }),
 
@@ -84567,7 +84492,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! E:\__laravel\shops\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\works\laravel\vesam_shop\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })

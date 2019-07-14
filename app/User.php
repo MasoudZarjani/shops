@@ -231,7 +231,7 @@ class User extends Authenticatable
      */
     public function setAvatar($path, $size, $type, $position)
     {
-        if (!$file = $this->files)
+        if (!$file = $this->files->first())
             $file = new File();
         $file->set($path, $size, $type, $position);
         return $this->files()->save($file);
