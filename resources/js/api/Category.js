@@ -8,6 +8,9 @@ export default {
     getOrder(data) {
         return axios.post('category/order', data)
     },
+    getFilter(data) {
+        return axios.post('category/filter', data)
+    },
     delete(id) {
         return axios.delete('category/delete/' + id)
     },
@@ -16,5 +19,8 @@ export default {
     },
     create(data) {
         return axios.post('category/create', data)
-    }
+    },
+    changeState(id) {
+        return axios.get('category/changeState/' + id)
+    },
 }

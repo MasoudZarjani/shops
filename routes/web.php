@@ -26,8 +26,9 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('delete/{id}', 'Admin\CategoryController@delete');
             Route::put('update', 'Admin\CategoryController@update');
             Route::post('create', 'Admin\CategoryController@create');
-
+            Route::post('filter', 'Admin\CategoryController@filter');
             Route::post('order', 'Admin\CategoryController@order');
+            Route::get('changeState/{id}', 'Admin\CategoryController@changeState');
         });
 
         Route::group(['prefix' => 'setting'], function () {

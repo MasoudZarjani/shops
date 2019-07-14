@@ -12,7 +12,7 @@ Use App\Helpers\UploadAdmin;
 class Category extends Model
 {
     use CreateUuid, SoftDeletes;
-
+    protected $guarded = [];
     /**
      * Get the category's file.
      */
@@ -160,6 +160,20 @@ class Category extends Model
         $sortBy = request('sortBy') ?? 'id';
         $parentId = request('parentId') ?? 0;
         return Category::ofCategoryId($parentId)->orderBy($sortBy, $direction)->paginate($per_page);
+    }
+
+    public static function getByFilter()
+    {
+        $per_page = empty(request('per_page')) ? 10 : (int) request('per_page');
+        return Category::where(function ($query) {
+            $query->whereHas('describes', function ($query) {
+                $query->where('title', 'LIKE', '%' . request('query') . '%');
+                $query->ofType(config('constants.describe.type.text'));
+            });
+        })
+        ->ofType(config('constants.category.type.main'))
+        ->active()
+        ->paginate($per_page);
     }
 
     public function setFile($path, $size, $type, $position)
