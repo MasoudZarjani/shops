@@ -2,7 +2,7 @@ import axios from '../config/axios'
 
 export default {
     getSetting(data) {
-        return axios.post('setting', data)
+        return axios.post('setting/index', data)
     },
     delete(id) {
         return axios.delete('setting/delete/' + id)

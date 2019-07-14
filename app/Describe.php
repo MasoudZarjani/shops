@@ -136,11 +136,12 @@ class Describe extends Model
      */
     public function set()
     {
-        $this->title = request('title') ?? "";
+        $this->title = request('title') ?? $this->title;
         $this->description = request('description') ?? "";
         $this->save();
         return $this;
     }
+    
 
         /**
      * Create describe
@@ -158,7 +159,7 @@ class Describe extends Model
     {
         $per_page = empty(request('per_page')) ? 10 : (int) request('per_page');
         $direction = request('direction')  ?? 'asc';
-        $sortBy = request('sortBy') ?? 'id';
+        $sortBy = request('sortBy') ?? 'title';
         return Describe::OfType(config('constants.describe.type.setting'))->select('title','description','id')->orderBy($sortBy, $direction)->paginate($per_page);
     }
 

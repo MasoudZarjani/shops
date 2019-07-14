@@ -2564,27 +2564,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      loading: false,
       snack: false,
       snackColor: '',
       snackText: '',
@@ -2592,15 +2576,16 @@ __webpack_require__.r(__webpack_exports__);
         return v.length <= 25 || 'Input too long!';
       },
       pagination: {},
+      results: [],
       headers: [{
         text: "ردیف",
         value: "id",
-        align: "center"
+        align: "center",
+        sortable: false
       }, {
         text: "عنوان ",
         value: "title",
-        align: "center",
-        sortable: false
+        align: "center"
       }, {
         text: "محتوی",
         value: "description",
@@ -2613,29 +2598,43 @@ __webpack_require__.r(__webpack_exports__);
     dialog: function dialog(val) {
       val || this.close();
     },
-    pagination: {
-      handler: function handler() {
-        this.getByPagination();
-      }
-    },
     search: function search() {
       this.getByPagination();
     }
   },
+  mounted: function mounted() {
+    this.getByPagination();
+  },
   methods: {
-    save: function save() {
+    getByPagination: function getByPagination() {
       var _this = this;
 
-      _api_Setting_js__WEBPACK_IMPORTED_MODULE_0__["default"].update(this.editedIndex).then(function () {
-        _this.snackColor = "success";
-        _this.snackText = _this.$t("message.update.success");
-        _this.snack = true;
-        var self = _this.editedIndex;
-        Object.assign(_this.results[self], _this.editedItem);
+      this.loading = true;
+      _api_Setting_js__WEBPACK_IMPORTED_MODULE_0__["default"].getSetting({
+        page: this.pagination.page,
+        per_page: this.pagination.rowsPerPage
+      }).then(function (res) {
+        _this.loading = false;
+        _this.results = res.data.data;
+        _this.total = res.data.meta.total;
+      })["catch"](function (err) {
+        return console.log(err.response.data);
+      })["finally"](function () {
+        return _this.loading = false;
+      });
+    },
+    save: function save($item) {
+      var _this2 = this;
+
+      _api_Setting_js__WEBPACK_IMPORTED_MODULE_0__["default"].update($item).then(function () {
+        _this2.snackColor = "success";
+        _this2.snackText = _this2.$t("message.update.success");
+        _this2.snack = true; //let self = this.editedIndex;
+        //Object.assign(this.results[self], this.editedItem);
       })["catch"](function (error) {
-        _this.snack = true;
-        _this.snackColor = "error";
-        _this.snackText = _this.$t("message.update.error");
+        _this2.snack = true;
+        _this2.snackColor = "error";
+        _this2.snackText = _this2.$t("message.update.error");
       });
     },
     cancel: function cancel() {
@@ -41690,7 +41689,11 @@ var render = function() {
     "div",
     [
       _c("v-data-table", {
-        attrs: { headers: _vm.headers, items: _vm.desserts },
+        attrs: {
+          headers: _vm.headers,
+          items: _vm.results,
+          loading: _vm.loading
+        },
         scopedSlots: _vm._u([
           {
             key: "items",
@@ -41698,60 +41701,7 @@ var render = function() {
               return [
                 _c("td", [_vm._v(_vm._s(props.index + 1))]),
                 _vm._v(" "),
-                _c(
-                  "td",
-                  [
-                    _c(
-                      "v-edit-dialog",
-                      {
-                        attrs: { "return-value": props.item.title, lazy: "" },
-                        on: {
-                          "update:returnValue": function($event) {
-                            return _vm.$set(props.item, "title", $event)
-                          },
-                          "update:return-value": function($event) {
-                            return _vm.$set(props.item, "title", $event)
-                          },
-                          save: _vm.save,
-                          cancel: _vm.cancel,
-                          open: _vm.open,
-                          close: _vm.close
-                        },
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "input",
-                              fn: function() {
-                                return [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      rules: [_vm.max250chars],
-                                      label: "Edit",
-                                      "single-line": "",
-                                      counter: ""
-                                    },
-                                    model: {
-                                      value: props.item.title,
-                                      callback: function($$v) {
-                                        _vm.$set(props.item, "title", $$v)
-                                      },
-                                      expression: "props.item.title"
-                                    }
-                                  })
-                                ]
-                              },
-                              proxy: true
-                            }
-                          ],
-                          null,
-                          true
-                        )
-                      },
-                      [_vm._v(" " + _vm._s(props.item.title) + "\n          ")]
-                    )
-                  ],
-                  1
-                ),
+                _c("td", [_vm._v(_vm._s(props.item.title))]),
                 _vm._v(" "),
                 _c(
                   "td",
@@ -41772,7 +41722,9 @@ var render = function() {
                           "update:return-value": function($event) {
                             return _vm.$set(props.item, "description", $event)
                           },
-                          save: _vm.save,
+                          save: function($event) {
+                            return _vm.save(props.item)
+                          },
                           cancel: _vm.cancel,
                           open: _vm.open,
                           close: _vm.close
@@ -41786,7 +41738,7 @@ var render = function() {
                                   _c("v-text-field", {
                                     attrs: {
                                       rules: [_vm.max2500chars],
-                                      label: "Edit",
+                                      label: "description",
                                       "single-line": "",
                                       counter: "",
                                       autofocus: ""
@@ -83422,7 +83374,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   getSetting: function getSetting(data) {
-    return _config_axios__WEBPACK_IMPORTED_MODULE_0__["default"].post('setting', data);
+    return _config_axios__WEBPACK_IMPORTED_MODULE_0__["default"].post('setting/index', data);
   },
   "delete": function _delete(id) {
     return _config_axios__WEBPACK_IMPORTED_MODULE_0__["default"]["delete"]('setting/delete/' + id);
