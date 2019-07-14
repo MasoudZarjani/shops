@@ -72,12 +72,11 @@
             @change="changeState(props.item.id)"
           ></v-switch>
         </td>
-        <td>
+        <td class="text-xs-center">
           <v-icon
             small
             @click="$router.push({ path: `/user/detail/${props.item.id}` })"
           >mdi-account-card-details</v-icon>
-          <v-icon small @click="editItem(props.item)">mdi-pencil</v-icon>
           <v-icon small @click="deleteItem(props.item)">mdi-delete</v-icon>
         </td>
       </template>

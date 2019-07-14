@@ -2755,7 +2755,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3001,6 +3000,52 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _api_User_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../api/User.js */ "./resources/js/api/User.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -42124,6 +42169,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "td",
+                  { staticClass: "text-xs-center" },
                   [
                     _c(
                       "v-icon",
@@ -42138,19 +42184,6 @@ var render = function() {
                         }
                       },
                       [_vm._v("mdi-account-card-details")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "v-icon",
-                      {
-                        attrs: { small: "" },
-                        on: {
-                          click: function($event) {
-                            return _vm.editItem(props.item)
-                          }
-                        }
-                      },
-                      [_vm._v("mdi-pencil")]
                     ),
                     _vm._v(" "),
                     _c(
@@ -42236,81 +42269,251 @@ var render = function() {
         "v-card",
         [
           _c(
-            "v-layout",
-            { attrs: { row: "" } },
+            "v-card-title",
             [
               _c(
                 "v-flex",
-                {
-                  attrs: { xs3: "", "align-center": "", "justify-center": "" }
-                },
                 [
-                  _c(
-                    "v-avatar",
-                    { attrs: { size: "125px", color: "grey lighten-4" } },
-                    [
-                      _c("v-img", {
-                        attrs: { src: _vm.data.avatar, contain: "" }
-                      })
-                    ],
-                    1
-                  )
+                  _c("v-img", {
+                    attrs: { src: _vm.data.avatar, width: "100px" }
+                  })
                 ],
                 1
               ),
               _vm._v(" "),
-              _c(
-                "v-flex",
-                { attrs: { xs9: "" } },
-                [
-                  _c(
-                    "v-card-title",
-                    [
-                      _c("v-flex", { attrs: { xs6: "" } }, [
-                        _c(
-                          "div",
-                          { staticClass: "subheading font-weight-black" },
-                          [_vm._v(_vm._s(_vm.data.full_name))]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "mt-2" },
-                          [
-                            _c("v-icon", { attrs: { small: "" } }, [
-                              _vm._v("mdi-deskphone")
-                            ]),
-                            _vm._v(
-                              "\n              " +
-                                _vm._s(_vm.data.mobile) +
-                                "\n              "
-                            ),
-                            _c("v-icon", { attrs: { small: "" } }, [
-                              _vm._v("mdi-calendar-plus")
-                            ]),
-                            _vm._v(
-                              "\n              " +
-                                _vm._s(_vm.data.created_at) +
-                                "\n            "
+              _c("v-flex", [
+                _c(
+                  "div",
+                  { staticClass: "subheading font-weight-black" },
+                  [
+                    _vm._v(
+                      "\n          " +
+                        _vm._s(_vm.data.full_name) +
+                        "\n          "
+                    ),
+                    _vm.data.status == true
+                      ? _c(
+                          "v-tooltip",
+                          {
+                            attrs: { bottom: "" },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "activator",
+                                  fn: function(ref) {
+                                    var on = ref.on
+                                    return [
+                                      _c(
+                                        "v-icon",
+                                        _vm._g(
+                                          {
+                                            attrs: { small: "", color: "green" }
+                                          },
+                                          on
+                                        ),
+                                        [_vm._v("mdi-circle")]
+                                      )
+                                    ]
+                                  }
+                                }
+                              ],
+                              null,
+                              false,
+                              3243333112
                             )
-                          ],
-                          1
+                          },
+                          [_vm._v(" "), _c("span", [_vm._v("فعال")])]
                         )
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "v-flex",
-                        { attrs: { xs6: "" } },
-                        [
+                      : _c(
+                          "v-tooltip",
+                          {
+                            attrs: { bottom: "" },
+                            scopedSlots: _vm._u([
+                              {
+                                key: "activator",
+                                fn: function(ref) {
+                                  var on = ref.on
+                                  return [
+                                    _c(
+                                      "v-icon",
+                                      _vm._g(
+                                        { attrs: { small: "", color: "red" } },
+                                        on
+                                      ),
+                                      [_vm._v("mdi-circle")]
+                                    )
+                                  ]
+                                }
+                              }
+                            ])
+                          },
+                          [_vm._v(" "), _c("span", [_vm._v("فعال")])]
+                        )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "mt-2" },
+                  [
+                    _c(
+                      "v-tooltip",
+                      {
+                        attrs: { bottom: "" },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "activator",
+                            fn: function(ref) {
+                              var on = ref.on
+                              return [
+                                _c(
+                                  "span",
+                                  _vm._g({}, on),
+                                  [
+                                    _c("v-icon", { attrs: { small: "" } }, [
+                                      _vm._v("mdi-phone")
+                                    ]),
+                                    _vm._v(
+                                      "\n                " +
+                                        _vm._s(_vm.data.mobile) +
+                                        "\n              "
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            }
+                          }
+                        ])
+                      },
+                      [_vm._v(" "), _c("span", [_vm._v("شماره تماس")])]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-tooltip",
+                      {
+                        attrs: { bottom: "" },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "activator",
+                            fn: function(ref) {
+                              var on = ref.on
+                              return [
+                                _c(
+                                  "span",
+                                  _vm._g({}, on),
+                                  [
+                                    _c("v-icon", { attrs: { small: "" } }, [
+                                      _vm._v("mdi-calendar-plus")
+                                    ]),
+                                    _vm._v(
+                                      "\n                " +
+                                        _vm._s(_vm.data.created_at) +
+                                        "\n              "
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            }
+                          }
+                        ])
+                      },
+                      [_vm._v(" "), _c("span", [_vm._v("تاریخ ثبت")])]
+                    )
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c(
+                "v-tooltip",
+                {
+                  attrs: { bottom: "" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "activator",
+                      fn: function(ref) {
+                        var on = ref.on
+                        return [
                           _c(
                             "v-btn",
-                            { staticClass: "left-float", attrs: { icon: "" } },
-                            [_c("v-icon", [_vm._v("mdi-pencil")])],
+                            _vm._g(
+                              {
+                                attrs: { color: "primary", fab: "", small: "" }
+                              },
+                              on
+                            ),
+                            [_c("v-icon", [_vm._v("edit")])],
                             1
                           )
-                        ],
-                        1
-                      )
+                        ]
+                      }
+                    }
+                  ])
+                },
+                [_vm._v(" "), _c("span", [_vm._v("ویرایش")])]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-layout",
+            { attrs: { row: "" } },
+            [_c("v-flex", { attrs: { xs10: "" } }, [_c("v-card-text")], 1)],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-divider", { attrs: { light: "" } }),
+          _vm._v(" "),
+          _c(
+            "v-card-actions",
+            { staticClass: "pa-3" },
+            [
+              _c(
+                "v-layout",
+                { attrs: { xs12: "" } },
+                [
+                  _c(
+                    "v-flex",
+                    { staticClass: "text-xs-center" },
+                    [
+                      _c("v-icon", [_vm._v("mdi-facebook")]),
+                      _vm._v("فیسبوک\n        ")
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-flex",
+                    { staticClass: "text-xs-center" },
+                    [
+                      _c("v-icon", [_vm._v("mdi-twitter")]),
+                      _vm._v("توئیتر\n        ")
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-flex",
+                    { staticClass: "text-xs-center" },
+                    [
+                      _c("v-icon", [_vm._v("mdi-telegram")]),
+                      _vm._v("تلگرام\n        ")
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-flex",
+                    { staticClass: "text-xs-center" },
+                    [
+                      _c("v-icon", [_vm._v("mdi-instagram")]),
+                      _vm._v("اینستاگرام\n        ")
                     ],
                     1
                   )
@@ -42319,11 +42522,7 @@ var render = function() {
               )
             ],
             1
-          ),
-          _vm._v(" "),
-          _c("v-divider", { attrs: { light: "" } }),
-          _vm._v(" "),
-          _c("v-card-actions", { staticClass: "pa-3" })
+          )
         ],
         1
       ),
