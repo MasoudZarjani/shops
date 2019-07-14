@@ -19,6 +19,7 @@ Route::middleware(['auth'])->group(function () {
             Route::put('update', 'Admin\UserController@update');
             Route::post('create', 'Admin\UserController@create');
             Route::get('changeState/{id}', 'Admin\UserController@changeState');
+            Route::get('detail/{id}', 'Admin\UserController@detail');
         });
 
         Route::group(['prefix' => 'category'], function () {
