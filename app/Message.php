@@ -42,6 +42,14 @@ class Message extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
+        /**
+     * Get the message's product.
+     */
+    public function product()
+    {
+        return $this->hasOne(Product::class, 'id', 'product_id');
+    }
+
     /**
      * Scope a query to return type from message.
      *

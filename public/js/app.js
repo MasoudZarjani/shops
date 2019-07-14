@@ -2577,54 +2577,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       snack: false,
-      modal: false,
-      snackColor: "",
-      snackText: "",
-      file: "",
-      results: [],
-      search: "",
-      total: 0,
-      loading: false,
+      snackColor: '',
+      snackText: '',
+      max25chars: function max25chars(v) {
+        return v.length <= 25 || 'Input too long!';
+      },
       pagination: {},
-      dialog: false,
-      editedIndex: -1,
-      editedItem: {
-        title: "",
-        description: ""
-      },
-      defaultItem: {
-        title: "",
-        description: ""
-      },
       headers: [{
         text: "ردیف",
         value: "id",
@@ -2639,19 +2602,8 @@ __webpack_require__.r(__webpack_exports__);
         value: "description",
         align: "center",
         sortable: false
-      }, {
-        text: "عملیات",
-        value: "action",
-        align: "center",
-        sortable: false
-      }],
-      rowsPerPageItems: [5, 10, 20, 50, 100]
+      }]
     };
-  },
-  computed: {
-    formTitle: function formTitle() {
-      return this.editedIndex === -1 ? "افزودن" : "ویرایش";
-    }
   },
   watch: {
     dialog: function dialog(val) {
@@ -2667,125 +2619,33 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    getByPagination: function getByPagination() {
+    save: function save() {
       var _this = this;
 
-      this.loading = true;
-
-      if (this.search) {
-        _api_Setting_js__WEBPACK_IMPORTED_MODULE_0__["default"].getFilter({
-          query: this.search,
-          page: this.pagination.page,
-          per_page: this.pagination.rowsPerPage
-        }).then(function (res) {
-          _this.results = res.data.data;
-          _this.total = res.data.meta.total;
-        })["catch"](function (err) {
-          return console.log(err.response.data);
-        })["finally"](function () {
-          return _this.loading = false;
-        });
-      } // get by sort option
-
-
-      if (this.pagination.sortBy && !this.search) {
-        var direction = this.pagination.descending ? "desc" : "asc";
-        _api_Setting_js__WEBPACK_IMPORTED_MODULE_0__["default"].getOrder({
-          direction: direction,
-          sortBy: this.pagination.sortBy,
-          page: this.pagination.page,
-          per_page: this.pagination.rowsPerPage
-        }).then(function (res) {
-          console.log(res);
-          _this.loading = false;
-          _this.results = res.data.data;
-          _this.total = res.data.meta.total;
-        });
-      }
-
-      if (!this.search && !this.pagination.sortBy) {
-        _api_Setting_js__WEBPACK_IMPORTED_MODULE_0__["default"].getSetting({
-          page: this.pagination.page,
-          per_page: this.pagination.rowsPerPage
-        }).then(function (res) {
-          console.log(res);
-          _this.loading = false;
-          _this.results = res.data.data;
-          _this.total = res.data.meta.total;
-        })["catch"](function (err) {
-          return console.log(err.response.data);
-        })["finally"](function () {
-          return _this.loading = false;
-        });
-      }
+      _api_Setting_js__WEBPACK_IMPORTED_MODULE_0__["default"].update(this.editedIndex).then(function () {
+        _this.snackColor = "success";
+        _this.snackText = _this.$t("message.update.success");
+        _this.snack = true;
+        var self = _this.editedIndex;
+        Object.assign(_this.results[self], _this.editedItem);
+      })["catch"](function (error) {
+        _this.snack = true;
+        _this.snackColor = "error";
+        _this.snackText = _this.$t("message.update.error");
+      });
     },
-    editItem: function editItem(item) {
-      this.editedIndex = this.results.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
+    cancel: function cancel() {
+      this.snack = true;
+      this.snackColor = 'error';
+      this.snackText = 'Canceled';
     },
-    deleteItem: function deleteItem(item) {
-      var _this2 = this;
-
-      var index = this.results.indexOf(item);
-
-      if (confirm("از حذف مطمئن هستید؟")) {
-        _api_Setting_js__WEBPACK_IMPORTED_MODULE_0__["default"]["delete"](item.id).then(function () {
-          _this2.results.splice(index, 1);
-
-          _this2.snack = true;
-          _this2.snackColor = "success";
-          _this2.snackText = _this2.$t("message.delete.success");
-        })["catch"](function (error) {
-          _this2.snack = true;
-          _this2.snackColor = "error";
-          _this2.snackText = _this2.$t("message.delete.error");
-        });
-      }
+    open: function open() {
+      this.snack = true;
+      this.snackColor = 'info';
+      this.snackText = 'Dialog opened';
     },
     close: function close() {
-      var _this3 = this;
-
-      this.dialog = false;
-      setTimeout(function () {
-        _this3.editedItem = Object.assign({}, _this3.defaultItem);
-        _this3.editedIndex = -1;
-      }, 1000);
-    },
-    save: function save() {
-      var _this4 = this;
-
-      if (this.editedIndex > -1) {
-        console.log(this.editedItem);
-        _api_Setting_js__WEBPACK_IMPORTED_MODULE_0__["default"].update(this.editedItem).then(function () {
-          _this4.snackColor = "success";
-          _this4.snackText = _this4.$t("message.update.success");
-          _this4.snack = true;
-          var self = _this4.editedIndex;
-          Object.assign(_this4.results[self], _this4.editedItem);
-        })["catch"](function (error) {
-          _this4.snack = true;
-          _this4.snackColor = "error";
-          _this4.snackText = _this4.$t("message.update.error");
-        });
-      } else {
-        _api_Setting_js__WEBPACK_IMPORTED_MODULE_0__["default"].create(this.editedItem).then(function (_ref) {
-          var data = _ref.data;
-          _this4.snack = true;
-          _this4.snackColor = "success";
-          _this4.snackText = _this4.$t("message.create.success");
-
-          _this4.results.push(data.data);
-
-          _this4.getByPagination();
-        })["catch"](function (error) {
-          _this4.snack = true;
-          _this4.snackColor = "error";
-          _this4.snackText = _this4.$t("message.create.error");
-        });
-      }
-
-      this.close();
+      console.log('Dialog closed');
     }
   }
 });
@@ -41847,219 +41707,128 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-container",
+    "div",
     [
-      _c(
-        "v-toolbar",
-        { attrs: { flat: "" } },
-        [
-          _c(
-            "v-dialog",
-            {
-              attrs: { "max-width": "600px" },
-              scopedSlots: _vm._u([
-                {
-                  key: "activator",
-                  fn: function(ref) {
-                    var on = ref.on
-                    return [
-                      _c("v-spacer"),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        _vm._g(
-                          { staticClass: "mb-2", attrs: { color: "primary" } },
-                          on
-                        ),
-                        [_vm._v("افزودن")]
-                      )
-                    ]
-                  }
-                }
-              ]),
-              model: {
-                value: _vm.dialog,
-                callback: function($$v) {
-                  _vm.dialog = $$v
-                },
-                expression: "dialog"
-              }
-            },
-            [
-              _vm._v(" "),
-              _c(
-                "v-card",
-                [
-                  _c("v-card-title", [
-                    _c("span", { staticClass: "headline" }, [
-                      _vm._v(_vm._s(_vm.formTitle))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-text",
-                    [
-                      _c(
-                        "v-container",
-                        { attrs: { "grid-list-md": "" } },
-                        [
-                          _c(
-                            "v-layout",
-                            { attrs: { wrap: "" } },
-                            [
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "", sm6: "", md6: "" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: { label: "عنوان*" },
-                                    model: {
-                                      value: _vm.editedItem.title,
-                                      callback: function($$v) {
-                                        _vm.$set(_vm.editedItem, "title", $$v)
-                                      },
-                                      expression: "editedItem.title"
-                                    }
-                                  })
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "", sm6: "", md6: "" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: { label: "توضیحات*" },
-                                    model: {
-                                      value: _vm.editedItem.description,
-                                      callback: function($$v) {
-                                        _vm.$set(
-                                          _vm.editedItem,
-                                          "description",
-                                          $$v
-                                        )
-                                      },
-                                      expression: "editedItem.description"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("small", [
-                        _vm._v("* فیلدهای الزامی را مشخص می نماید.")
-                      ])
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-spacer"),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { color: "primary darken-1", flat: "" },
-                          on: { click: _vm.close }
-                        },
-                        [_vm._v("رد")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { color: "primary darken-1", flat: "" },
-                          on: { click: _vm.save }
-                        },
-                        [_vm._v("ذخیره")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
       _c("v-data-table", {
-        staticClass: "elevation-1",
-        attrs: {
-          headers: _vm.headers,
-          items: _vm.results,
-          pagination: _vm.pagination,
-          "total-items": _vm.total,
-          "rows-per-page-items": _vm.rowsPerPageItems,
-          loading: _vm.loading
-        },
-        on: {
-          "update:pagination": function($event) {
-            _vm.pagination = $event
-          }
-        },
+        attrs: { headers: _vm.headers, items: _vm.desserts },
         scopedSlots: _vm._u([
           {
             key: "items",
             fn: function(props) {
               return [
-                _c("td", [
-                  _vm._v(
-                    _vm._s(
-                      _vm.pagination.rowsPerPage * (_vm.pagination.page - 1) +
-                        (props.index + 1)
-                    )
-                  )
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-xs-center" }, [
-                  _vm._v(_vm._s(props.item.title))
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-xs-center" }, [
-                  _vm._v(_vm._s(props.item.description))
-                ]),
+                _c("td", [_vm._v(_vm._s(props.index + 1))]),
                 _vm._v(" "),
                 _c(
                   "td",
                   [
                     _c(
-                      "v-icon",
+                      "v-edit-dialog",
                       {
-                        staticClass: "mr-2",
-                        attrs: { small: "", color: "blue" },
+                        attrs: { "return-value": props.item.title, lazy: "" },
                         on: {
-                          click: function($event) {
-                            return _vm.editItem(props.item)
-                          }
-                        }
+                          "update:returnValue": function($event) {
+                            return _vm.$set(props.item, "title", $event)
+                          },
+                          "update:return-value": function($event) {
+                            return _vm.$set(props.item, "title", $event)
+                          },
+                          save: _vm.save,
+                          cancel: _vm.cancel,
+                          open: _vm.open,
+                          close: _vm.close
+                        },
+                        scopedSlots: _vm._u(
+                          [
+                            {
+                              key: "input",
+                              fn: function() {
+                                return [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      rules: [_vm.max250chars],
+                                      label: "Edit",
+                                      "single-line": "",
+                                      counter: ""
+                                    },
+                                    model: {
+                                      value: props.item.title,
+                                      callback: function($$v) {
+                                        _vm.$set(props.item, "title", $$v)
+                                      },
+                                      expression: "props.item.title"
+                                    }
+                                  })
+                                ]
+                              },
+                              proxy: true
+                            }
+                          ],
+                          null,
+                          true
+                        )
                       },
-                      [_vm._v("mdi-pencil")]
-                    ),
-                    _vm._v(" "),
+                      [_vm._v(" " + _vm._s(props.item.title) + "\n          ")]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  { staticClass: "text-xs-right" },
+                  [
                     _c(
-                      "v-icon",
+                      "v-edit-dialog",
                       {
-                        attrs: { small: "", color: "red" },
+                        attrs: {
+                          "return-value": props.item.description,
+                          large: "",
+                          lazy: ""
+                        },
                         on: {
-                          click: function($event) {
-                            return _vm.deleteItem(props.item)
-                          }
-                        }
+                          "update:returnValue": function($event) {
+                            return _vm.$set(props.item, "description", $event)
+                          },
+                          "update:return-value": function($event) {
+                            return _vm.$set(props.item, "description", $event)
+                          },
+                          save: _vm.save,
+                          cancel: _vm.cancel,
+                          open: _vm.open,
+                          close: _vm.close
+                        },
+                        scopedSlots: _vm._u(
+                          [
+                            {
+                              key: "input",
+                              fn: function() {
+                                return [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      rules: [_vm.max2500chars],
+                                      label: "Edit",
+                                      "single-line": "",
+                                      counter: "",
+                                      autofocus: ""
+                                    },
+                                    model: {
+                                      value: props.item.description,
+                                      callback: function($$v) {
+                                        _vm.$set(props.item, "description", $$v)
+                                      },
+                                      expression: "props.item.description"
+                                    }
+                                  })
+                                ]
+                              },
+                              proxy: true
+                            }
+                          ],
+                          null,
+                          true
+                        )
                       },
-                      [_vm._v("mdi-delete")]
+                      [_c("div", [_vm._v(_vm._s(props.item.description))])]
                     )
                   ],
                   1
