@@ -21,7 +21,7 @@
           <v-card-text>
             <h2>{{ tabInformation.title }}</h2>
             <v-flex xs12>
-              <v-card>
+              <v-card v-if="tabInformation.name == 'information'">
                 <v-layout row>
                   <v-flex xs2>
                     <v-img
@@ -42,11 +42,13 @@
                       </div>
                     </v-card-title>
                   </v-flex>
-                  <v-flex xs6>
+                  <v-flex xs6 row>
                     <v-flex xs6>
                       <a :href="items.social.facebook" target="_blank">
                         <v-icon large>mdi-facebook</v-icon>
                       </a>
+                    </v-flex>
+                    <v-flex xs6>
                       <a :href="items.social.twitter" target="_blank">
                         <v-icon large>mdi-twitter</v-icon>
                       </a>
@@ -55,6 +57,8 @@
                       <a :href="items.social.instagram" target="_blank">
                         <v-icon large>mdi-instagram</v-icon>
                       </a>
+                    </v-flex>
+                    <v-flex xs6>
                       <a :href="items.social.telegram" target="_blank">
                         <v-icon large>mdi-telegram</v-icon>
                       </a>
