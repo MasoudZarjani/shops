@@ -2,49 +2,32 @@
   <div>
     <v-data-table
       :headers="headers"
-      :items="desserts"
+      :items="results"
+      :loading="loading"
     >
       <template v-slot:items="props">
         <td>{{ props.index+1 }}</td>
-        <td>
-          <v-edit-dialog
-            :return-value.sync="props.item.title"
-            lazy
-            @save="save"
-            @cancel="cancel"
-            @open="open"
-            @close="close"
-          > {{ props.item.title }}
-            <template v-slot:input>
-              <v-text-field
-                v-model="props.item.title"
-                :rules="[max250chars]"
-                label="Edit"
-                single-line
-                counter
-              ></v-text-field>
-            </template>
-          </v-edit-dialog>
-        </td>
+        <td>{{ props.item.title }}</td>
+        
         <td class="text-xs-right">
           <v-edit-dialog
             :return-value.sync="props.item.description"
             large
             lazy
-            @save="save"
+            @save="save(props.item)"
             @cancel="cancel"
             @open="open"
             @close="close"
           >
             <div>{{ props.item.description }}</div>
             <template v-slot:input>
-              <div class="mt-3 title">Update description</div>
+              <div class="mt-3 title">ویرایش محتوی</div>
             </template>
             <template v-slot:input>
               <v-text-field
                 v-model="props.item.description"
                 :rules="[max2500chars]"
-                label="Edit"
+                label="description"
                 single-line
                 counter
                 autofocus
@@ -66,14 +49,16 @@
   export default {
     data () {
       return {
+        loading: false,
         snack: false,
         snackColor: '',
         snackText: '',
         max25chars: v => v.length <= 25 || 'Input too long!',
         pagination: {},
+        results: [],
         headers: [
-          { text: "ردیف", value: "id", align: "center" },
-          { text: "عنوان ", value: "title", align: "center", sortable: false },
+          { text: "ردیف", value: "id", align: "center", sortable: false },
+          { text: "عنوان ", value: "title", align: "center" },
           { text: "محتوی", value: "description", align: "center", sortable: false  },
         ],
       }
@@ -82,24 +67,38 @@
       dialog(val) {
         val || this.close();
       },
-      pagination: {
-        handler() {
-          this.getByPagination();
-        }
-      },
       search() {
         this.getByPagination();
       }
     },
+    mounted() {
+      this.getByPagination();
+    },
     methods: {
-      save () {
-        Api.update(this.editedIndex)
+      getByPagination() {
+        this.loading = true;
+        
+        Api.getSetting({
+          page: this.pagination.page,
+          per_page: this.pagination.rowsPerPage
+        })
+          .then(res => {
+            this.loading = false;
+            this.results = res.data.data;
+            this.total = res.data.meta.total;
+          })
+          .catch(err => console.log(err.response.data))
+          .finally(() => (this.loading = false));
+       },
+
+      save ($item) {
+        Api.update($item)
           .then(() => {
             this.snackColor = "success";
             this.snackText = this.$t("message.update.success");
             this.snack = true;
-            let self = this.editedIndex;
-            Object.assign(this.results[self], this.editedItem);
+            //let self = this.editedIndex;
+            //Object.assign(this.results[self], this.editedItem);
           })
           .catch(error => {
             this.snack = true;
