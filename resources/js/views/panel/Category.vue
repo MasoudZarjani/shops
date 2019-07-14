@@ -6,6 +6,15 @@
         max-width="600px"
       >
         <template v-slot:activator="{ on }">
+          
+          <v-text-field
+            v-model="search"
+            append-icon="search"
+            label="جستجو"
+            single-line
+            hide-details
+          ></v-text-field>
+
           <v-spacer></v-spacer>
           <v-btn
             color="primary"

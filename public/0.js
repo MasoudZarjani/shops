@@ -146,7 +146,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.title {\n  font-family: iranyekan !important;\n}\n", ""]);
+exports.push([module.i, "\n.title {\r\n  font-family: iranyekan !important;\n}\r\n", ""]);
 
 // exports
 
