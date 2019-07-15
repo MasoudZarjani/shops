@@ -1,54 +1,5 @@
 <template>
   <v-container>
-    <v-toolbar flat>
-      <v-dialog v-model="dialog" max-width="600px">
-        <template v-slot:activator="{ on }">
-          <v-text-field
-            v-model="search"
-            append-icon="search"
-            label="جستجو"
-            single-line
-            hide-details
-          ></v-text-field>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" class="mb-2" v-on="on">افزودن</v-btn>
-        </template>
-        <v-card>
-          <v-card-title>
-            <span class="headline">{{ formTitle }}</span>
-          </v-card-title>
-          <v-card-text>
-            <v-container grid-list-md>
-              <v-layout wrap>
-                <v-flex xs12 sm6 md6>
-                  <v-text-field v-model="editedItem.first_name" label="نام*"></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md6>
-                  <v-text-field v-model="editedItem.last_name" label="نام خانوادگی*"></v-text-field>
-                </v-flex>
-
-                <v-flex xs12 sm4 md4>
-                  <v-switch v-model="editedItem.status" label="وضعیت"></v-switch>
-                </v-flex>
-                <v-flex xs12 sm8 md8>
-                  <input type="file" v-on:change="onFileChange" />
-                </v-flex>
-                <v-flex xs12 sm4 md4>
-                  <img v-if="file!==''" :src="file" class="img-responsive" />
-                  <img v-else :src="editedItem.avatar" class="img-responsive" />
-                </v-flex>
-              </v-layout>
-            </v-container>
-            <small>* فیلدهای الزامی را مشخص می نماید.</small>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="primary darken-1" flat @click="close">رد</v-btn>
-            <v-btn color="primary darken-1" flat @click="save">ذخیره</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </v-toolbar>
     <v-data-table
       :headers="headers"
       :items="results"
@@ -93,34 +44,14 @@ import Api from "../../api/User.js";
 
 export default {
   data: () => ({
-    modal: false,
     snack: false,
     snackColor: "",
     snackText: "",
-    file: "",
     results: [],
     search: "",
     total: 0,
     loading: false,
     pagination: {},
-    dialog: false,
-    editedIndex: -1,
-    editedItem: {
-      avatar: "",
-      first_name: "",
-      last_name: "",
-      mobile: "",
-      status: 0,
-      created_at: ""
-    },
-    defaultItem: {
-      avatar: "",
-      first_name: "",
-      last_name: "",
-      mobile: "",
-      status: 0,
-      created_at: ""
-    },
     headers: [
       { text: "ردیف", value: "id", align: "center" },
       {
@@ -136,15 +67,7 @@ export default {
     ],
     rowsPerPageItems: [5, 10, 20, 50, 100]
   }),
-  computed: {
-    formTitle() {
-      return this.editedIndex === -1 ? "افزودن" : "ویرایش";
-    }
-  },
   watch: {
-    dialog(val) {
-      val || this.close();
-    },
     pagination: {
       handler() {
         this.getByPagination();
@@ -201,12 +124,6 @@ export default {
       }
     },
 
-    editItem(item) {
-      this.editedIndex = this.results.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
-    },
-
     deleteItem(item) {
       const index = this.results.indexOf(item);
       if (confirm("از حذف مطمئن هستید؟")) {
@@ -233,41 +150,6 @@ export default {
       }, 1000);
     },
 
-    save() {
-      this.editedItem.avatar = this.file;
-      if (this.editedIndex > -1) {
-        console.log(this.editedItem);
-        Api.update(this.editedItem)
-          .then(() => {
-            this.snackColor = "success";
-            this.snackText = this.$t("message.update.success");
-            this.snack = true;
-            let self = this.editedIndex;
-            Object.assign(this.results[self], this.editedItem);
-          })
-          .catch(error => {
-            this.snack = true;
-            this.snackColor = "error";
-            this.snackText = this.$t("message.update.error");
-          });
-      } else {
-        Api.create(this.editedItem)
-          .then(({ data }) => {
-            this.snack = true;
-            this.snackColor = "success";
-            this.snackText = this.$t("message.create.success");
-            this.results.push(data.data);
-            this.getByPagination();
-          })
-          .catch(error => {
-            this.snack = true;
-            this.snackColor = "error";
-            this.snackText = this.$t("message.create.error");
-          });
-      }
-      this.close();
-    },
-
     changeState(item) {
       this.snack = false;
       Api.changeState(item)
@@ -281,21 +163,6 @@ export default {
           this.snackColor = "error";
           this.snackText = this.$t("message.changeState.error");
         });
-    },
-
-    onFileChange(e) {
-      let files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return;
-      this.createImage(files[0]);
-    },
-
-    createImage(file) {
-      let reader = new FileReader();
-      let vm = this;
-      reader.onload = e => {
-        vm.file = e.target.result;
-      };
-      reader.readAsDataURL(file);
     }
   }
 };

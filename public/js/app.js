@@ -2556,24 +2556,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       loading: false,
       snack: false,
-      snackColor: '',
-      snackText: '',
+      snackColor: "",
+      snackText: "",
       max25chars: function max25chars(v) {
-        return v.length <= 25 || 'Input too long!';
+        return v.length <= 25 || "Input too long!";
       },
       pagination: {},
       results: [],
@@ -2639,16 +2631,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     cancel: function cancel() {
       this.snack = true;
-      this.snackColor = 'error';
-      this.snackText = 'Canceled';
-    },
-    open: function open() {
-      this.snack = true;
-      this.snackColor = 'info';
-      this.snackText = 'Dialog opened';
-    },
-    close: function close() {
-      console.log('Dialog closed');
+      this.snackColor = "error";
+      this.snackText = this.$t("message.snack.close");
     }
   }
 });
@@ -2706,87 +2690,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      modal: false,
       snack: false,
       snackColor: "",
       snackText: "",
-      file: "",
       results: [],
       search: "",
       total: 0,
       loading: false,
       pagination: {},
-      dialog: false,
-      editedIndex: -1,
-      editedItem: {
-        avatar: "",
-        first_name: "",
-        last_name: "",
-        mobile: "",
-        status: 0,
-        created_at: ""
-      },
-      defaultItem: {
-        avatar: "",
-        first_name: "",
-        last_name: "",
-        mobile: "",
-        status: 0,
-        created_at: ""
-      },
       headers: [{
         text: "ردیف",
         value: "id",
@@ -2816,15 +2731,7 @@ __webpack_require__.r(__webpack_exports__);
       rowsPerPageItems: [5, 10, 20, 50, 100]
     };
   },
-  computed: {
-    formTitle: function formTitle() {
-      return this.editedIndex === -1 ? "افزودن" : "ویرایش";
-    }
-  },
   watch: {
-    dialog: function dialog(val) {
-      val || this.close();
-    },
     pagination: {
       handler: function handler() {
         this.getByPagination();
@@ -2886,11 +2793,6 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    editItem: function editItem(item) {
-      this.editedIndex = this.results.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
-    },
     deleteItem: function deleteItem(item) {
       var _this2 = this;
 
@@ -2919,71 +2821,19 @@ __webpack_require__.r(__webpack_exports__);
         _this3.editedIndex = -1;
       }, 1000);
     },
-    save: function save() {
-      var _this4 = this;
-
-      this.editedItem.avatar = this.file;
-
-      if (this.editedIndex > -1) {
-        console.log(this.editedItem);
-        _api_User_js__WEBPACK_IMPORTED_MODULE_0__["default"].update(this.editedItem).then(function () {
-          _this4.snackColor = "success";
-          _this4.snackText = _this4.$t("message.update.success");
-          _this4.snack = true;
-          var self = _this4.editedIndex;
-          Object.assign(_this4.results[self], _this4.editedItem);
-        })["catch"](function (error) {
-          _this4.snack = true;
-          _this4.snackColor = "error";
-          _this4.snackText = _this4.$t("message.update.error");
-        });
-      } else {
-        _api_User_js__WEBPACK_IMPORTED_MODULE_0__["default"].create(this.editedItem).then(function (_ref) {
-          var data = _ref.data;
-          _this4.snack = true;
-          _this4.snackColor = "success";
-          _this4.snackText = _this4.$t("message.create.success");
-
-          _this4.results.push(data.data);
-
-          _this4.getByPagination();
-        })["catch"](function (error) {
-          _this4.snack = true;
-          _this4.snackColor = "error";
-          _this4.snackText = _this4.$t("message.create.error");
-        });
-      }
-
-      this.close();
-    },
     changeState: function changeState(item) {
-      var _this5 = this;
+      var _this4 = this;
 
       this.snack = false;
       _api_User_js__WEBPACK_IMPORTED_MODULE_0__["default"].changeState(item).then(function () {
-        _this5.snack = true;
-        _this5.snackColor = "success";
-        _this5.snackText = _this5.$t("message.changeState.success");
+        _this4.snack = true;
+        _this4.snackColor = "success";
+        _this4.snackText = _this4.$t("message.changeState.success");
       })["catch"](function (error) {
-        _this5.snack = true;
-        _this5.snackColor = "error";
-        _this5.snackText = _this5.$t("message.changeState.error");
+        _this4.snack = true;
+        _this4.snackColor = "error";
+        _this4.snackText = _this4.$t("message.changeState.error");
       });
-    },
-    onFileChange: function onFileChange(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return;
-      this.createImage(files[0]);
-    },
-    createImage: function createImage(file) {
-      var reader = new FileReader();
-      var vm = this;
-
-      reader.onload = function (e) {
-        vm.file = e.target.result;
-      };
-
-      reader.readAsDataURL(file);
     }
   }
 });
@@ -3084,10 +2934,67 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      modal: false,
+      dialog: false,
+      editedIndex: -1,
+      editedItem: {
+        avatar: "",
+        first_name: "",
+        last_name: "",
+        mobile: "",
+        status: 0,
+        created_at: ""
+      },
+      defaultItem: {
+        avatar: "",
+        first_name: "",
+        last_name: "",
+        mobile: "",
+        status: 0,
+        created_at: ""
+      },
+      file: "",
       snack: false,
       snackColor: "",
       snackText: "",
@@ -3096,6 +3003,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.getDetail();
+  },
+  watch: {
+    dialog: function dialog(val) {
+      val || this.close();
+    }
   },
   methods: {
     getDetail: function getDetail() {
@@ -3109,6 +3021,86 @@ __webpack_require__.r(__webpack_exports__);
         _this.snack = true;
         _this.snackColor = "error";
         _this.snackText = _this.$t("message.userDetail.error");
+      });
+    },
+    editItem: function editItem(item) {
+      this.editedIndex = item;
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
+    },
+    save: function save() {
+      var _this2 = this;
+
+      this.editedItem.avatar = this.file;
+
+      if (this.editedIndex > -1) {
+        console.log(this.editedItem);
+        _api_User_js__WEBPACK_IMPORTED_MODULE_0__["default"].update(this.editedItem).then(function () {
+          _this2.snackColor = "success";
+          _this2.snackText = _this2.$t("message.update.success");
+          _this2.snack = true;
+          var self = _this2.editedIndex;
+          Object.assign(_this2.results[self], _this2.editedItem);
+        })["catch"](function (error) {
+          _this2.snack = true;
+          _this2.snackColor = "error";
+          _this2.snackText = _this2.$t("message.update.error");
+        });
+      } else {
+        _api_User_js__WEBPACK_IMPORTED_MODULE_0__["default"].create(this.editedItem).then(function (_ref) {
+          var data = _ref.data;
+          _this2.snack = true;
+          _this2.snackColor = "success";
+          _this2.snackText = _this2.$t("message.create.success");
+
+          _this2.results.push(data.data);
+
+          _this2.getByPagination();
+        })["catch"](function (error) {
+          _this2.snack = true;
+          _this2.snackColor = "error";
+          _this2.snackText = _this2.$t("message.create.error");
+        });
+      }
+
+      this.close();
+    },
+    close: function close() {
+      var _this3 = this;
+
+      this.dialog = false;
+      setTimeout(function () {
+        _this3.editedItem = Object.assign({}, _this3.defaultItem);
+        _this3.editedIndex = -1;
+      }, 1000);
+    },
+    onFileChange: function onFileChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+      this.createImage(files[0]);
+    },
+    createImage: function createImage(file) {
+      var reader = new FileReader();
+      var vm = this;
+
+      reader.onload = function (e) {
+        vm.file = e.target.result;
+      };
+
+      reader.readAsDataURL(file);
+    },
+    changeState: function changeState(item) {
+      var _this4 = this;
+
+      this.snack = false;
+      _api_User_js__WEBPACK_IMPORTED_MODULE_0__["default"].changeState(item).then(function () {
+        _this4.snack = true;
+        _this4.snackColor = "success";
+        _this4.snackText = _this4.$t("message.changeState.success");
+      })["catch"](function (error) {
+        _this4.snack = true;
+        _this4.snackColor = "error";
+        _this4.snackText = _this4.$t("message.changeState.error");
       });
     }
   }
@@ -7650,7 +7642,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.headline[data-v-5aed8c36] {\r\n  font-family: iranyekan !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.headline[data-v-5aed8c36] {\n  font-family: iranyekan !important;\n}\n", ""]);
 
 // exports
 
@@ -7688,7 +7680,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.left-float[data-v-7033baf4] {\n  float: left !important;\n}\n", ""]);
+exports.push([module.i, "\n.left-float[data-v-7033baf4] {\n  float: left !important;\n}\n.v-card__title[data-v-7033baf4] {\n  align-items: flex-start !important;\n  padding: 5px;\n}\n", ""]);
 
 // exports
 
@@ -41775,7 +41767,6 @@ var render = function() {
                       {
                         attrs: {
                           "return-value": props.item.description,
-                          large: "",
                           lazy: ""
                         },
                         on: {
@@ -41788,9 +41779,7 @@ var render = function() {
                           save: function($event) {
                             return _vm.save(props.item)
                           },
-                          cancel: _vm.cancel,
-                          open: _vm.open,
-                          close: _vm.close
+                          cancel: _vm.cancel
                         },
                         scopedSlots: _vm._u(
                           [
@@ -41858,7 +41847,7 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("Close")]
+            [_vm._v("بستن")]
           )
         ],
         1
@@ -41892,217 +41881,6 @@ var render = function() {
   return _c(
     "v-container",
     [
-      _c(
-        "v-toolbar",
-        { attrs: { flat: "" } },
-        [
-          _c(
-            "v-dialog",
-            {
-              attrs: { "max-width": "600px" },
-              scopedSlots: _vm._u([
-                {
-                  key: "activator",
-                  fn: function(ref) {
-                    var on = ref.on
-                    return [
-                      _c("v-text-field", {
-                        attrs: {
-                          "append-icon": "search",
-                          label: "جستجو",
-                          "single-line": "",
-                          "hide-details": ""
-                        },
-                        model: {
-                          value: _vm.search,
-                          callback: function($$v) {
-                            _vm.search = $$v
-                          },
-                          expression: "search"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("v-spacer"),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        _vm._g(
-                          { staticClass: "mb-2", attrs: { color: "primary" } },
-                          on
-                        ),
-                        [_vm._v("افزودن")]
-                      )
-                    ]
-                  }
-                }
-              ]),
-              model: {
-                value: _vm.dialog,
-                callback: function($$v) {
-                  _vm.dialog = $$v
-                },
-                expression: "dialog"
-              }
-            },
-            [
-              _vm._v(" "),
-              _c(
-                "v-card",
-                [
-                  _c("v-card-title", [
-                    _c("span", { staticClass: "headline" }, [
-                      _vm._v(_vm._s(_vm.formTitle))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-text",
-                    [
-                      _c(
-                        "v-container",
-                        { attrs: { "grid-list-md": "" } },
-                        [
-                          _c(
-                            "v-layout",
-                            { attrs: { wrap: "" } },
-                            [
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "", sm6: "", md6: "" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: { label: "نام*" },
-                                    model: {
-                                      value: _vm.editedItem.first_name,
-                                      callback: function($$v) {
-                                        _vm.$set(
-                                          _vm.editedItem,
-                                          "first_name",
-                                          $$v
-                                        )
-                                      },
-                                      expression: "editedItem.first_name"
-                                    }
-                                  })
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "", sm6: "", md6: "" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: { label: "نام خانوادگی*" },
-                                    model: {
-                                      value: _vm.editedItem.last_name,
-                                      callback: function($$v) {
-                                        _vm.$set(
-                                          _vm.editedItem,
-                                          "last_name",
-                                          $$v
-                                        )
-                                      },
-                                      expression: "editedItem.last_name"
-                                    }
-                                  })
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "", sm4: "", md4: "" } },
-                                [
-                                  _c("v-switch", {
-                                    attrs: { label: "وضعیت" },
-                                    model: {
-                                      value: _vm.editedItem.status,
-                                      callback: function($$v) {
-                                        _vm.$set(_vm.editedItem, "status", $$v)
-                                      },
-                                      expression: "editedItem.status"
-                                    }
-                                  })
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "", sm8: "", md8: "" } },
-                                [
-                                  _c("input", {
-                                    attrs: { type: "file" },
-                                    on: { change: _vm.onFileChange }
-                                  })
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "", sm4: "", md4: "" } },
-                                [
-                                  _vm.file !== ""
-                                    ? _c("img", {
-                                        staticClass: "img-responsive",
-                                        attrs: { src: _vm.file }
-                                      })
-                                    : _c("img", {
-                                        staticClass: "img-responsive",
-                                        attrs: { src: _vm.editedItem.avatar }
-                                      })
-                                ]
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("small", [
-                        _vm._v("* فیلدهای الزامی را مشخص می نماید.")
-                      ])
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-spacer"),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { color: "primary darken-1", flat: "" },
-                          on: { click: _vm.close }
-                        },
-                        [_vm._v("رد")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { color: "primary darken-1", flat: "" },
-                          on: { click: _vm.save }
-                        },
-                        [_vm._v("ذخیره")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
       _c("v-data-table", {
         staticClass: "elevation-1",
         attrs: {
@@ -42266,6 +42044,151 @@ var render = function() {
     "v-container",
     [
       _c(
+        "v-dialog",
+        {
+          attrs: { "max-width": "600px" },
+          model: {
+            value: _vm.dialog,
+            callback: function($$v) {
+              _vm.dialog = $$v
+            },
+            expression: "dialog"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c(
+                "v-toolbar",
+                { attrs: { dark: "", color: "primary" } },
+                [
+                  _c(
+                    "v-btn",
+                    { attrs: { icon: "", dark: "" }, on: { click: _vm.close } },
+                    [_c("v-icon", [_vm._v("mdi-close")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-toolbar-title", [_vm._v("ویرایش")]),
+                  _vm._v(" "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-toolbar-items",
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { dark: "", flat: "" },
+                          on: { click: _vm.save }
+                        },
+                        [_vm._v("ذخیره")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c(
+                    "v-container",
+                    { attrs: { "grid-list-md": "" } },
+                    [
+                      _c(
+                        "v-layout",
+                        { attrs: { wrap: "" } },
+                        [
+                          _c(
+                            "v-flex",
+                            { attrs: { xs12: "", sm6: "", md6: "" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: { label: "نام*" },
+                                model: {
+                                  value: _vm.editedItem.first_name,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.editedItem, "first_name", $$v)
+                                  },
+                                  expression: "editedItem.first_name"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-flex",
+                            { attrs: { xs12: "", sm6: "", md6: "" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: { label: "نام خانوادگی*" },
+                                model: {
+                                  value: _vm.editedItem.last_name,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.editedItem, "last_name", $$v)
+                                  },
+                                  expression: "editedItem.last_name"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-flex",
+                            { attrs: { xs6: "", sm6: "", md6: "" } },
+                            [
+                              _c("input", {
+                                attrs: { type: "file" },
+                                on: { change: _vm.onFileChange }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-flex",
+                            { attrs: { xs6: "", sm6: "", md6: "" } },
+                            [
+                              _vm.file !== ""
+                                ? _c("img", {
+                                    staticClass: "img-responsive",
+                                    attrs: { src: _vm.file, width: "125px" }
+                                  })
+                                : _c("img", {
+                                    staticClass: "img-responsive",
+                                    attrs: {
+                                      src: _vm.editedItem.avatar,
+                                      width: "125px"
+                                    }
+                                  })
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("small", { staticClass: "red--text darken-4" }, [
+                    _vm._v("* فیلدهای الزامی را مشخص می نماید.")
+                  ])
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
         "v-card",
         [
           _c(
@@ -42273,6 +42196,7 @@ var render = function() {
             [
               _c(
                 "v-flex",
+                { staticClass: "pa-2", attrs: { xs2: "" } },
                 [
                   _c("v-img", {
                     attrs: { src: _vm.data.avatar, width: "100px" }
@@ -42281,15 +42205,15 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("v-flex", [
+              _c("v-flex", { staticClass: "pa-2" }, [
                 _c(
                   "div",
                   { staticClass: "subheading font-weight-black" },
                   [
                     _vm._v(
-                      "\n          " +
+                      "\n            " +
                         _vm._s(_vm.data.full_name) +
-                        "\n          "
+                        "\n            "
                     ),
                     _vm.data.status == true
                       ? _c(
@@ -42348,7 +42272,47 @@ var render = function() {
                             ])
                           },
                           [_vm._v(" "), _c("span", [_vm._v("فعال")])]
-                        )
+                        ),
+                    _vm._v(" "),
+                    _c(
+                      "v-tooltip",
+                      {
+                        attrs: { bottom: "" },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "activator",
+                            fn: function(ref) {
+                              var on = ref.on
+                              return [
+                                _c(
+                                  "span",
+                                  _vm._g({}, on),
+                                  [
+                                    _c("v-switch", {
+                                      attrs: { color: "primary" },
+                                      on: {
+                                        change: function($event) {
+                                          return _vm.changeState(_vm.data.id)
+                                        }
+                                      },
+                                      model: {
+                                        value: _vm.data.status,
+                                        callback: function($$v) {
+                                          _vm.$set(_vm.data, "status", $$v)
+                                        },
+                                        expression: "data.status"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ]
+                            }
+                          }
+                        ])
+                      },
+                      [_vm._v(" "), _c("span", [_vm._v("وضعیت")])]
+                    )
                   ],
                   1
                 ),
@@ -42443,11 +42407,16 @@ var render = function() {
                             "v-btn",
                             _vm._g(
                               {
-                                attrs: { color: "primary", fab: "", small: "" }
+                                attrs: { color: "primary", fab: "", small: "" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.editItem(_vm.data)
+                                  }
+                                }
                               },
                               on
                             ),
-                            [_c("v-icon", [_vm._v("edit")])],
+                            [_c("v-icon", [_vm._v("mdi-pencil")])],
                             1
                           )
                         ]
@@ -42458,13 +42427,6 @@ var render = function() {
                 [_vm._v(" "), _c("span", [_vm._v("ویرایش")])]
               )
             ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-layout",
-            { attrs: { row: "" } },
-            [_c("v-flex", { attrs: { xs10: "" } }, [_c("v-card-text")], 1)],
             1
           ),
           _vm._v(" "),
@@ -83918,7 +83880,7 @@ module.exports = {};
 /*! exports provided: home, navigation, menu, message, server, default */
 /***/ (function(module) {
 
-module.exports = {"home":{"welcome":"خوش آمدید","brand":"M|Z"},"navigation":{"title":"پنل مدیریت"},"menu":{"list":{"Category":"دسته بندی ها","Index":"صفحه اصلی","User":"کاربران","UserDetail":"جزئیات کاربر","Setting":"تنظیمات","NotFound":"خطا"}},"message":{"delete":{"success":"حذف با موفقیت انجام شد.","error":"حذف با خطا مواجه شد"},"changeState":{"success":"اطلاعات با موفقیت به روز شد.","error":"به روز رسانی اطلاعات با خطا مواجه شد."},"create":{"success":"اطلاعات با موفقیت ثبت گردید.","error":"در ثبت اطلاعات خطایی رخ داده است."},"update":{"success":"ویرایش با موفقیت انجام شد.","error":"ویرایش با خطا همراه شد."},"userDetail":{"error":"ارتباط با سرور با خطا روبرو شد."}},"server":{"error":{"404":"خطای 404: صفحه یافت نشد"}}};
+module.exports = {"home":{"welcome":"خوش آمدید","brand":"M|Z"},"navigation":{"title":"پنل مدیریت"},"menu":{"list":{"Category":"دسته بندی ها","Index":"صفحه اصلی","User":"کاربران","UserDetail":"جزئیات کاربر","Setting":"تنظیمات","NotFound":"خطا"}},"message":{"delete":{"success":"حذف با موفقیت انجام شد.","error":"حذف با خطا مواجه شد"},"changeState":{"success":"اطلاعات با موفقیت به روز شد.","error":"به روز رسانی اطلاعات با خطا مواجه شد."},"create":{"success":"اطلاعات با موفقیت ثبت گردید.","error":"در ثبت اطلاعات خطایی رخ داده است."},"update":{"success":"ویرایش با موفقیت انجام شد.","error":"ویرایش با خطا همراه شد."},"userDetail":{"error":"ارتباط با سرور با خطا روبرو شد."},"snack":{"close":"بسته شد."}},"server":{"error":{"404":"خطای 404: صفحه یافت نشد"}}};
 
 /***/ }),
 
