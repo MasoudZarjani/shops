@@ -24,9 +24,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::group(['prefix' => 'category'], function () {
             Route::post('index', 'Admin\CategoryController@index');
-            Route::delete('delete/{id}', 'Admin\CategoryController@delete');
             Route::put('update', 'Admin\CategoryController@update');
-            Route::post('create', 'Admin\CategoryController@create');
             Route::post('filter', 'Admin\CategoryController@filter');
             Route::post('order', 'Admin\CategoryController@order');
             Route::get('changeState/{id}', 'Admin\CategoryController@changeState');
@@ -38,6 +36,11 @@ Route::middleware(['auth'])->group(function () {
             Route::put('update', 'Admin\SettingController@update');
             Route::post('create', 'Admin\SettingController@create');
             Route::post('order', 'Admin\SettingController@order');
+        });
+
+        Route::group(['prefix' => 'color'], function () {
+            Route::post('index', 'Admin\ColorController@index');
+            Route::put('update', 'Admin\ColorController@update');
         });
     });
 });

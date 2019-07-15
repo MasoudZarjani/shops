@@ -18,7 +18,7 @@ class SettingController extends Controller
      */
     public function index()
     {
-        $describes = Describe::OfType(config('constants.describe.type.setting'))->select('title','description','id')->get();
+        $describes = Describe::OfType(config('constants.describe.type.setting'))->select('title', 'description', 'id')->get();
         return SettingResource::collection($describes);
     }
 
@@ -32,5 +32,5 @@ class SettingController extends Controller
     {
         $describe = Describe::ofId(request('id'))->first();
         return $describe->set();
-    }    
+    }
 }

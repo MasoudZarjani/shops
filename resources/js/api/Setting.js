@@ -4,16 +4,16 @@ export default {
     getSetting(data) {
         return axios.post('setting/index', data)
     },
-    delete(id) {
-        return axios.delete('setting/delete/' + id)
-    },
     update(data) {
         return axios.put('setting/update', data)
     },
-    create(data) {
-        return axios.post('setting/create', data)
-    },
     getOrder(data) {
         return axios.post('setting/order', data)
-    }
+    },
+    getColor() {
+        return axios.post('color/index')
+    },
+    updateColor(data) {
+        return axios.put('color/update', data)
+    },
 }

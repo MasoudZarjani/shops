@@ -17,11 +17,7 @@
         <td class="text-xs-center">{{ props.item.full_name }}</td>
         <td class="text-xs-center">{{ props.item.mobile }}</td>
         <td class="text-xs-center">
-          <v-switch
-            v-model="props.item.status"
-            color="primary"
-            @change="changeState(props.item.id)"
-          ></v-switch>
+          
         </td>
         <td class="text-xs-center">
           <v-icon

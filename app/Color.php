@@ -9,7 +9,7 @@ use App\Traits\CreateUuid;
 class Color extends Model
 {
     use CreateUuid, SoftDeletes;
-    
+
     /**
      * Get all of the products that are assigned this color.
      */
@@ -49,5 +49,12 @@ class Color extends Model
     public static function getWithUuid()
     {
         return Color::ofUuid(request('color_uuid'))->first();
+    }
+
+    public function set()
+    {
+        $this->name = request('name') ?? ($this->name ?? "مشکی");
+        $this->code = request('code')['hex'] ?? ($this->code ?? "#000000");
+        return $this->save();
     }
 }

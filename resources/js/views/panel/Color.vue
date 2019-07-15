@@ -3,26 +3,22 @@
     <v-data-table :headers="headers" :items="results" :loading="loading">
       <template v-slot:items="props">
         <td class="text-xs-center">{{ props.index+1 }}</td>
-        <td class="text-xs-center">{{ props.item.title }}</td>
-        <td class="text-xs-center">
+        <td class="text-xs-center" align-center justify-cente>
           <v-edit-dialog
-            :return-value.sync="props.item.description"
+            :return-value.sync="props.item.code"
             lazy
+            large
             @save="save(props.item)"
             @cancel="cancel"
           >
-            <div>{{ props.item.description }}</div>
+            <td class="mt-4">{{ props.item.name }}</td>
+            <td class="mt-4">{{ props.item.code }}</td>
+            <td class="mt-4 input-group-addon color-picker-container">
+              <span class="current-color" :style="'background-color: ' + props.item.code"></span>
+            </td>
             <template v-slot:input>
-              <div class="mt-3 title">ویرایش محتوی</div>
-            </template>
-            <template v-slot:input>
-              <v-text-field
-                v-model="props.item.description"
-                label="description"
-                single-line
-                counter
-                autofocus
-              ></v-text-field>
+              <chrome-picker v-model="props.item.code" />
+              <v-text-field v-model="props.item.name" label="نام رنگ" single-line counter autofocus></v-text-field>
             </template>
           </v-edit-dialog>
         </td>
@@ -36,58 +32,47 @@
   </div>
 </template>
 <script>
+import { Chrome } from "vue-color";
 import Api from "../../api/Setting.js";
+
 export default {
+  components: {
+    "chrome-picker": Chrome
+  },
   data() {
     return {
       loading: false,
       snack: false,
       snackColor: "",
       snackText: "",
-      pagination: {},
       results: [],
       headers: [
         { text: "ردیف", value: "id", align: "center", sortable: false },
-        { text: "عنوان ", value: "title", align: "center" },
-        {
-          text: "محتوی",
-          value: "description",
-          align: "center",
-          sortable: false
-        }
+        { text: "رنگ", value: "name", align: "center" }
       ]
     };
   },
   watch: {
     dialog(val) {
       val || this.close();
-    },
-    search() {
-      this.getByPagination();
     }
   },
   mounted() {
-    this.getByPagination();
+    this.get();
   },
   methods: {
-    getByPagination() {
+    get() {
       this.loading = true;
-
-      Api.getSetting({
-        page: this.pagination.page,
-        per_page: this.pagination.rowsPerPage
-      })
+      Api.getColor()
         .then(res => {
           this.loading = false;
           this.results = res.data.data;
-          this.total = res.data.meta.total;
         })
         .catch(err => console.log(err.response.data))
         .finally(() => (this.loading = false));
     },
-
     save($item) {
-      Api.update($item)
+      Api.updateColor($item)
         .then(() => {
           this.snackColor = "success";
           this.snackText = this.$t("message.update.success");
@@ -109,10 +94,16 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.headline {
-  font-family: iranyekan !important;
+<style>
+.current-color {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-color: #000;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #888888;
+}
+.v-menu__activator {
+  display: block !important;
 }
 </style>
-
