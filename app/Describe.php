@@ -155,12 +155,12 @@ class Describe extends Model
         return $this;
     }
 
-    public static function getByOrder()
+    public static function getByOrder($type)
     {
         $per_page = empty(request('per_page')) ? 10 : (int) request('per_page');
         $direction = request('direction')  ?? 'asc';
         $sortBy = request('sortBy') ?? 'title';
-        return Describe::OfType(config('constants.describe.type.setting'))->select('title','description','id')->orderBy($sortBy, $direction)->paginate($per_page);
+        return Describe::ofType($type)->select('title','description','id')->orderBy($sortBy, $direction)->paginate($per_page);
     }
 
 }

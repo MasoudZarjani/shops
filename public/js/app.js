@@ -2560,16 +2560,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      currentPage: this.page,
       loading: false,
       snack: false,
       snackColor: '',
       snackText: '',
-      max25chars: function max25chars(v) {
-        return v.length <= 25 || 'Input too long!';
+      max250chars: function max250chars(v) {
+        return v.length <= 250 || 'Input too long!';
       },
       pagination: {},
       results: [],
@@ -2614,7 +2616,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.results = res.data.data;
         _this.total = res.data.meta.total;
       })["catch"](function (err) {
-        return console.log(err.response.data);
+        return console.log(err.data);
       })["finally"](function () {
         return _this.loading = false;
       });
@@ -41708,14 +41710,28 @@ var render = function() {
         attrs: {
           headers: _vm.headers,
           items: _vm.results,
-          loading: _vm.loading
+          loading: _vm.loading,
+          pagination: _vm.pagination
+        },
+        on: {
+          "update:pagination": function($event) {
+            _vm.pagination = $event
+          }
         },
         scopedSlots: _vm._u([
           {
             key: "items",
             fn: function(props) {
               return [
-                _c("td", [_vm._v(_vm._s(props.index + 1))]),
+                _c("td", [
+                  _vm._v(
+                    _vm._s(
+                      (_vm.pagination.page - 1) * _vm.pagination.rowsPerPage +
+                        props.index +
+                        1
+                    )
+                  )
+                ]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(props.item.title))]),
                 _vm._v(" "),
@@ -41753,7 +41769,7 @@ var render = function() {
                                 return [
                                   _c("v-text-field", {
                                     attrs: {
-                                      rules: [_vm.max2500chars],
+                                      rules: [_vm.max250chars],
                                       label: "description",
                                       "single-line": "",
                                       counter: "",

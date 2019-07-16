@@ -39,6 +39,14 @@ Route::middleware(['auth'])->group(function () {
             Route::post('create', 'Admin\SettingController@create');
             Route::post('order', 'Admin\SettingController@order');
         });
+
+        Route::group(['prefix' => 'message'], function () {
+            Route::post('index', 'Admin\MessageController@index');
+            Route::post('order', 'Admin\MessageController@order');
+            Route::post('filter', 'Admin\MessageController@filter');
+            Route::get('changeState/{id}', 'Admin\MessageController@changeState');
+            Route::get('detail/{id}', 'Admin\MessageController@detail');
+        });
     });
 });
 Route::get('/home', 'HomeController@index')->name('home');

@@ -24,13 +24,22 @@ class SettingController extends Controller
 
     public function order()
     {
-        $describes = Describe::getByOrder();
+        $describes = Describe::getByOrder(config('constants.describe.type.setting'));
         return SettingResource::collection($describes);
     }
-
-    public function update()
+    
+    public function changeState($id)
     {
-        $describe = Describe::ofId(request('id'))->first();
-        return $describe->set();
-    }    
+        $user = User::ofId($id)->first();
+        if ($user->status == 1)
+            $status = 0;
+        else {
+            $status = 1;
+        }
+        $user->update([
+            'status' => $status
+        ]);
+
+        return $user;
+    }
 }

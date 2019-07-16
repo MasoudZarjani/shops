@@ -22,8 +22,8 @@ class MessageController extends Controller
 
     public function order()
     {
-        $describes = Describe::getByOrder();
-        return SettingResource::collection($describes);
+        $messages = Message::getByOrder(config('constants.message.type.comment'));
+        return MessageResource::collection($messages);
     }
 
     public function create(Request $request)

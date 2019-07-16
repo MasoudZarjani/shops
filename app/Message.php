@@ -168,4 +168,12 @@ class Message extends Model
         }
         return false;
     }
+
+    public static function getByOrder($type)
+    {
+        $per_page = empty(request('per_page')) ? 10 : (int) request('per_page');
+        $direction = request('direction')  ?? 'asc';
+        $sortBy = request('sortBy') ?? 'id';
+        return Message::ofType($type)->select('id')->orderBy($sortBy, $direction)->paginate($per_page);
+    }
 }

@@ -4,9 +4,10 @@
       :headers="headers"
       :items="results"
       :loading="loading"
+      :pagination.sync="pagination"
     >
       <template v-slot:items="props">
-        <td>{{ props.index+1 }}</td>
+        <td>{{ (pagination.page-1)*pagination.rowsPerPage + props.index + 1 }}</td>
         <td>{{ props.item.title }}</td>
         
         <td class="text-xs-right">
@@ -26,7 +27,7 @@
             <template v-slot:input>
               <v-text-field
                 v-model="props.item.description"
-                :rules="[max2500chars]"
+                :rules="[max250chars]"
                 label="description"
                 single-line
                 counter
@@ -49,11 +50,12 @@
   export default {
     data () {
       return {
+        currentPage : this.page,
         loading: false,
         snack: false,
         snackColor: '',
         snackText: '',
-        max25chars: v => v.length <= 25 || 'Input too long!',
+        max250chars: v => v.length <= 250 || 'Input too long!',
         pagination: {},
         results: [],
         headers: [
@@ -87,7 +89,7 @@
             this.results = res.data.data;
             this.total = res.data.meta.total;
           })
-          .catch(err => console.log(err.response.data))
+          .catch(err => console.log(err.data))
           .finally(() => (this.loading = false));
        },
 
