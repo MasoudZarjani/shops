@@ -19,7 +19,7 @@ class CommunicationResource extends JsonResource
             'phone' => $this->phone,
             'fax' => $this->fax,
             'postal_code' => $this->postal_code,
-            'city_id' => $this->city_id,
+            'city' => $this->city->name,
         ];
     }
 }

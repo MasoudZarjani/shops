@@ -29,6 +29,7 @@
     },
     "dependencies": {
         "jalali-moment": "^3.3.3",
+        "vue-color": "^2.7.0",
         "vuetify": "^1.5.16"
     }
 }

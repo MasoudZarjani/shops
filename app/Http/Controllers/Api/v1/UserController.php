@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Helpers\Utility;
 use App\User;
 use App\Helpers\Upload;
-use App\Http\Resources\Api\v1\UserResource;
 use App\PersonalAddress;
 use App\Http\Resources\Api\v1\InformationResource;
 use App\UserCommunication;

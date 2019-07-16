@@ -15,10 +15,10 @@ class UserSocialResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'telegram' => $this->telegram,
-            'twitter' => $this->twitter,
-            'instagram' => $this->instagram,
-            'facebook' => $this->facebook
+            'telegram' => $this->telegram ?? "",
+            'twitter' => $this->twitter ?? "",
+            'instagram' => $this->instagram ?? "",
+            'facebook' => $this->facebook ?? ""
         ];
     }
 }

@@ -64,6 +64,6 @@ class File extends Model
         $this->size = $size ?? "";
         $this->type = $type ?? 0;
         $this->position = $position ?? 0;
-        $this->save();
+        return $this->save();
     }
 }

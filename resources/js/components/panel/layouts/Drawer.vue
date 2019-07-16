@@ -76,8 +76,8 @@ export default {
       {
         title: "پیام ها",
         icon: "mdi-message",
-        arrow_icon: "keyboard_arrow_up",
-        arrow_icon_alt: "keyboard_arrow_down",
+        arrow_icon: "mdi-chevron-up",
+        arrow_icon_alt: "mdi-chevron-down",
         children: [
           { title: "نظرات", to: "/comment", icon: "mdi-message-text" },
           { title: "پرسش و پاسخ", to: "/discuss", icon: "mdi-forum" }
@@ -86,8 +86,8 @@ export default {
       {
         title: "تنظیمات",
         icon: "mdi-settings",
-        arrow_icon: "keyboard_arrow_up",
-        arrow_icon_alt: "keyboard_arrow_down",
+        arrow_icon: "mdi-chevron-up",
+        arrow_icon_alt: "mdi-chevron-down",
         children: [
           { title: "رنگ", to: "/color", icon: "mdi-palette" },
           {

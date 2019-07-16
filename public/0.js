@@ -101,8 +101,8 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         title: "پیام ها",
         icon: "mdi-message",
-        arrow_icon: "keyboard_arrow_up",
-        arrow_icon_alt: "keyboard_arrow_down",
+        arrow_icon: "mdi-chevron-up",
+        arrow_icon_alt: "mdi-chevron-down",
         children: [{
           title: "نظرات",
           to: "/comment",
@@ -115,8 +115,8 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         title: "تنظیمات",
         icon: "mdi-settings",
-        arrow_icon: "keyboard_arrow_up",
-        arrow_icon_alt: "keyboard_arrow_down",
+        arrow_icon: "mdi-chevron-up",
+        arrow_icon_alt: "mdi-chevron-down",
         children: [{
           title: "رنگ",
           to: "/color",
@@ -146,7 +146,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.title {\r\n  font-family: iranyekan !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.title {\n  font-family: iranyekan !important;\n}\n", ""]);
 
 // exports
 

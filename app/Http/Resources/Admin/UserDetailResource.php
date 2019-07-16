@@ -29,7 +29,7 @@ class UserDetailResource extends JsonResource
             'communication' => CommunicationResource::collection($this->communications) ?? "",
             'created_at' => $date ?? "",
             'avatar' => $this->avatar()->path ?? "",
-            'social' => new UserSocialResource($this->social) ?? ""
+            'social' => new UserSocialResource($this->social ?? "") ?? ""
         ];
     }
 }

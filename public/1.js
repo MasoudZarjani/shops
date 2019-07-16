@@ -34,11 +34,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.title = this.$route.name;
+    this.title = this.$t("menu.list." + this.$route.name);
   },
   watch: {
     $route: function $route(val) {
-      this.title = val.name;
+      this.title = this.$t("menu.list." + val.name);
     }
   },
   methods: {
@@ -71,7 +71,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.v-input__control {\r\n  height: 100% !important;\n}\n.v-input__slot {\r\n  height: 100% !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.v-input__control {\n  height: 100% !important;\n}\n.v-input__slot {\n  height: 100% !important;\n}\n", ""]);
 
 // exports
 

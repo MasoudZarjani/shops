@@ -18,6 +18,8 @@ class UserProfilesTableSeeder extends Seeder
             $userProfileModel = new UserProfile();
             $userProfileModel->id = $userProfile->id;
             $userProfileModel->full_name = $userProfile->full_name;
+            $userProfileModel->first_name = $userProfile->first_name;
+            $userProfileModel->last_name = $userProfile->last_name;
             $userProfileModel->user_id = $userProfile->user_id;
             $userProfileModel->save();
         }

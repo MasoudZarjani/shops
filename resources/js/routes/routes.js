@@ -4,6 +4,7 @@ import NotFound from '../views/panel/NotFound'
 import Setting from '../views/panel/Setting'
 import Category from '../views/panel/Category'
 import UserDetail from '../views/panel/UserDetail'
+import Color from '../views/panel/Color'
 
 export default [{
         path: '*',
@@ -35,5 +36,9 @@ export default [{
         name: 'Category',
         component: Category
     },
-
+    {
+        path: '/color',
+        name: 'Color',
+        component: Color
+    },
 ]
