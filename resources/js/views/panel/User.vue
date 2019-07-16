@@ -1,5 +1,20 @@
 <template>
   <v-container>
+    <v-dialog v-model="dialog" width="500">
+      <v-card>
+        <v-card-title class="headline primary" primary-title>حذف کاربر</v-card-title>
+
+        <v-card-text>آیا از حذف کاربر مطمئن هستید؟</v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" flat @click="dialog = false">رد</v-btn>
+          <v-btn color="primary" flat @click="deleteItem">تایید</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-data-table
       :headers="headers"
       :items="results"
@@ -25,7 +40,7 @@
             small
             @click="$router.push({ path: `/user/detail/${props.item.id}` })"
           >mdi-account-card-details</v-icon>
-          <v-icon small @click="deleteItem(props.item)">mdi-delete</v-icon>
+          <v-icon small @click="deleteDialog(props.item)">mdi-delete</v-icon>
         </td>
       </template>
     </v-data-table>
@@ -42,6 +57,8 @@ import Api from "../../api/User.js";
 export default {
   data: () => ({
     snack: false,
+    dialog: false,
+    deleteId: 0,
     snackColor: "",
     snackText: "",
     results: [],
@@ -100,7 +117,6 @@ export default {
           page: this.pagination.page,
           per_page: this.pagination.rowsPerPage
         }).then(res => {
-          console.log(res);
           this.loading = false;
           this.results = res.data.data;
           this.total = res.data.meta.total;
@@ -121,22 +137,26 @@ export default {
       }
     },
 
-    deleteItem(item) {
-      const index = this.results.indexOf(item);
-      if (confirm("از حذف مطمئن هستید؟")) {
-        Api.delete(item.id)
-          .then(() => {
-            this.results.splice(index, 1);
-            this.snack = true;
-            this.snackColor = "success";
-            this.snackText = this.$t("message.delete.success");
-          })
-          .catch(error => {
-            this.snack = true;
-            this.snackColor = "error";
-            this.snackText = this.$t("message.delete.error");
-          });
-      }
+    deleteDialog(item) {
+      this.deleteId = item;
+      this.dialog = true;
+    },
+
+    deleteItem() {
+      let index = this.results.indexOf(this.deleteId);
+      this.dialog = false;
+      Api.delete(this.deleteId.id)
+        .then(res => {
+          this.results.splice(index, 1);
+          this.snack = true;
+          this.snackColor = "success";
+          this.snackText = this.$t("message.delete.success");
+        })
+        .catch(error => {
+          this.snack = true;
+          this.snackColor = "error";
+          this.snackText = this.$t("message.delete.error");
+        });
     },
 
     close() {

@@ -34,6 +34,10 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+    <v-layout>
+      <v-spacer></v-spacer>
+      <v-btn to="/user" color="primary">بازگشت</v-btn>
+    </v-layout>
     <v-card>
       <v-card-title>
         <v-flex xs2 class="pa-2">
@@ -53,7 +57,7 @@
                 <template v-slot:activator="{ on }">
                   <v-icon small color="red" v-on="on">mdi-circle</v-icon>
                 </template>
-                <span>فعال</span>
+                <span>غیرفعال</span>
               </v-tooltip>
             </v-flex>
             <v-flex xs2>
@@ -102,7 +106,9 @@
       <v-card-actions class="pa-3">
         <v-layout xs12>
           <v-flex class="text-xs-center">
-            <v-icon>mdi-facebook</v-icon>فیسبوک
+            <a :href="data.social.facebook">
+              <v-icon>mdi-facebook</v-icon>فیسبوک
+            </a>
           </v-flex>
           <v-flex class="text-xs-center">
             <v-icon>mdi-twitter</v-icon>توئیتر
@@ -167,7 +173,6 @@ export default {
       Api.getDetail(this.$route.params.id)
         .then(result => {
           this.data = result.data.data;
-          console.log(this.data);
         })
         .catch(error => {
           this.snack = true;
@@ -178,7 +183,6 @@ export default {
 
     editItem(item) {
       this.editedIndex = item.id;
-      console.log(this.editedIndex);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
@@ -187,7 +191,6 @@ export default {
       if (this.file != null) this.editedItem.avatar = this.file;
       this.editedItem.avatar = this.data.avatar;
       if (this.editedIndex > -1) {
-        console.log(this.editedItem);
         Api.update(this.editedItem)
           .then(() => {
             this.snackColor = "success";

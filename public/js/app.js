@@ -2799,11 +2799,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       snack: false,
+      dialog: false,
+      deleteId: 0,
       snackColor: "",
       snackText: "",
       results: [],
@@ -2880,7 +2897,6 @@ __webpack_require__.r(__webpack_exports__);
           page: this.pagination.page,
           per_page: this.pagination.rowsPerPage
         }).then(function (res) {
-          console.log(res);
           _this.loading = false;
           _this.results = res.data.data;
           _this.total = res.data.meta.total;
@@ -2902,24 +2918,26 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    deleteItem: function deleteItem(item) {
+    deleteDialog: function deleteDialog(item) {
+      this.deleteId = item;
+      this.dialog = true;
+    },
+    deleteItem: function deleteItem() {
       var _this2 = this;
 
-      var index = this.results.indexOf(item);
+      var index = this.results.indexOf(this.deleteId);
+      this.dialog = false;
+      _api_User_js__WEBPACK_IMPORTED_MODULE_0__["default"]["delete"](this.deleteId.id).then(function (res) {
+        _this2.results.splice(index, 1);
 
-      if (confirm("از حذف مطمئن هستید؟")) {
-        _api_User_js__WEBPACK_IMPORTED_MODULE_0__["default"]["delete"](item.id).then(function () {
-          _this2.results.splice(index, 1);
-
-          _this2.snack = true;
-          _this2.snackColor = "success";
-          _this2.snackText = _this2.$t("message.delete.success");
-        })["catch"](function (error) {
-          _this2.snack = true;
-          _this2.snackColor = "error";
-          _this2.snackText = _this2.$t("message.delete.error");
-        });
-      }
+        _this2.snack = true;
+        _this2.snackColor = "success";
+        _this2.snackText = _this2.$t("message.delete.success");
+      })["catch"](function (error) {
+        _this2.snack = true;
+        _this2.snackColor = "error";
+        _this2.snackText = _this2.$t("message.delete.error");
+      });
     },
     close: function close() {
       var _this3 = this;
@@ -2959,6 +2977,12 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _api_User_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../api/User.js */ "./resources/js/api/User.js");
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3129,7 +3153,6 @@ __webpack_require__.r(__webpack_exports__);
       this.snack = false;
       _api_User_js__WEBPACK_IMPORTED_MODULE_0__["default"].getDetail(this.$route.params.id).then(function (result) {
         _this.data = result.data.data;
-        console.log(_this.data);
       })["catch"](function (error) {
         _this.snack = true;
         _this.snackColor = "error";
@@ -3138,7 +3161,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     editItem: function editItem(item) {
       this.editedIndex = item.id;
-      console.log(this.editedIndex);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
@@ -3149,7 +3171,6 @@ __webpack_require__.r(__webpack_exports__);
       this.editedItem.avatar = this.data.avatar;
 
       if (this.editedIndex > -1) {
-        console.log(this.editedItem);
         _api_User_js__WEBPACK_IMPORTED_MODULE_0__["default"].update(this.editedItem).then(function () {
           _this2.snackColor = "success";
           _this2.snackText = _this2.$t("message.update.success");
@@ -42232,6 +42253,71 @@ var render = function() {
   return _c(
     "v-container",
     [
+      _c(
+        "v-dialog",
+        {
+          attrs: { width: "500" },
+          model: {
+            value: _vm.dialog,
+            callback: function($$v) {
+              _vm.dialog = $$v
+            },
+            expression: "dialog"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c(
+                "v-card-title",
+                {
+                  staticClass: "headline primary",
+                  attrs: { "primary-title": "" }
+                },
+                [_vm._v("حذف کاربر")]
+              ),
+              _vm._v(" "),
+              _c("v-card-text", [_vm._v("آیا از حذف کاربر مطمئن هستید؟")]),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "primary", flat: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.dialog = false
+                        }
+                      }
+                    },
+                    [_vm._v("رد")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "primary", flat: "" },
+                      on: { click: _vm.deleteItem }
+                    },
+                    [_vm._v("تایید")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
       _c("v-data-table", {
         staticClass: "elevation-1",
         attrs: {
@@ -42304,7 +42390,7 @@ var render = function() {
                         attrs: { small: "" },
                         on: {
                           click: function($event) {
-                            return _vm.deleteItem(props.item)
+                            return _vm.deleteDialog(props.item)
                           }
                         }
                       },
@@ -42523,6 +42609,18 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
+        "v-layout",
+        [
+          _c("v-spacer"),
+          _vm._v(" "),
+          _c("v-btn", { attrs: { to: "/user", color: "primary" } }, [
+            _vm._v("بازگشت")
+          ])
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
         "v-card",
         [
           _c(
@@ -42620,7 +42718,7 @@ var render = function() {
                                     }
                                   ])
                                 },
-                                [_vm._v(" "), _c("span", [_vm._v("فعال")])]
+                                [_vm._v(" "), _c("span", [_vm._v("غیرفعال")])]
                               )
                         ],
                         1
@@ -42807,15 +42905,17 @@ var render = function() {
                 "v-layout",
                 { attrs: { xs12: "" } },
                 [
-                  _c(
-                    "v-flex",
-                    { staticClass: "text-xs-center" },
-                    [
-                      _c("v-icon", [_vm._v("mdi-facebook")]),
-                      _vm._v("فیسبوک\n        ")
-                    ],
-                    1
-                  ),
+                  _c("v-flex", { staticClass: "text-xs-center" }, [
+                    _c(
+                      "a",
+                      { attrs: { href: _vm.data.social.facebook } },
+                      [
+                        _c("v-icon", [_vm._v("mdi-facebook")]),
+                        _vm._v("فیسبوک\n          ")
+                      ],
+                      1
+                    )
+                  ]),
                   _vm._v(" "),
                   _c(
                     "v-flex",
@@ -43013,7 +43113,7 @@ function normalizeComponent (
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /*!
-  * vue-router v3.0.7
+  * vue-router v3.0.6
   * (c) 2019 Evan You
   * @license MIT
   */
@@ -44401,8 +44501,10 @@ function createMatcher (
         }
       }
 
-      location.path = fillParams(record.path, location.params, ("named route \"" + name + "\""));
-      return _createRoute(record, location, redirectedFrom)
+      if (record) {
+        location.path = fillParams(record.path, location.params, ("named route \"" + name + "\""));
+        return _createRoute(record, location, redirectedFrom)
+      }
     } else if (location.path) {
       location.params = {};
       for (var i = 0; i < pathList.length; i++) {
@@ -44557,12 +44659,7 @@ var positionStore = Object.create(null);
 function setupScroll () {
   // Fix for #1585 for Firefox
   // Fix for #2195 Add optional third attribute to workaround a bug in safari https://bugs.webkit.org/show_bug.cgi?id=182678
-  // Fix for #2774 Support for apps loaded from Windows file shares not mapped to network drives: replaced location.origin with
-  // window.location.protocol + '//' + window.location.host
-  // location.host contains the port and location.hostname doesn't
-  var protocolAndPath = window.location.protocol + '//' + window.location.host;
-  var absolutePath = window.location.href.replace(protocolAndPath, '');
-  window.history.replaceState({ key: getStateKey() }, '', absolutePath);
+  window.history.replaceState({ key: getStateKey() }, '', window.location.href.replace(window.location.origin, ''));
   window.addEventListener('popstate', function (e) {
     saveScrollPosition();
     if (e.state && e.state.key) {
@@ -45134,6 +45231,7 @@ function bindEnterGuard (
 ) {
   return function routeEnterGuard (to, from, next) {
     return guard(to, from, function (cb) {
+      next(cb);
       if (typeof cb === 'function') {
         cbs.push(function () {
           // #750
@@ -45144,7 +45242,6 @@ function bindEnterGuard (
           poll(cb, match.instances, key, isValid);
         });
       }
-      next(cb);
     })
   }
 }
@@ -45679,7 +45776,7 @@ function createHref (base, fullPath, mode) {
 }
 
 VueRouter.install = install;
-VueRouter.version = '3.0.7';
+VueRouter.version = '3.0.6';
 
 if (inBrowser && window.Vue) {
   window.Vue.use(VueRouter);
