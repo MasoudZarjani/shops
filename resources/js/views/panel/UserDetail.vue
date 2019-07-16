@@ -40,7 +40,8 @@
           <v-img :src="data.avatar" width="100px"></v-img>
         </v-flex>
         <v-flex class="pa-2">
-          <div class="subheading font-weight-black">
+          <v-layout class="font-weight-black">
+            <v-flex xs3>
               {{ data.full_name }}
               <v-tooltip bottom v-if="data.status == true">
                 <template v-slot:activator="{ on }">
@@ -54,6 +55,8 @@
                 </template>
                 <span>فعال</span>
               </v-tooltip>
+            </v-flex>
+            <v-flex xs2>
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
                   <span v-on="on">
@@ -62,7 +65,8 @@
                 </template>
                 <span>وضعیت</span>
               </v-tooltip>
-          </div>
+            </v-flex>
+          </v-layout>
           <div class="mt-2">
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
@@ -173,13 +177,15 @@ export default {
     },
 
     editItem(item) {
-      this.editedIndex = item;
+      this.editedIndex = item.id;
+      console.log(this.editedIndex);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
 
     save() {
-      this.editedItem.avatar = this.file;
+      if (this.file != null) this.editedItem.avatar = this.file;
+      this.editedItem.avatar = this.data.avatar;
       if (this.editedIndex > -1) {
         console.log(this.editedItem);
         Api.update(this.editedItem)
@@ -261,6 +267,10 @@ export default {
 .v-card__title {
   align-items: flex-start !important;
   padding: 5px;
+}
+.v-input--switch {
+  padding: 0 !important;
+  margin: 0 !important;
 }
 </style>
 

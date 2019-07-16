@@ -2798,6 +2798,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3079,6 +3080,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3132,14 +3137,16 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     editItem: function editItem(item) {
-      this.editedIndex = item;
+      this.editedIndex = item.id;
+      console.log(this.editedIndex);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
     save: function save() {
       var _this2 = this;
 
-      this.editedItem.avatar = this.file;
+      if (this.file != null) this.editedItem.avatar = this.file;
+      this.editedItem.avatar = this.data.avatar;
 
       if (this.editedIndex > -1) {
         console.log(this.editedItem);
@@ -7807,7 +7814,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.left-float[data-v-7033baf4] {\n  float: left !important;\n}\n.v-card__title[data-v-7033baf4] {\n  align-items: flex-start !important;\n  padding: 5px;\n}\n", ""]);
+exports.push([module.i, "\n.left-float[data-v-7033baf4] {\n  float: left !important;\n}\n.v-card__title[data-v-7033baf4] {\n  align-items: flex-start !important;\n  padding: 5px;\n}\n.v-input--switch[data-v-7033baf4] {\n  padding: 0 !important;\n  margin: 0 !important;\n}\n", ""]);
 
 // exports
 
@@ -42266,7 +42273,11 @@ var render = function() {
                   _vm._v(_vm._s(props.item.mobile))
                 ]),
                 _vm._v(" "),
-                _c("td", { staticClass: "text-xs-center" }),
+                _c("td", { staticClass: "text-xs-center" }, [
+                  props.item.status == 1
+                    ? _c("span", [_vm._v("فعال")])
+                    : _c("span", [_vm._v("غیر فعال")])
+                ]),
                 _vm._v(" "),
                 _c(
                   "td",
@@ -42528,191 +42539,224 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("v-flex", { staticClass: "pa-2" }, [
-                _c(
-                  "div",
-                  { staticClass: "subheading font-weight-black" },
-                  [
-                    _vm._v(
-                      "\n            " +
-                        _vm._s(_vm.data.full_name) +
-                        "\n            "
-                    ),
-                    _vm.data.status == true
-                      ? _c(
-                          "v-tooltip",
-                          {
-                            attrs: { bottom: "" },
-                            scopedSlots: _vm._u(
-                              [
+              _c(
+                "v-flex",
+                { staticClass: "pa-2" },
+                [
+                  _c(
+                    "v-layout",
+                    { staticClass: "font-weight-black" },
+                    [
+                      _c(
+                        "v-flex",
+                        { attrs: { xs3: "" } },
+                        [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(_vm.data.full_name) +
+                              "\n            "
+                          ),
+                          _vm.data.status == true
+                            ? _c(
+                                "v-tooltip",
+                                {
+                                  attrs: { bottom: "" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function(ref) {
+                                          var on = ref.on
+                                          return [
+                                            _c(
+                                              "v-icon",
+                                              _vm._g(
+                                                {
+                                                  attrs: {
+                                                    small: "",
+                                                    color: "green"
+                                                  }
+                                                },
+                                                on
+                                              ),
+                                              [_vm._v("mdi-circle")]
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    false,
+                                    3243333112
+                                  )
+                                },
+                                [_vm._v(" "), _c("span", [_vm._v("فعال")])]
+                              )
+                            : _c(
+                                "v-tooltip",
+                                {
+                                  attrs: { bottom: "" },
+                                  scopedSlots: _vm._u([
+                                    {
+                                      key: "activator",
+                                      fn: function(ref) {
+                                        var on = ref.on
+                                        return [
+                                          _c(
+                                            "v-icon",
+                                            _vm._g(
+                                              {
+                                                attrs: {
+                                                  small: "",
+                                                  color: "red"
+                                                }
+                                              },
+                                              on
+                                            ),
+                                            [_vm._v("mdi-circle")]
+                                          )
+                                        ]
+                                      }
+                                    }
+                                  ])
+                                },
+                                [_vm._v(" "), _c("span", [_vm._v("فعال")])]
+                              )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-flex",
+                        { attrs: { xs2: "" } },
+                        [
+                          _c(
+                            "v-tooltip",
+                            {
+                              attrs: { bottom: "" },
+                              scopedSlots: _vm._u([
                                 {
                                   key: "activator",
                                   fn: function(ref) {
                                     var on = ref.on
                                     return [
                                       _c(
-                                        "v-icon",
-                                        _vm._g(
-                                          {
-                                            attrs: { small: "", color: "green" }
-                                          },
-                                          on
-                                        ),
-                                        [_vm._v("mdi-circle")]
+                                        "span",
+                                        _vm._g({}, on),
+                                        [
+                                          _c("v-switch", {
+                                            attrs: { color: "primary" },
+                                            on: {
+                                              change: function($event) {
+                                                return _vm.changeState(
+                                                  _vm.data.id
+                                                )
+                                              }
+                                            },
+                                            model: {
+                                              value: _vm.data.status,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.data,
+                                                  "status",
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "data.status"
+                                            }
+                                          })
+                                        ],
+                                        1
                                       )
                                     ]
                                   }
                                 }
-                              ],
-                              null,
-                              false,
-                              3243333112
-                            )
-                          },
-                          [_vm._v(" "), _c("span", [_vm._v("فعال")])]
-                        )
-                      : _c(
-                          "v-tooltip",
-                          {
-                            attrs: { bottom: "" },
-                            scopedSlots: _vm._u([
-                              {
-                                key: "activator",
-                                fn: function(ref) {
-                                  var on = ref.on
-                                  return [
-                                    _c(
-                                      "v-icon",
-                                      _vm._g(
-                                        { attrs: { small: "", color: "red" } },
-                                        on
-                                      ),
-                                      [_vm._v("mdi-circle")]
-                                    )
-                                  ]
-                                }
+                              ])
+                            },
+                            [_vm._v(" "), _c("span", [_vm._v("وضعیت")])]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "mt-2" },
+                    [
+                      _c(
+                        "v-tooltip",
+                        {
+                          attrs: { bottom: "" },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "activator",
+                              fn: function(ref) {
+                                var on = ref.on
+                                return [
+                                  _c(
+                                    "span",
+                                    _vm._g({}, on),
+                                    [
+                                      _c("v-icon", { attrs: { small: "" } }, [
+                                        _vm._v("mdi-phone")
+                                      ]),
+                                      _vm._v(
+                                        "\n                " +
+                                          _vm._s(_vm.data.mobile) +
+                                          "\n              "
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ]
                               }
-                            ])
-                          },
-                          [_vm._v(" "), _c("span", [_vm._v("فعال")])]
-                        ),
-                    _vm._v(" "),
-                    _c(
-                      "v-tooltip",
-                      {
-                        attrs: { bottom: "" },
-                        scopedSlots: _vm._u([
-                          {
-                            key: "activator",
-                            fn: function(ref) {
-                              var on = ref.on
-                              return [
-                                _c(
-                                  "span",
-                                  _vm._g({}, on),
-                                  [
-                                    _c("v-switch", {
-                                      attrs: { color: "primary" },
-                                      on: {
-                                        change: function($event) {
-                                          return _vm.changeState(_vm.data.id)
-                                        }
-                                      },
-                                      model: {
-                                        value: _vm.data.status,
-                                        callback: function($$v) {
-                                          _vm.$set(_vm.data, "status", $$v)
-                                        },
-                                        expression: "data.status"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
-                              ]
                             }
-                          }
-                        ])
-                      },
-                      [_vm._v(" "), _c("span", [_vm._v("وضعیت")])]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "mt-2" },
-                  [
-                    _c(
-                      "v-tooltip",
-                      {
-                        attrs: { bottom: "" },
-                        scopedSlots: _vm._u([
-                          {
-                            key: "activator",
-                            fn: function(ref) {
-                              var on = ref.on
-                              return [
-                                _c(
-                                  "span",
-                                  _vm._g({}, on),
-                                  [
-                                    _c("v-icon", { attrs: { small: "" } }, [
-                                      _vm._v("mdi-phone")
-                                    ]),
-                                    _vm._v(
-                                      "\n                " +
-                                        _vm._s(_vm.data.mobile) +
-                                        "\n              "
-                                    )
-                                  ],
-                                  1
-                                )
-                              ]
+                          ])
+                        },
+                        [_vm._v(" "), _c("span", [_vm._v("شماره تماس")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-tooltip",
+                        {
+                          attrs: { bottom: "" },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "activator",
+                              fn: function(ref) {
+                                var on = ref.on
+                                return [
+                                  _c(
+                                    "span",
+                                    _vm._g({}, on),
+                                    [
+                                      _c("v-icon", { attrs: { small: "" } }, [
+                                        _vm._v("mdi-calendar-plus")
+                                      ]),
+                                      _vm._v(
+                                        "\n                " +
+                                          _vm._s(_vm.data.created_at) +
+                                          "\n              "
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ]
+                              }
                             }
-                          }
-                        ])
-                      },
-                      [_vm._v(" "), _c("span", [_vm._v("شماره تماس")])]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "v-tooltip",
-                      {
-                        attrs: { bottom: "" },
-                        scopedSlots: _vm._u([
-                          {
-                            key: "activator",
-                            fn: function(ref) {
-                              var on = ref.on
-                              return [
-                                _c(
-                                  "span",
-                                  _vm._g({}, on),
-                                  [
-                                    _c("v-icon", { attrs: { small: "" } }, [
-                                      _vm._v("mdi-calendar-plus")
-                                    ]),
-                                    _vm._v(
-                                      "\n                " +
-                                        _vm._s(_vm.data.created_at) +
-                                        "\n              "
-                                    )
-                                  ],
-                                  1
-                                )
-                              ]
-                            }
-                          }
-                        ])
-                      },
-                      [_vm._v(" "), _c("span", [_vm._v("تاریخ ثبت")])]
-                    )
-                  ],
-                  1
-                )
-              ]),
+                          ])
+                        },
+                        [_vm._v(" "), _c("span", [_vm._v("تاریخ ثبت")])]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
               _c("v-spacer"),
               _vm._v(" "),

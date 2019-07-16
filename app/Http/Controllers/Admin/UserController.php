@@ -8,6 +8,7 @@ use App\User;
 use App\UserProfile;
 use App\Helpers\UploadAdmin;
 use App\Http\Resources\Admin\UserDetailResource;
+use App\File;
 
 class UserController extends Controller
 {
@@ -45,24 +46,9 @@ class UserController extends Controller
         if ($user->profile->set()) {
             $uploadAdmin = new UploadAdmin();
             if ($result = $uploadAdmin->image(request('avatar'), 'avatars'))
+            dd($result);
             $user->setAvatar($result, 0, 0, config('constants.file.position.avatar'));
         }
-        return $user;
-    }
-
-    public function create()
-    {
-        $user = new User();
-        $user->set();
-
-        $profile = new UserProfile();
-        $profile->set();
-        $user->profile()->save($profile);
-
-        $avatar = new File();
-        $avatar->set();
-        $user->avatar()->save($avatar);
-
         return $user;
     }
 

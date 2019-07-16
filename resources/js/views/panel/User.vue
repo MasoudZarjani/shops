@@ -17,7 +17,8 @@
         <td class="text-xs-center">{{ props.item.full_name }}</td>
         <td class="text-xs-center">{{ props.item.mobile }}</td>
         <td class="text-xs-center">
-          
+          <span v-if="props.item.status == 1">فعال</span>
+          <span v-else>غیر فعال</span>
         </td>
         <td class="text-xs-center">
           <v-icon
