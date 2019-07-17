@@ -40,14 +40,14 @@ export default [{
         component: SettingComment
     },
     {
+        path: '/setting/color',
+        name: 'SettingColor',
+        component: SettingColor
+    },
+    {
         path: '/category',
         name: 'Category',
         component: Category
-    },
-    {
-        path: '/color',
-        name: 'Color',
-        component: Color
     },
     {
         path: '/comment',
