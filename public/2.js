@@ -27,8 +27,10 @@ __webpack_require__.r(__webpack_exports__);
       year: new Date().getFullYear()
     };
   },
-  watch: function watch() {
-    if (this.goDark == false) this.color = "gradiant";else this.color = "";
+  computed: {
+    gradiant: function gradiant() {
+      if (this.goDark == false) return "gradiant";else return "";
+    }
   }
 });
 
@@ -104,9 +106,9 @@ var render = function() {
     [
       _c(
         "v-flex",
-        { class: _vm.color, attrs: { "py-3": "", "text-xs-center": "" } },
+        { class: _vm.gradiant, attrs: { "py-3": "", "text-xs-center": "" } },
         [
-          _c("span", { attrs: { "white--tex": "" } }, [
+          _c("span", { staticClass: "white--text" }, [
             _vm._v("\n      Copyright © " + _vm._s(_vm.year) + " —\n      "),
             _c("strong", [_vm._v("Vesam 24")])
           ])

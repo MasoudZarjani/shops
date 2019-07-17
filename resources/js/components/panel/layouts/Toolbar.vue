@@ -1,7 +1,7 @@
 <template>
   <v-toolbar app flat :color="backgroundChoice" :dark="darkTheme" class="white--text">
     <v-toolbar-side-icon
-      class="hidden-md-and-up"
+      class="hidden-md-and-up white--text"
       v-model="drawer.open"
       @click.stop="drawer.open = !drawer.open"
     ></v-toolbar-side-icon>

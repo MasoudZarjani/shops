@@ -136,7 +136,7 @@ var render = function() {
     },
     [
       _c("v-toolbar-side-icon", {
-        staticClass: "hidden-md-and-up",
+        staticClass: "hidden-md-and-up white--text",
         on: {
           click: function($event) {
             $event.stopPropagation()

@@ -118,7 +118,7 @@
       <v-card-actions class="pa-3">
         <v-layout xs12>
           <v-flex class="text-xs-center">
-            <a :href="data.social.facebook" target="_blank">
+            <a :href="data.facebook" target="_blank">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
                   <v-icon v-on="on">mdi-facebook</v-icon>
@@ -128,7 +128,7 @@
             </a>
           </v-flex>
           <v-flex class="text-xs-center">
-            <a :href="data.social.twitter" target="_blank">
+            <a :href="data.twitter" target="_blank">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
                   <v-icon v-on="on">mdi-twitter</v-icon>
@@ -138,7 +138,7 @@
             </a>
           </v-flex>
           <v-flex class="text-xs-center">
-            <a :href="data.social.telegram" target="_blank">
+            <a :href="data.telegram" target="_blank">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
                   <v-icon v-on="on">mdi-telegram</v-icon>
@@ -150,7 +150,7 @@
           <v-flex class="text-xs-center">
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
-                <a :href="data.social.instagram" v-on="on" target="_blank">
+                <a :href="data.instagram" v-on="on" target="_blank">
                   <v-icon>mdi-instagram</v-icon>
                 </a>
               </template>

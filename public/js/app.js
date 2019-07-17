@@ -44170,12 +44170,7 @@ var render = function() {
                   _c("v-flex", { staticClass: "text-xs-center" }, [
                     _c(
                       "a",
-                      {
-                        attrs: {
-                          href: _vm.data.social.facebook,
-                          target: "_blank"
-                        }
-                      },
+                      { attrs: { href: _vm.data.facebook, target: "_blank" } },
                       [
                         _c(
                           "v-tooltip",
@@ -44210,12 +44205,7 @@ var render = function() {
                   _c("v-flex", { staticClass: "text-xs-center" }, [
                     _c(
                       "a",
-                      {
-                        attrs: {
-                          href: _vm.data.social.twitter,
-                          target: "_blank"
-                        }
-                      },
+                      { attrs: { href: _vm.data.twitter, target: "_blank" } },
                       [
                         _c(
                           "v-tooltip",
@@ -44250,12 +44240,7 @@ var render = function() {
                   _c("v-flex", { staticClass: "text-xs-center" }, [
                     _c(
                       "a",
-                      {
-                        attrs: {
-                          href: _vm.data.social.telegram,
-                          target: "_blank"
-                        }
-                      },
+                      { attrs: { href: _vm.data.telegram, target: "_blank" } },
                       [
                         _c(
                           "v-tooltip",
@@ -44306,7 +44291,7 @@ var render = function() {
                                     _vm._g(
                                       {
                                         attrs: {
-                                          href: _vm.data.social.instagram,
+                                          href: _vm.data.instagram,
                                           target: "_blank"
                                         }
                                       },

@@ -1,7 +1,7 @@
 <template>
   <v-footer app>
-    <v-flex py-3 :class="color" text-xs-center>
-      <span white--tex>
+    <v-flex py-3 :class="gradiant" text-xs-center>
+      <span class="white--text">
         Copyright &copy; {{ year }} —
         <strong>Vesam 24</strong>
       </span>
@@ -15,9 +15,11 @@ export default {
     color: "gradiant",
     year: new Date().getFullYear()
   }),
-  watch() {
-    if (this.goDark == false) this.color = "gradiant";
-    else this.color = "";
+  computed: {
+    gradiant: function() {
+      if (this.goDark == false) return "gradiant";
+      else return "";
+    }
   }
 };
 </script>
