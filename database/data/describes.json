@@ -686,5 +686,21 @@
         "type": 0,
         "describe_able_type": "App\\File",
         "describe_able_id": 59
+    },
+    {
+        "id": 87,
+        "title": "foodQuqlity",
+        "description": "کیفیت غذایی بسته به قیمت",
+        "type": 6,
+        "describe_able_type": null,
+        "describe_able_id": null
+    },
+    {
+        "id": 88,
+        "title": "packing",
+        "description": "بسته بندی",
+        "type": 6,
+        "describe_able_type": null,
+        "describe_able_id": null
     }
 ]

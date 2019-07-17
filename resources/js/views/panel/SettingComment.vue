@@ -1,10 +1,16 @@
 <template>
   <div>
-    <v-data-table :headers="headers" :items="results" :loading="loading">
+    <v-data-table
+      :headers="headers"
+      :items="results"
+      :loading="loading"
+      :pagination.sync="pagination"
+    >
       <template v-slot:items="props">
-        <td class="text-xs-center">{{ props.index+1 }}</td>
-        <td class="text-xs-center">{{ props.item.title }}</td>
-        <td class="text-xs-center">
+        <td>{{ (pagination.page-1)*pagination.rowsPerPage + props.index + 1 }}</td>
+        <td>{{ props.item.title }}</td>
+        
+        <td class="text-xs-right">
           <v-edit-dialog
             :return-value.sync="props.item.description"
             lazy
@@ -18,6 +24,7 @@
             <template v-slot:input>
               <v-text-field
                 v-model="props.item.description"
+                :rules="[max250chars]"
                 label="description"
                 single-line
                 counter
@@ -36,36 +43,31 @@
   </div>
 </template>
 <script>
-import Api from "../../api/Setting.js";
-export default {
-  data() {
-    return {
-      loading: false,
-      snack: false,
-      snackColor: "",
-      snackText: "",
-      pagination: {},
-      results: [],
-      headers: [
-        { text: "ردیف", value: "id", align: "center", sortable: false },
-        { text: "عنوان ", value: "title", align: "center" },
-        {
-          text: "محتوی",
-          value: "description",
-          align: "center",
-          sortable: false
-        }
-      ]
-    };
-  },
-  watch: {
-    dialog(val) {
-      val || this.close();
+  import Api from "../../api/Setting.js";
+import { type } from 'os';
+  export default {
+    data () {
+      return {
+        currentPage : this.page,
+        loading: false,
+        snack: false,
+        snackColor: '',
+        snackText: '',
+        max250chars: v => v.length <= 250 || 'Input too long!',
+        pagination: {},
+        results: [],
+        type : this.$route.params.type,
+        headers: [
+          { text: "ردیف", value: "id", align: "center", sortable: false },
+          { text: "عنوان ", value: "title", align: "center" },
+          { text: "محتوی", value: "description", align: "center", sortable: false  },
+        ],
+      }
     },
     search() {
       this.getByPagination();
-    }
-  },
+    },
+
   mounted() {
     this.getByPagination();
   },
@@ -73,18 +75,23 @@ export default {
     getByPagination() {
       this.loading = true;
 
-      Api.getSetting({
+      Api.getComment({
         page: this.pagination.page,
-        per_page: this.pagination.rowsPerPage
+        per_page: this.pagination.rowsPerPage,
       })
         .then(res => {
           this.loading = false;
           this.results = res.data.data;
           this.total = res.data.meta.total;
         })
-        .catch(err => console.log(err.response.data))
-        .finally(() => (this.loading = false));
-    },
+          .then(res => {
+            this.loading = false;
+            this.results = res.data.data;
+            this.total = res.data.meta.total;
+          })
+          .catch(err => console.log(err.data))
+          .finally(() => (this.loading = false));
+       },
 
     save($item) {
       Api.update($item)
@@ -92,8 +99,6 @@ export default {
           this.snackColor = "success";
           this.snackText = this.$t("message.update.success");
           this.snack = true;
-          //let self = this.editedIndex;
-          //Object.assign(this.results[self], this.editedItem);
         })
         .catch(error => {
           this.snack = true;

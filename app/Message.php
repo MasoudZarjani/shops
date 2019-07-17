@@ -42,13 +42,6 @@ class Message extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-        /**
-     * Get the message's product.
-     */
-    public function product()
-    {
-        return $this->hasOne(Product::class, 'id', 'product_id');
-    }
 
     /**
      * Scope a query to return type from message.
@@ -167,5 +160,13 @@ class Message extends Model
             return $actionMessage;
         }
         return false;
+    }
+
+    public static function getByOrder($type)
+    {
+        $per_page = empty(request('per_page')) ? 10 : (int) request('per_page');
+        $direction = request('direction')  ?? 'asc';
+        $sortBy = request('sortBy') ?? 'id';
+        return Message::ofType($type)->orderBy($sortBy, $direction)->paginate($per_page);
     }
 }

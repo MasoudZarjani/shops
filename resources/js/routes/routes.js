@@ -1,10 +1,13 @@
 import Index from '../views/panel/Index'
 import User from '../views/panel/User'
 import NotFound from '../views/panel/NotFound'
-import Setting from '../views/panel/Setting'
+import SettingApplication from '../views/panel/SettingApplication'
+import SettingComment from '../views/panel/SettingComment'
+import Color from '../views/panel/Color'
 import Category from '../views/panel/Category'
 import UserDetail from '../views/panel/UserDetail'
-import Color from '../views/panel/Color'
+
+import Comment from '../views/panel/Message'
 
 export default [{
         path: '*',
@@ -27,9 +30,14 @@ export default [{
         component: UserDetail
     },
     {
-        path: '/setting',
-        name: 'Setting',
-        component: Setting
+        path: '/setting/application',
+        name: 'SettingApplication',
+        component: SettingApplication
+    },
+    {
+        path: '/setting/comment',
+        name: 'SettingComment',
+        component: SettingComment
     },
     {
         path: '/category',
@@ -40,5 +48,10 @@ export default [{
         path: '/color',
         name: 'Color',
         component: Color
+    },
+    {
+        path: '/comment',
+        name: 'Comment',
+        component: Comment
     },
 ]

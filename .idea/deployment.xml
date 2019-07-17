@@ -79,6 +79,13 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="تیک اپ">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="جاهدی">
         <serverdata>
           <mappings>
@@ -143,6 +150,13 @@
         </serverdata>
       </paths>
       <paths name="سخنوران">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="سراج">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />

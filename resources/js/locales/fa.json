@@ -12,9 +12,12 @@
             "Index": "صفحه اصلی",
             "User": "کاربران",
             "UserDetail": "جزئیات کاربر",
-            "Setting": "تنظیمات",
+            "SettingApplication": "تنظیمات اپلیکیشن",
+            "SettingComment": "تنظیمات نظرات",
             "NotFound": "خطا",
-            "Color": "رنگ ها"
+            "Color": "رنگ ها",
+            "Comment":"نظرات",
+            "Discuss":"پرسش و پاسخ"
         }
     },
     "message": {

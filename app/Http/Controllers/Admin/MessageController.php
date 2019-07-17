@@ -16,14 +16,14 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $messages = Message::OfType(config('constants.message.type.comment'))->get();
+        $messages = Message::OfType(config('constants.message.type.comment'))->user->get();
         return MessageResource::collection($messages);
     }
 
     public function order()
     {
-        $describes = Describe::getByOrder();
-        return SettingResource::collection($describes);
+        $messages = Message::getByOrder(config('constants.message.type.comment'));
+        return MessageResource::collection($messages);
     }
 
     public function create(Request $request)
