@@ -30,7 +30,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       title: null,
       darkTheme: false,
-      backgroundChoice: "primary"
+      backgroundChoice: "gradiant"
     };
   },
   mounted: function mounted() {
@@ -52,7 +52,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     changeTheme: function changeTheme() {
       this.$emit("changeTheme", this.darkTheme);
-      if (this.backgroundChoice == "primary") this.backgroundChoice = "";else this.backgroundChoice = "primary";
+      if (this.backgroundChoice == "gradiant") this.backgroundChoice = "";else this.backgroundChoice = "gradiant";
     }
   }
 });
@@ -71,7 +71,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.v-input__control {\r\n  height: 100% !important;\n}\n.v-input__slot {\r\n  height: 100% !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.v-input__control {\n  height: 100% !important;\n}\n.v-input__slot {\n  height: 100% !important;\n}\n.gradiant {\n  background-image: linear-gradient(to right, #135589, #33d0cd);\n}\n", ""]);
 
 // exports
 
@@ -126,6 +126,7 @@ var render = function() {
   return _c(
     "v-toolbar",
     {
+      staticClass: "white--text",
       attrs: {
         app: "",
         flat: "",
@@ -179,6 +180,7 @@ var render = function() {
           _c(
             "v-icon",
             {
+              attrs: { color: "white" },
               on: {
                 click: function($event) {
                   return _vm.logout()

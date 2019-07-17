@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar app flat :color="backgroundChoice" :dark="darkTheme">
+  <v-toolbar app flat :color="backgroundChoice" :dark="darkTheme" class="white--text">
     <v-toolbar-side-icon
       class="hidden-md-and-up"
       v-model="drawer.open"
@@ -9,7 +9,7 @@
     <v-spacer></v-spacer>
     <v-toolbar-items>
       <v-switch v-model="darkTheme" @change="changeTheme()" color="white"></v-switch>
-      <v-icon @click="logout()">mdi-logout</v-icon>
+      <v-icon color="white" @click="logout()">mdi-logout</v-icon>
     </v-toolbar-items>
   </v-toolbar>
 </template>
@@ -19,7 +19,7 @@ export default {
   data: () => ({
     title: null,
     darkTheme: false,
-    backgroundChoice: "primary"
+    backgroundChoice: "gradiant"
   }),
 
   mounted() {
@@ -46,18 +46,22 @@ export default {
 
     changeTheme() {
       this.$emit("changeTheme", this.darkTheme);
-      if (this.backgroundChoice == "primary") this.backgroundChoice = "";
-      else this.backgroundChoice = "primary";
+      if (this.backgroundChoice == "gradiant") this.backgroundChoice = "";
+      else this.backgroundChoice = "gradiant";
     }
   }
 };
 </script>
+
 <style>
 .v-input__control {
   height: 100% !important;
 }
 .v-input__slot {
   height: 100% !important;
+}
+.gradiant {
+  background-image: linear-gradient(to right, #135589, #33d0cd);
 }
 </style>
 

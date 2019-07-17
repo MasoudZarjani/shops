@@ -3,7 +3,7 @@ import User from '../views/panel/User'
 import NotFound from '../views/panel/NotFound'
 import SettingApplication from '../views/panel/SettingApplication'
 import SettingComment from '../views/panel/SettingComment'
-import Color from '../views/panel/Color'
+import SettingColor from '../views/panel/SettingColor'
 import Category from '../views/panel/Category'
 import UserDetail from '../views/panel/UserDetail'
 

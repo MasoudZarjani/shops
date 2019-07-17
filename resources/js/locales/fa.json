@@ -15,9 +15,9 @@
             "SettingApplication": "تنظیمات اپلیکیشن",
             "SettingComment": "تنظیمات نظرات",
             "NotFound": "خطا",
-            "Color": "رنگ ها",
-            "Comment":"نظرات",
-            "Discuss":"پرسش و پاسخ"
+            "SettingColor": "رنگ ها",
+            "Comment": "نظرات",
+            "Discuss": "پرسش و پاسخ"
         }
     },
     "message": {
@@ -54,7 +54,8 @@
         "delete": "حذف",
         "save": "ذخیره",
         "new": "جدید",
-        "back": "بازگشت"
+        "back": "بازگشت",
+        "close": "بسته شد."
     },
     "form": {
         "first_name": "نام",
@@ -62,7 +63,8 @@
         "status": "وضعیت",
         "mobile": "موبایل",
         "enable": "فعال",
-        "disable": "غیرفعال"
+        "disable": "غیرفعال",
+        "createdAt": "تاریخ ثبت"
     },
     "validation": {
         "required": "الزامی می باشد.",
