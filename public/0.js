@@ -119,12 +119,16 @@ __webpack_require__.r(__webpack_exports__);
         arrow_icon_alt: "mdi-chevron-down",
         children: [{
           title: "رنگ",
-          to: "/color",
+          to: "/setting/color",
           icon: "mdi-palette"
         }, {
           title: "اپلیکیشن",
-          to: "/setting",
+          to: "/setting/application",
           icon: "mdi-cellphone-settings-variant"
+        }, {
+          title: "نظرات",
+          to: "/setting/comment",
+          icon: "mdi-phone-settings"
         }]
       }],
       logo: "/images/vesam-logo.jpg"
@@ -146,7 +150,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.title {\n  font-family: iranyekan !important;\n}\n", ""]);
+exports.push([module.i, "\n.title {\r\n  font-family: iranyekan !important;\n}\r\n", ""]);
 
 // exports
 

@@ -16,7 +16,7 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $messages = Message::OfType(config('constants.message.type.comment'))->get();
+        $messages = Message::OfType(config('constants.message.type.comment'))->user->get();
         return MessageResource::collection($messages);
     }
 

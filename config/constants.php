@@ -81,6 +81,7 @@ return [
             'layoutStatus' => 3,
             'group' => 4,
             'color' => 5,
+            'comment' => 6,
         ]
     ],
     'file' => [

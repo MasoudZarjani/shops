@@ -44,6 +44,7 @@
 </template>
 <script>
   import Api from "../../api/Setting.js";
+import { type } from 'os';
   export default {
     data () {
       return {
@@ -55,6 +56,7 @@
         max250chars: v => v.length <= 250 || 'Input too long!',
         pagination: {},
         results: [],
+        type : this.$route.params.type,
         headers: [
           { text: "ردیف", value: "id", align: "center", sortable: false },
           { text: "عنوان ", value: "title", align: "center" },
@@ -64,8 +66,8 @@
     },
     search() {
       this.getByPagination();
-    }
-  },
+    },
+
   mounted() {
     this.getByPagination();
   },
@@ -73,9 +75,9 @@
     getByPagination() {
       this.loading = true;
 
-      Api.getSetting({
+      Api.getComment({
         page: this.pagination.page,
-        per_page: this.pagination.rowsPerPage
+        per_page: this.pagination.rowsPerPage,
       })
         .then(res => {
           this.loading = false;
@@ -97,8 +99,6 @@
           this.snackColor = "success";
           this.snackText = this.$t("message.update.success");
           this.snack = true;
-          //let self = this.editedIndex;
-          //Object.assign(this.results[self], this.editedItem);
         })
         .catch(error => {
           this.snack = true;

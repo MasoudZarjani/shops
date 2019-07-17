@@ -89,12 +89,9 @@ export default {
         arrow_icon: "mdi-chevron-up",
         arrow_icon_alt: "mdi-chevron-down",
         children: [
-          { title: "رنگ", to: "/color", icon: "mdi-palette" },
-          {
-            title: "اپلیکیشن",
-            to: "/setting",
-            icon: "mdi-cellphone-settings-variant"
-          }
+          { title: "رنگ", to: "/setting/color", icon: "mdi-palette" },
+          { title: "اپلیکیشن",to: "/setting/application",icon: "mdi-cellphone-settings-variant" },
+          { title: "نظرات",to: "/setting/comment",icon: "mdi-phone-settings" }
         ]
       }
     ],

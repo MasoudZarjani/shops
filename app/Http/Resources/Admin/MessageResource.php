@@ -17,7 +17,7 @@ class MessageResource extends JsonResource
         return [
             'id' => $this->id ?? "",
             'user' => $this->user ? ($this->user->profile? $this->user->profile->full_name : '') : '',
-            'product' => $this->product ? ($this->product->describe ? ($this->product->describe->title?? '') : '' ) : '',
+            'product' => $this->message_able ? ($this->message_able->describe ? ($this->message_able->describe->title?? '') : '' ) : '',
             'title' => $this->describe ? $this->describe->title : '',
         ];
     }
