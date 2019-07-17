@@ -6,20 +6,20 @@
           <v-btn icon dark @click="close">
             <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-toolbar-title>ویرایش</v-toolbar-title>
+          <v-toolbar-title>{{ $t('general.edit') }}</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click="save">ذخیره</v-btn>
+            <v-btn dark flat @click="save">{{ $t('general.save') }}</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editedItem.first_name" label="نام*"></v-text-field>
+                <v-text-field v-model="editedItem.first_name" :label="$t('form.first_name')"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editedItem.last_name" label="نام خانوادگی*"></v-text-field>
+                <v-text-field v-model="editedItem.last_name" :label="$t('form.last_name')"></v-text-field>
               </v-flex>
               <v-flex xs6 sm6 md6>
                 <input type="file" v-on:change="onFileChange" />
@@ -30,45 +30,57 @@
               </v-flex>
             </v-layout>
           </v-container>
-          <small class="red--text darken-4">* فیلدهای الزامی را مشخص می نماید.</small>
+          <small class="red--text darken-4">{{ $t('validation.requiredMessage') }}</small>
         </v-card-text>
       </v-card>
     </v-dialog>
     <v-layout>
       <v-spacer></v-spacer>
-      <v-btn to="/user" color="primary">بازگشت</v-btn>
+      <v-btn to="/user" color="primary">{{ $t('general.back') }}</v-btn>
     </v-layout>
     <v-card>
+      <v-toolbar flat>
+        <v-toolbar-title>
+          <v-icon>mdi-account-card-details</v-icon>
+          &nbsp;{{ $t('title.userDetail.userInformation') }}
+        </v-toolbar-title>
+        <v-spacer></v-spacer>
+      </v-toolbar>
       <v-card-title>
         <v-flex xs2 class="pa-2">
-          <v-img :src="data.avatar" width="100px"></v-img>
+          <v-img :src="data.avatar" width="100%"></v-img>
         </v-flex>
         <v-flex class="pa-2">
           <v-layout class="font-weight-black">
-            <v-flex xs3>
+            <v-flex xs4>
               {{ data.full_name }}
               <v-tooltip bottom v-if="data.status == true">
                 <template v-slot:activator="{ on }">
                   <v-icon small color="green" v-on="on">mdi-circle</v-icon>
                 </template>
-                <span>فعال</span>
+                <span>{{ $t('form.enable') }}</span>
               </v-tooltip>
               <v-tooltip bottom v-else>
                 <template v-slot:activator="{ on }">
                   <v-icon small color="red" v-on="on">mdi-circle</v-icon>
                 </template>
-                <span>غیرفعال</span>
+                <span>{{ $t('form.disable') }}</span>
               </v-tooltip>
             </v-flex>
-            <v-flex xs2>
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                  <span v-on="on">
-                    <v-switch v-model="data.status" color="primary" @change="changeState(data.id)"></v-switch>
-                  </span>
-                </template>
-                <span>وضعیت</span>
-              </v-tooltip>
+            <v-flex xs6>
+              <span>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-switch
+                      v-on="on"
+                      v-model="data.status"
+                      color="primary"
+                      @change="changeState(data.id)"
+                    ></v-switch>
+                  </template>
+                  <span>{{ $t('form.status') }}</span>
+                </v-tooltip>
+              </span>
             </v-flex>
           </v-layout>
           <div class="mt-2">
@@ -79,7 +91,7 @@
                   {{ data.mobile }}
                 </span>
               </template>
-              <span>شماره تماس</span>
+              <span>{{ $t('form.mobile') }}</span>
             </v-tooltip>
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
@@ -88,7 +100,7 @@
                   {{ data.created_at }}
                 </span>
               </template>
-              <span>تاریخ ثبت</span>
+              <span>{{ $t('form.createdAt') }}</span>
             </v-tooltip>
           </div>
         </v-flex>
@@ -106,25 +118,75 @@
       <v-card-actions class="pa-3">
         <v-layout xs12>
           <v-flex class="text-xs-center">
-            <a :href="data.social.facebook">
-              <v-icon>mdi-facebook</v-icon>فیسبوک
+            <a :href="data.social.facebook" target="_blank">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <v-icon v-on="on">mdi-facebook</v-icon>
+                </template>
+                <span>{{ $t('socialNetwork.facebook') }}</span>
+              </v-tooltip>
             </a>
           </v-flex>
           <v-flex class="text-xs-center">
-            <v-icon>mdi-twitter</v-icon>توئیتر
+            <a :href="data.social.twitter" target="_blank">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <v-icon v-on="on">mdi-twitter</v-icon>
+                </template>
+                <span>{{ $t('socialNetwork.twitter') }}</span>
+              </v-tooltip>
+            </a>
           </v-flex>
           <v-flex class="text-xs-center">
-            <v-icon>mdi-telegram</v-icon>تلگرام
+            <a :href="data.social.telegram" target="_blank">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <v-icon v-on="on">mdi-telegram</v-icon>
+                </template>
+                <span>{{ $t('socialNetwork.telegram') }}</span>
+              </v-tooltip>
+            </a>
           </v-flex>
           <v-flex class="text-xs-center">
-            <v-icon>mdi-instagram</v-icon>اینستاگرام
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <a :href="data.social.instagram" v-on="on" target="_blank">
+                  <v-icon>mdi-instagram</v-icon>
+                </a>
+              </template>
+              <span>{{ $t('socialNetwork.instagram') }}</span>
+            </v-tooltip>
           </v-flex>
         </v-layout>
       </v-card-actions>
     </v-card>
+    <br />
+    <v-card>
+      <v-toolbar flat>
+        <v-toolbar-title>
+          <v-icon>mdi-map-marker</v-icon>
+          &nbsp;{{ $t('title.userDetail.addresses') }}
+        </v-toolbar-title>
+        <v-spacer></v-spacer>
+      </v-toolbar>
+      <v-card-title>
+        <v-flex></v-flex>
+        <v-spacer></v-spacer>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn color="primary" fab small v-on="on" @click="editItem(data)">
+              <v-icon>mdi-pencil</v-icon>
+            </v-btn>
+          </template>
+          <span>{{ $t('general.edit') }}</span>
+        </v-tooltip>
+      </v-card-title>
+      <v-divider light></v-divider>
+      <v-card-actions class="pa-3"></v-card-actions>
+    </v-card>
     <v-snackbar v-model="snack" :timeout="3000" :color="snackColor">
       {{ snackText }}
-      <v-btn flat @click="snack = false">بستن</v-btn>
+      <v-btn flat @click="snack = false">{{ $t('general.close') }}</v-btn>
     </v-snackbar>
   </v-container>
 </template>
