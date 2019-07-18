@@ -28,6 +28,12 @@ Route::middleware(['auth'])->group(function () {
             Route::post('filter', 'Admin\CategoryController@filter');
             Route::post('order', 'Admin\CategoryController@order');
             Route::get('changeState/{id}', 'Admin\CategoryController@changeState');
+
+            Route::get('getComments/{id}', 'Admin\CategoryController@getComments');
+            Route::post('createComment', 'Admin\CategoryController@createComment');
+            Route::put('updateComment', 'Admin\CategoryController@updateComment');
+            Route::delete('deleteComment/{id}', 'Admin\CategoryController@deleteComment');
+
         });
 
         Route::group(['prefix' => 'setting'], function () {

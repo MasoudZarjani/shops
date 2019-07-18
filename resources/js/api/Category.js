@@ -23,4 +23,17 @@ export default {
     changeState(id) {
         return axios.get('category/changeState/' + id)
     },
+
+    getComments(id) {
+        return axios.get('category/getComments/'+ id)
+    },
+    createComment(data) {
+        return axios.post('category/createComment', data)
+    },
+    updateComment(data) {
+        return axios.put('category/updateComment', data)
+    },
+    deleteComment(id) {
+        return axios.delete('category/deleteComment/' + id)
+    },
 }

@@ -19,11 +19,6 @@
           <v-btn
             color="primary"
             class="mb-2"
-            @click="getParent()"
-          >بازگشت</v-btn>
-          <v-btn
-            color="primary"
-            class="mb-2"
             v-on="on"
           >افزودن</v-btn>
         </template>
@@ -35,28 +30,9 @@
           <v-card-text>
             <v-container grid-list-md>
               <v-layout wrap>
-                <v-flex xs12 sm6 md6 >
+                <v-flex xs12 sm12 md12 >
                   <v-text-field v-model="editedItem.title" label="عنوان*" ></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md6 >
-                  <v-text-field
-                    v-model="editedItem.description"
-                    label="توضیحات*" ></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md6 >
-                  <v-text-field
-                    v-model="editedItem.sort"
-                    label="ترتیب*" ></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm4 md4 >
-                  <v-switch v-model="editedItem.status" label="وضعیت" ></v-switch>
-                </v-flex>
-                <v-flex xs12 sm8 md8>
-                  <input type="file" v-on:change="onFileChange" />
-                </v-flex>
-                <v-flex xs12 sm4 md4>
-                  <img v-if="file!==''" :src="file" class="img-responsive" />
-                  <img v-else :src="editedItem.image" class="img-responsive" />
+                  <v-text-field v-model="editedItem.categoryId"></v-text-field>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -90,25 +66,12 @@
     >
       <template v-slot:items="props">
         <td>{{ (pagination.rowsPerPage*(pagination.page-1))+(props.index+1) }}</td>
-        <td class="text-xs-center">
-          <v-img
-            width="80" :src="props.item.image"></v-img>
-        </td>
+        
         <td class="text-xs-center">{{ props.item.title }}</td>
-        <td class="text-xs-center">{{ props.item.countChildren }}</td>
-        <td class="text-xs-center">
-          <v-switch
-            v-model="props.item.status"
-            @change="changeState(props.item.id)"
-          ></v-switch>
-        </td>
+        
         <td>
           <v-icon small class="mr-2" color="blue" @click="editItem(props.item)" >mdi-pencil</v-icon>
           <v-icon small color="red" @click="deleteItem(props.item)" >mdi-delete</v-icon>
-          <v-icon small color="blue" @click="getChildren(props.item.id)" v-if='(props.item.countChildren>0)'>mdi-clipboard-text</v-icon>
-          <v-icon small color="blue" 
-          @click="$router.push({ path: `/category/getComments/${props.item.id}` })"
-          >mdi-message-settings-variant</v-icon>
         </td>
       </template>
     </v-data-table>
@@ -143,31 +106,17 @@ export default {
     pagination: {},
     dialog: false,
     editedIndex: -1,
-    parentId: 0,
-    currentParentId: 0,
     editedItem: {
-      image: "",
       title: "",
-      description: "",
-      status: 0,
-      sort:0,
-      parentId : 0,
+      categoryId : "",
     },
     defaultItem: {
-      image: "",
       title: "",
-      description: "",
-      status: 0,
-      sort:0,
-      parentId : 0,
+      categoryId : "",
     },
     headers: [
       { text: "ردیف", value: "id", align: "center" },
-      { text: "تصویر ", value: "image", align: "center", sortable: false },
       { text: "عنوان", value: "title", align: "center" },
-      { text: "تعداد زیردسته", value: "countChildren", align: "center" },
-      { text: "وضعیت", value: "status", align: "center" },
-      { text: "عملیات", value: "action", align: "center" }
     ],
     rowsPerPageItems: [5, 10, 20, 50, 100]
   }),
@@ -190,55 +139,9 @@ export default {
     }
   },
   methods: {
-    getParent() {
-      this.parentId = this.currentParentId;
-      this.currentParentId = 0;
-      this.getByPagination();
-    },
-    getChildren(parentId) {
-
-      this.currentParentId = this.parentId;
-      this.parentId = parentId;
-      this.getByPagination();
-    },
+    
     getByPagination() {
-      this.loading = true;
-      if (this.search) {
-        Api.getFilter({
-          query: this.search,
-          page: this.pagination.page,
-          per_page: this.pagination.rowsPerPage
-        })
-          .then(res => {
-            this.results = res.data.data;
-            this.total = res.data.meta.total;
-          })
-          .catch(err => console.log(err.response.data))
-          .finally(() => (this.loading = false));
-      }
-
-      // get by sort option
-      if (this.pagination.sortBy && !this.search) {
-        const direction = this.pagination.descending ? "desc" : "asc";
-        Api.getOrder({
-          direction: direction,
-          sortBy: this.pagination.sortBy,
-          page: this.pagination.page,
-          per_page: this.pagination.rowsPerPage,
-          parentId: this.parentId,
-          currentParentId : this.currentParentId,
-        }).then(res => {
-          console.log(res);
-          this.loading = false;
-          this.results = res.data.data;
-          this.total = res.data.meta.total;
-        });
-      }
-      if (!this.search && !this.pagination.sortBy) {
-        Api.get({
-          page: this.pagination.page,
-          per_page: this.pagination.rowsPerPage
-        })
+        Api.getComments(this.$route.params.id)
           .then(res => {
             this.loading = false;
             this.results = res.data.data;
@@ -246,7 +149,6 @@ export default {
           })
           .catch(err => console.log(err.response.data))
           .finally(() => (this.loading = false));
-      }
     },
 
     editItem(item) {
@@ -258,7 +160,7 @@ export default {
     deleteItem(item) {
       const index = this.results.indexOf(item);
       if (confirm("از حذف مطمئن هستید؟")) {
-        Api.delete(item.id)
+        Api.deleteComment(item.id)
           .then(() => {
             this.results.splice(index, 1);
             this.snack = true;
@@ -282,11 +184,8 @@ export default {
     },
 
     save() {
-      this.editedItem.image = this.file;
-      this.editedItem.parentId = this.parentId;
       if (this.editedIndex > -1) {
-        console.log(this.editedItem);
-        Api.update(this.editedItem)
+        Api.updateComment(this.editedItem)
           .then(() => {
             this.snackColor = "success";
             this.snackText = this.$t("message.update.success");
@@ -300,7 +199,7 @@ export default {
             this.snackText = this.$t("message.update.error");
           });
       } else {
-        Api.create(this.editedItem)
+        Api.createComment(this.editedItem)
           .then(({ data }) => {
             this.snack = true;
             this.snackColor = "success";
@@ -316,35 +215,6 @@ export default {
       }
       this.close();
     },
-
-    changeState(item) {
-      Api.changeState(item)
-        .then(() => {
-          this.snack = true;
-          this.snackColor = "success";
-          this.snackText = this.$t("message.changeState.success");
-        })
-        .catch(error => {
-          this.snack = true;
-          this.snackColor = "error";
-          this.snackText = this.$t("message.changeState.error");
-        });
-    },
-
-    onFileChange(e) {
-      let files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return;
-      this.createImage(files[0]);
-    },
-
-    createImage(file) {
-      let reader = new FileReader();
-      let vm = this;
-      reader.onload = e => {
-        vm.file = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
   }
 };
 </script>

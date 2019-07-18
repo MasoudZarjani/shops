@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\CategoryResource;
+use App\Http\Resources\Admin\CommentResource;
 use App\Category;
-
+use App\Describe;
+use CategoriesTableSeeder;
+use config;
 class CategoryController extends Controller
 {
     /**
@@ -60,5 +63,34 @@ class CategoryController extends Controller
         ]);
 
         return $category;
+    }
+
+    //============comment
+
+    public function getComments($id)
+    {
+        $category = Category::find($id);
+        $comments = $category->describes()->ofType(6)->get();
+        return CommentResource::collection($comments);
+    }
+
+    public function createComment()
+    {
+        $category = Category::find(request("categoryId"));
+        $description = new Describe();
+        $description->title = request("title");
+        $description->type = 6;
+        return $category->describes()->save($description);
+    }
+
+    public function updateComment()
+    {
+        $description = Describe::find(request('id'));
+        return $description->set();
+    }
+
+    public function deleteComment($id)
+    {
+        return Describe::ofId($id)->delete();
     }
 }
