@@ -266,3 +266,7 @@ blockquote {
 .headline {
     font-family: iranyekan !important
 }
+
+a {
+    text-decoration: none !important;
+}

@@ -1,124 +1,93 @@
 <template v-slot:extension>
   <v-container>
-    <v-dialog v-model="dialog" max-width="600px">
-      <v-card>
-        <v-toolbar dark color="primary">
-          <v-btn icon dark @click="close">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-          <v-toolbar-title>ویرایش</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn dark flat @click="save">ذخیره</v-btn>
-          </v-toolbar-items>
-        </v-toolbar>
-        <v-card-text>
-          <v-container grid-list-md>
-            <v-layout wrap>
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editedItem.first_name" label="نام*"></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editedItem.last_name" label="نام خانوادگی*"></v-text-field>
-              </v-flex>
-              <v-flex xs6 sm6 md6>
-                <input type="file" v-on:change="onFileChange" />
-              </v-flex>
-              <v-flex xs6 sm6 md6>
-                <img v-if="file!==''" :src="file" width="125px" class="img-responsive" />
-                <img v-else :src="editedItem.avatar" width="125px" class="img-responsive" />
-              </v-flex>
-            </v-layout>
-          </v-container>
-          <small class="red--text darken-4">* فیلدهای الزامی را مشخص می نماید.</small>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
     <v-card>
-      <v-card-title>
-        <v-flex xs2 class="pa-2">
-          <v-img :src="data.avatar" width="100px"></v-img>
+      <v-layout>
+        <v-flex xs6 sm4 md4>
+          <v-card-text style="padding: 0">
+            <v-navigation-drawer v-model="drawer" permanent right>
+              <v-toolbar height="150" flat class="transparent">
+                <v-list two-line class="pa-0">
+                  <v-subheader inset>
+                    {{ $t('title.userDetail.userInformation') }}
+                    <v-spacer></v-spacer>
+                    <v-icon color="blue">mdi-chat</v-icon>
+                  </v-subheader>
+                  <v-list-tile avatar>
+                    <v-list-tile-avatar>
+                      <img :src="data.avatar" />
+                    </v-list-tile-avatar>
+                    <v-list-tile-content>
+                      <v-list-tile-title>
+                        {{ data.full_name }}
+                        <v-tooltip bottom v-if="data.status == true">
+                          <template v-slot:activator="{ on }">
+                            <v-icon small color="green" v-on="on">mdi-circle</v-icon>
+                          </template>
+                          <span>{{ $t('form.enable') }}</span>
+                        </v-tooltip>
+                        <v-tooltip bottom v-else>
+                          <template v-slot:activator="{ on }">
+                            <v-icon small color="red" v-on="on">mdi-circle</v-icon>
+                          </template>
+                          <span>{{ $t('form.disable') }}</span>
+                        </v-tooltip>
+                      </v-list-tile-title>
+                      <v-list-tile-sub-title>
+                        <v-tooltip bottom>
+                          <template v-slot:activator="{ on }">
+                            <span v-on="on">
+                              <v-icon small>mdi-calendar-plus</v-icon>
+                              {{ data.created_at }}
+                            </span>
+                          </template>
+                          <span>{{ $t('form.createdAt') }}</span>
+                        </v-tooltip>
+                      </v-list-tile-sub-title>
+                    </v-list-tile-content>
+                    <v-list-tile-action>
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                          <v-switch
+                            v-on="on"
+                            v-model="data.status"
+                            color="primary"
+                            @change="changeState(data.id)"
+                          ></v-switch>
+                        </template>
+                        <span>{{ $t('form.status') }}</span>
+                      </v-tooltip>
+                    </v-list-tile-action>
+                    <span></span>
+                  </v-list-tile>
+                </v-list>
+              </v-toolbar>
+
+              <v-list class="pt-1" dense>
+                <v-divider></v-divider>
+
+                <v-list-tile v-for="item in items" :key="item.title" @click="showTab(item.name)">
+                  <v-list-tile-action>
+                    <v-icon>{{ item.icon }}</v-icon>
+                  </v-list-tile-action>
+
+                  <v-list-tile-content>
+                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                  </v-list-tile-content>
+                </v-list-tile>
+              </v-list>
+            </v-navigation-drawer>
+          </v-card-text>
         </v-flex>
-        <v-flex class="pa-2">
-          <v-layout class="font-weight-black">
-            <v-flex xs3>
-              {{ data.full_name }}
-              <v-tooltip bottom v-if="data.status == true">
-                <template v-slot:activator="{ on }">
-                  <v-icon small color="green" v-on="on">mdi-circle</v-icon>
-                </template>
-                <span>فعال</span>
-              </v-tooltip>
-              <v-tooltip bottom v-else>
-                <template v-slot:activator="{ on }">
-                  <v-icon small color="red" v-on="on">mdi-circle</v-icon>
-                </template>
-                <span>فعال</span>
-              </v-tooltip>
-            </v-flex>
-            <v-flex xs2>
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                  <span v-on="on">
-                    <v-switch v-model="data.status" color="primary" @change="changeState(data.id)"></v-switch>
-                  </span>
-                </template>
-                <span>وضعیت</span>
-              </v-tooltip>
-            </v-flex>
-          </v-layout>
-          <div class="mt-2">
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <span v-on="on">
-                  <v-icon small>mdi-phone</v-icon>
-                  {{ data.mobile }}
-                </span>
-              </template>
-              <span>شماره تماس</span>
-            </v-tooltip>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <span v-on="on">
-                  <v-icon small>mdi-calendar-plus</v-icon>
-                  {{ data.created_at }}
-                </span>
-              </template>
-              <span>تاریخ ثبت</span>
-            </v-tooltip>
-          </div>
+        <v-flex xs6 sm8 md8>
+          <v-card-text v-if="address">address</v-card-text>
+          <v-card-text v-if="payment">payment</v-card-text>
+          <v-card-text v-if="message">message</v-card-text>
         </v-flex>
-        <v-spacer></v-spacer>
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on }">
-            <v-btn color="primary" fab small v-on="on" @click="editItem(data)">
-              <v-icon>mdi-pencil</v-icon>
-            </v-btn>
-          </template>
-          <span>ویرایش</span>
-        </v-tooltip>
-      </v-card-title>
-      <v-divider light></v-divider>
-      <v-card-actions class="pa-3">
-        <v-layout xs12>
-          <v-flex class="text-xs-center">
-            <v-icon>mdi-facebook</v-icon>فیسبوک
-          </v-flex>
-          <v-flex class="text-xs-center">
-            <v-icon>mdi-twitter</v-icon>توئیتر
-          </v-flex>
-          <v-flex class="text-xs-center">
-            <v-icon>mdi-telegram</v-icon>تلگرام
-          </v-flex>
-          <v-flex class="text-xs-center">
-            <v-icon>mdi-instagram</v-icon>اینستاگرام
-          </v-flex>
-        </v-layout>
-      </v-card-actions>
+      </v-layout>
     </v-card>
     <v-snackbar v-model="snack" :timeout="3000" :color="snackColor">
       {{ snackText }}
-      <v-btn flat @click="snack = false">بستن</v-btn>
+      <v-btn flat @click="snack = false">{{ $t('general.close') }}</v-btn>
     </v-snackbar>
   </v-container>
 </template>
@@ -128,8 +97,18 @@ import Api from "../../api/User.js";
 
 export default {
   data: () => ({
+    drawer: true,
+    items: [
+      { title: "آدرس ها", name: "address", icon: "mdi-map-marker" },
+      { title: "پرداخت ها", name: "payment", icon: "mdi-credit-card-settings" },
+      { title: "پیام ها", name: "message", icon: "mdi-forum" }
+    ],
+    right: null,
     modal: false,
     dialog: false,
+    address: false,
+    payment: false,
+    message: false,
     editedIndex: -1,
     editedItem: {
       avatar: "",
@@ -162,12 +141,29 @@ export default {
     }
   },
   methods: {
+    showTab(name) {
+      this.address = false;
+      this.payment = false;
+      this.message = false;
+      switch (name) {
+        case "address":
+          this.address = true;
+          break;
+        case "payment":
+          this.payment = true;
+          break;
+        case "message":
+          this.message = true;
+          break;
+        default:
+          break;
+      }
+    },
     getDetail() {
       this.snack = false;
       Api.getDetail(this.$route.params.id)
         .then(result => {
           this.data = result.data.data;
-          console.log(this.data);
         })
         .catch(error => {
           this.snack = true;
@@ -178,7 +174,6 @@ export default {
 
     editItem(item) {
       this.editedIndex = item.id;
-      console.log(this.editedIndex);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
@@ -187,7 +182,6 @@ export default {
       if (this.file != null) this.editedItem.avatar = this.file;
       this.editedItem.avatar = this.data.avatar;
       if (this.editedIndex > -1) {
-        console.log(this.editedItem);
         Api.update(this.editedItem)
           .then(() => {
             this.snackColor = "success";

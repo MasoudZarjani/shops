@@ -1,5 +1,6 @@
 vendor/
 node_modules/
+
 npm-debug.log
 
 # Laravel 4 specific
@@ -22,3 +23,6 @@ Homestead.json
 *.jpg
 *.png
 *.gif
+
+.
+idea/

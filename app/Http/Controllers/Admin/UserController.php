@@ -37,7 +37,9 @@ class UserController extends Controller
 
     public function delete($id)
     {
-        return User::ofId($id)->delete();
+        if (User::ofId($id)->delete())
+            return response()->json(['status' => true]);
+        return response()->json(['status' => false], 500);
     }
 
     public function update()
@@ -46,7 +48,7 @@ class UserController extends Controller
         if ($user->profile->set()) {
             $uploadAdmin = new UploadAdmin();
             if ($result = $uploadAdmin->image(request('avatar'), 'avatars'))
-            dd($result);
+                dd($result);
             $user->setAvatar($result, 0, 0, config('constants.file.position.avatar'));
         }
         return $user;

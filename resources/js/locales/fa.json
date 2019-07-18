@@ -16,9 +16,9 @@
             "SettingApplication": "تنظیمات اپلیکیشن",
             "SettingComment": "تنظیمات نظرات",
             "NotFound": "خطا",
-            "Color": "رنگ ها",
-            "Comment":"نظرات",
-            "Discuss":"پرسش و پاسخ"
+            "SettingColor": "رنگ ها",
+            "Comment": "نظرات",
+            "Discuss": "پرسش و پاسخ"
         }
     },
     "message": {
@@ -41,13 +41,46 @@
         "userDetail": {
             "error": "ارتباط با سرور با خطا روبرو شد."
         },
-        "snack" : {
-            "close" : "بسته شد."
+        "snack": {
+            "close": "بسته شد."
         }
     },
     "server": {
-        "error":{
+        "error": {
             "404": "خطای 404: صفحه یافت نشد"
         }
+    },
+    "general": {
+        "edit": "ویرایش",
+        "delete": "حذف",
+        "save": "ذخیره",
+        "new": "جدید",
+        "back": "بازگشت",
+        "close": "بسته شد."
+    },
+    "form": {
+        "first_name": "نام",
+        "last_name": "نام خانوادگی",
+        "status": "وضعیت",
+        "mobile": "موبایل",
+        "enable": "فعال",
+        "disable": "غیرفعال",
+        "createdAt": "تاریخ ثبت"
+    },
+    "validation": {
+        "required": "الزامی می باشد.",
+        "requiredMessage": "* فیلدهای الزامی را مشخص می نماید."
+    },
+    "title": {
+        "userDetail": {
+            "userInformation": "اطلاعات کاربری",
+            "addresses": "آدرس ها"
+        }
+    },
+    "socialNetwork": {
+        "facebook": "فیسبوک",
+        "twitter": "توئیتر",
+        "telegram": "تلگرام",
+        "instagram": "اینستاگرام"
     }
 }
