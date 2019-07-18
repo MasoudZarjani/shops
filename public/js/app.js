@@ -3532,125 +3532,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      drawer: true,
+      items: [{
+        title: "آدرس ها",
+        icon: "mdi-map-marker"
+      }, {
+        title: "پرداخت ها",
+        icon: "mdi-credit-card-settings"
+      }, {
+        title: "پیام ها",
+        icon: "mdi-forum"
+      }],
+      right: null,
       modal: false,
       dialog: false,
       editedIndex: -1,
@@ -43681,435 +43578,303 @@ var render = function() {
     "v-container",
     [
       _c(
-        "v-dialog",
-        {
-          attrs: { "max-width": "600px" },
-          model: {
-            value: _vm.dialog,
-            callback: function($$v) {
-              _vm.dialog = $$v
-            },
-            expression: "dialog"
-          }
-        },
-        [
-          _c(
-            "v-card",
-            [
-              _c(
-                "v-toolbar",
-                { attrs: { dark: "", color: "primary" } },
-                [
-                  _c(
-                    "v-btn",
-                    { attrs: { icon: "", dark: "" }, on: { click: _vm.close } },
-                    [_c("v-icon", [_vm._v("mdi-close")])],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-toolbar-title", [
-                    _vm._v(_vm._s(_vm.$t("general.edit")))
-                  ]),
-                  _vm._v(" "),
-                  _c("v-spacer"),
-                  _vm._v(" "),
-                  _c(
-                    "v-toolbar-items",
-                    [
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { dark: "", flat: "" },
-                          on: { click: _vm.save }
-                        },
-                        [_vm._v(_vm._s(_vm.$t("general.save")))]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-card-text",
-                [
-                  _c(
-                    "v-container",
-                    { attrs: { "grid-list-md": "" } },
-                    [
-                      _c(
-                        "v-layout",
-                        { attrs: { wrap: "" } },
-                        [
-                          _c(
-                            "v-flex",
-                            { attrs: { xs12: "", sm6: "", md6: "" } },
-                            [
-                              _c("v-text-field", {
-                                attrs: { label: _vm.$t("form.first_name") },
-                                model: {
-                                  value: _vm.editedItem.first_name,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.editedItem, "first_name", $$v)
-                                  },
-                                  expression: "editedItem.first_name"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-flex",
-                            { attrs: { xs12: "", sm6: "", md6: "" } },
-                            [
-                              _c("v-text-field", {
-                                attrs: { label: _vm.$t("form.last_name") },
-                                model: {
-                                  value: _vm.editedItem.last_name,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.editedItem, "last_name", $$v)
-                                  },
-                                  expression: "editedItem.last_name"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-flex",
-                            { attrs: { xs6: "", sm6: "", md6: "" } },
-                            [
-                              _c("input", {
-                                attrs: { type: "file" },
-                                on: { change: _vm.onFileChange }
-                              })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-flex",
-                            { attrs: { xs6: "", sm6: "", md6: "" } },
-                            [
-                              _vm.file !== ""
-                                ? _c("img", {
-                                    staticClass: "img-responsive",
-                                    attrs: { src: _vm.file, width: "125px" }
-                                  })
-                                : _c("img", {
-                                    staticClass: "img-responsive",
-                                    attrs: {
-                                      src: _vm.editedItem.avatar,
-                                      width: "125px"
-                                    }
-                                  })
-                            ]
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("small", { staticClass: "red--text darken-4" }, [
-                    _vm._v(_vm._s(_vm.$t("validation.requiredMessage")))
-                  ])
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-layout",
-        [
-          _c("v-spacer"),
-          _vm._v(" "),
-          _c("v-btn", { attrs: { to: "/user", color: "primary" } }, [
-            _vm._v(_vm._s(_vm.$t("general.back")))
-          ])
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
         "v-card",
         [
           _c(
-            "v-toolbar",
-            { attrs: { flat: "" } },
-            [
-              _c(
-                "v-toolbar-title",
-                [
-                  _c("v-icon", [_vm._v("mdi-account-card-details")]),
-                  _vm._v(
-                    "\n         " +
-                      _vm._s(_vm.$t("title.userDetail.userInformation")) +
-                      "\n      "
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("v-spacer")
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-card-title",
+            "v-layout",
             [
               _c(
                 "v-flex",
-                { staticClass: "pa-2", attrs: { xs2: "" } },
-                [
-                  _c("v-img", {
-                    attrs: { src: _vm.data.avatar, width: "100%" }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                { staticClass: "pa-2" },
+                { attrs: { xs4: "" } },
                 [
                   _c(
-                    "v-layout",
-                    { staticClass: "font-weight-black" },
+                    "v-card-text",
+                    { staticStyle: { padding: "0" } },
                     [
                       _c(
-                        "v-flex",
-                        { attrs: { xs4: "" } },
+                        "v-navigation-drawer",
+                        {
+                          attrs: { width: "auto", permanent: "", right: "" },
+                          model: {
+                            value: _vm.drawer,
+                            callback: function($$v) {
+                              _vm.drawer = $$v
+                            },
+                            expression: "drawer"
+                          }
+                        },
                         [
-                          _vm._v(
-                            "\n            " +
-                              _vm._s(_vm.data.full_name) +
-                              "\n            "
-                          ),
-                          _vm.data.status == true
-                            ? _c(
-                                "v-tooltip",
+                          _c(
+                            "v-toolbar",
+                            {
+                              staticClass: "transparent",
+                              attrs: { height: "auto", flat: "" }
+                            },
+                            [
+                              _c(
+                                "v-list",
                                 {
-                                  attrs: { bottom: "" },
-                                  scopedSlots: _vm._u(
-                                    [
-                                      {
-                                        key: "activator",
-                                        fn: function(ref) {
-                                          var on = ref.on
-                                          return [
-                                            _c(
-                                              "v-icon",
-                                              _vm._g(
-                                                {
-                                                  attrs: {
-                                                    small: "",
-                                                    color: "green"
-                                                  }
-                                                },
-                                                on
-                                              ),
-                                              [_vm._v("mdi-circle")]
-                                            )
-                                          ]
-                                        }
-                                      }
-                                    ],
-                                    null,
-                                    false,
-                                    3243333112
-                                  )
+                                  staticClass: "pa-0",
+                                  attrs: { "two-line": "" }
                                 },
                                 [
-                                  _vm._v(" "),
-                                  _c("span", [
-                                    _vm._v(_vm._s(_vm.$t("form.enable")))
-                                  ])
-                                ]
-                              )
-                            : _c(
-                                "v-tooltip",
-                                {
-                                  attrs: { bottom: "" },
-                                  scopedSlots: _vm._u([
-                                    {
-                                      key: "activator",
-                                      fn: function(ref) {
-                                        var on = ref.on
-                                        return [
-                                          _c(
-                                            "v-icon",
-                                            _vm._g(
-                                              {
-                                                attrs: {
-                                                  small: "",
-                                                  color: "red"
-                                                }
-                                              },
-                                              on
-                                            ),
-                                            [_vm._v("mdi-circle")]
-                                          )
-                                        ]
-                                      }
-                                    }
-                                  ])
-                                },
-                                [
-                                  _vm._v(" "),
-                                  _c("span", [
-                                    _vm._v(_vm._s(_vm.$t("form.disable")))
-                                  ])
-                                ]
-                              )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("v-flex", { attrs: { xs6: "" } }, [
-                        _c(
-                          "span",
-                          [
-                            _c(
-                              "v-tooltip",
-                              {
-                                attrs: { bottom: "" },
-                                scopedSlots: _vm._u([
-                                  {
-                                    key: "activator",
-                                    fn: function(ref) {
-                                      var on = ref.on
-                                      return [
-                                        _c(
-                                          "v-switch",
-                                          _vm._g(
-                                            {
-                                              attrs: { color: "primary" },
-                                              on: {
-                                                change: function($event) {
-                                                  return _vm.changeState(
-                                                    _vm.data.id
-                                                  )
-                                                }
-                                              },
-                                              model: {
-                                                value: _vm.data.status,
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    _vm.data,
-                                                    "status",
-                                                    $$v
-                                                  )
-                                                },
-                                                expression: "data.status"
-                                              }
-                                            },
-                                            on
-                                          )
+                                  _c("v-subheader", { attrs: { inset: "" } }, [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.$t(
+                                          "title.userDetail.userInformation"
                                         )
-                                      ]
-                                    }
-                                  }
-                                ])
-                              },
-                              [
-                                _vm._v(" "),
-                                _c("span", [
-                                  _vm._v(_vm._s(_vm.$t("form.status")))
-                                ])
-                              ]
-                            )
-                          ],
-                          1
-                        )
-                      ])
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "mt-2" },
-                    [
-                      _c(
-                        "v-tooltip",
-                        {
-                          attrs: { bottom: "" },
-                          scopedSlots: _vm._u([
-                            {
-                              key: "activator",
-                              fn: function(ref) {
-                                var on = ref.on
-                                return [
-                                  _c(
-                                    "span",
-                                    _vm._g({}, on),
-                                    [
-                                      _c("v-icon", { attrs: { small: "" } }, [
-                                        _vm._v("mdi-phone")
-                                      ]),
-                                      _vm._v(
-                                        "\n                " +
-                                          _vm._s(_vm.data.mobile) +
-                                          "\n              "
                                       )
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list-tile",
+                                    { attrs: { avatar: "" } },
+                                    [
+                                      _c("v-list-tile-avatar", [
+                                        _c("img", {
+                                          attrs: { src: _vm.data.avatar }
+                                        })
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-list-tile-content",
+                                        [
+                                          _c(
+                                            "v-list-tile-title",
+                                            [
+                                              _vm._v(
+                                                "\n                      " +
+                                                  _vm._s(_vm.data.full_name) +
+                                                  "\n                      "
+                                              ),
+                                              _vm.data.status == true
+                                                ? _c(
+                                                    "v-tooltip",
+                                                    {
+                                                      attrs: { bottom: "" },
+                                                      scopedSlots: _vm._u(
+                                                        [
+                                                          {
+                                                            key: "activator",
+                                                            fn: function(ref) {
+                                                              var on = ref.on
+                                                              return [
+                                                                _c(
+                                                                  "v-icon",
+                                                                  _vm._g(
+                                                                    {
+                                                                      attrs: {
+                                                                        small:
+                                                                          "",
+                                                                        color:
+                                                                          "green"
+                                                                      }
+                                                                    },
+                                                                    on
+                                                                  ),
+                                                                  [
+                                                                    _vm._v(
+                                                                      "mdi-circle"
+                                                                    )
+                                                                  ]
+                                                                )
+                                                              ]
+                                                            }
+                                                          }
+                                                        ],
+                                                        null,
+                                                        false,
+                                                        3243333112
+                                                      )
+                                                    },
+                                                    [
+                                                      _vm._v(" "),
+                                                      _c("span", [
+                                                        _vm._v(
+                                                          _vm._s(
+                                                            _vm.$t(
+                                                              "form.enable"
+                                                            )
+                                                          )
+                                                        )
+                                                      ])
+                                                    ]
+                                                  )
+                                                : _c(
+                                                    "v-tooltip",
+                                                    {
+                                                      attrs: { bottom: "" },
+                                                      scopedSlots: _vm._u([
+                                                        {
+                                                          key: "activator",
+                                                          fn: function(ref) {
+                                                            var on = ref.on
+                                                            return [
+                                                              _c(
+                                                                "v-icon",
+                                                                _vm._g(
+                                                                  {
+                                                                    attrs: {
+                                                                      small: "",
+                                                                      color:
+                                                                        "red"
+                                                                    }
+                                                                  },
+                                                                  on
+                                                                ),
+                                                                [
+                                                                  _vm._v(
+                                                                    "mdi-circle"
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ]
+                                                          }
+                                                        }
+                                                      ])
+                                                    },
+                                                    [
+                                                      _vm._v(" "),
+                                                      _c("span", [
+                                                        _vm._v(
+                                                          _vm._s(
+                                                            _vm.$t(
+                                                              "form.disable"
+                                                            )
+                                                          )
+                                                        )
+                                                      ])
+                                                    ]
+                                                  )
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c("v-list-tile-sub-title", [
+                                            _vm._v(_vm._s(_vm.data.created_at))
+                                          ])
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-list-tile-action",
+                                        [
+                                          _c(
+                                            "v-tooltip",
+                                            {
+                                              attrs: { bottom: "" },
+                                              scopedSlots: _vm._u([
+                                                {
+                                                  key: "activator",
+                                                  fn: function(ref) {
+                                                    var on = ref.on
+                                                    return [
+                                                      _c(
+                                                        "v-switch",
+                                                        _vm._g(
+                                                          {
+                                                            attrs: {
+                                                              color: "primary"
+                                                            },
+                                                            on: {
+                                                              change: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.changeState(
+                                                                  _vm.data.id
+                                                                )
+                                                              }
+                                                            },
+                                                            model: {
+                                                              value:
+                                                                _vm.data.status,
+                                                              callback: function(
+                                                                $$v
+                                                              ) {
+                                                                _vm.$set(
+                                                                  _vm.data,
+                                                                  "status",
+                                                                  $$v
+                                                                )
+                                                              },
+                                                              expression:
+                                                                "data.status"
+                                                            }
+                                                          },
+                                                          on
+                                                        )
+                                                      )
+                                                    ]
+                                                  }
+                                                }
+                                              ])
+                                            },
+                                            [
+                                              _vm._v(" "),
+                                              _c("span", [
+                                                _vm._v(
+                                                  _vm._s(_vm.$t("form.status"))
+                                                )
+                                              ])
+                                            ]
+                                          )
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c("span")
                                     ],
                                     1
                                   )
-                                ]
-                              }
-                            }
-                          ])
-                        },
-                        [
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
                           _vm._v(" "),
-                          _c("span", [_vm._v(_vm._s(_vm.$t("form.mobile")))])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-tooltip",
-                        {
-                          attrs: { bottom: "" },
-                          scopedSlots: _vm._u([
-                            {
-                              key: "activator",
-                              fn: function(ref) {
-                                var on = ref.on
-                                return [
-                                  _c(
-                                    "span",
-                                    _vm._g({}, on),
-                                    [
-                                      _c("v-icon", { attrs: { small: "" } }, [
-                                        _vm._v("mdi-calendar-plus")
-                                      ]),
-                                      _vm._v(
-                                        "\n                " +
-                                          _vm._s(_vm.data.created_at) +
-                                          "\n              "
-                                      )
-                                    ],
-                                    1
-                                  )
-                                ]
-                              }
-                            }
-                          ])
-                        },
-                        [
-                          _vm._v(" "),
-                          _c("span", [_vm._v(_vm._s(_vm.$t("form.createdAt")))])
-                        ]
+                          _c(
+                            "v-list",
+                            { staticClass: "pt-1", attrs: { dense: "" } },
+                            [
+                              _c("v-divider"),
+                              _vm._v(" "),
+                              _vm._l(_vm.items, function(item) {
+                                return _c(
+                                  "v-list-tile",
+                                  { key: item.title },
+                                  [
+                                    _c(
+                                      "v-list-tile-action",
+                                      [
+                                        _c("v-icon", [
+                                          _vm._v(_vm._s(item.icon))
+                                        ])
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-list-tile-content",
+                                      [
+                                        _c("v-list-tile-title", [
+                                          _vm._v(_vm._s(item.title))
+                                        ])
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              })
+                            ],
+                            2
+                          )
+                        ],
+                        1
                       )
                     ],
                     1
@@ -44118,290 +43883,15 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("v-spacer"),
-              _vm._v(" "),
               _c(
-                "v-tooltip",
-                {
-                  attrs: { bottom: "" },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "activator",
-                      fn: function(ref) {
-                        var on = ref.on
-                        return [
-                          _c(
-                            "v-btn",
-                            _vm._g(
-                              {
-                                attrs: { color: "primary", fab: "", small: "" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.editItem(_vm.data)
-                                  }
-                                }
-                              },
-                              on
-                            ),
-                            [_c("v-icon", [_vm._v("mdi-pencil")])],
-                            1
-                          )
-                        ]
-                      }
-                    }
-                  ])
-                },
-                [_vm._v(" "), _c("span", [_vm._v("ویرایش")])]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("v-divider", { attrs: { light: "" } }),
-          _vm._v(" "),
-          _c(
-            "v-card-actions",
-            { staticClass: "pa-3" },
-            [
-              _c(
-                "v-layout",
-                { attrs: { xs12: "" } },
-                [
-                  _c("v-flex", { staticClass: "text-xs-center" }, [
-                    _c(
-                      "a",
-                      { attrs: { href: _vm.data.facebook, target: "_blank" } },
-                      [
-                        _c(
-                          "v-tooltip",
-                          {
-                            attrs: { bottom: "" },
-                            scopedSlots: _vm._u([
-                              {
-                                key: "activator",
-                                fn: function(ref) {
-                                  var on = ref.on
-                                  return [
-                                    _c("v-icon", _vm._g({}, on), [
-                                      _vm._v("mdi-facebook")
-                                    ])
-                                  ]
-                                }
-                              }
-                            ])
-                          },
-                          [
-                            _vm._v(" "),
-                            _c("span", [
-                              _vm._v(_vm._s(_vm.$t("socialNetwork.facebook")))
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("v-flex", { staticClass: "text-xs-center" }, [
-                    _c(
-                      "a",
-                      { attrs: { href: _vm.data.twitter, target: "_blank" } },
-                      [
-                        _c(
-                          "v-tooltip",
-                          {
-                            attrs: { bottom: "" },
-                            scopedSlots: _vm._u([
-                              {
-                                key: "activator",
-                                fn: function(ref) {
-                                  var on = ref.on
-                                  return [
-                                    _c("v-icon", _vm._g({}, on), [
-                                      _vm._v("mdi-twitter")
-                                    ])
-                                  ]
-                                }
-                              }
-                            ])
-                          },
-                          [
-                            _vm._v(" "),
-                            _c("span", [
-                              _vm._v(_vm._s(_vm.$t("socialNetwork.twitter")))
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("v-flex", { staticClass: "text-xs-center" }, [
-                    _c(
-                      "a",
-                      { attrs: { href: _vm.data.telegram, target: "_blank" } },
-                      [
-                        _c(
-                          "v-tooltip",
-                          {
-                            attrs: { bottom: "" },
-                            scopedSlots: _vm._u([
-                              {
-                                key: "activator",
-                                fn: function(ref) {
-                                  var on = ref.on
-                                  return [
-                                    _c("v-icon", _vm._g({}, on), [
-                                      _vm._v("mdi-telegram")
-                                    ])
-                                  ]
-                                }
-                              }
-                            ])
-                          },
-                          [
-                            _vm._v(" "),
-                            _c("span", [
-                              _vm._v(_vm._s(_vm.$t("socialNetwork.telegram")))
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-flex",
-                    { staticClass: "text-xs-center" },
-                    [
-                      _c(
-                        "v-tooltip",
-                        {
-                          attrs: { bottom: "" },
-                          scopedSlots: _vm._u([
-                            {
-                              key: "activator",
-                              fn: function(ref) {
-                                var on = ref.on
-                                return [
-                                  _c(
-                                    "a",
-                                    _vm._g(
-                                      {
-                                        attrs: {
-                                          href: _vm.data.instagram,
-                                          target: "_blank"
-                                        }
-                                      },
-                                      on
-                                    ),
-                                    [_c("v-icon", [_vm._v("mdi-instagram")])],
-                                    1
-                                  )
-                                ]
-                              }
-                            }
-                          ])
-                        },
-                        [
-                          _vm._v(" "),
-                          _c("span", [
-                            _vm._v(_vm._s(_vm.$t("socialNetwork.instagram")))
-                          ])
-                        ]
-                      )
-                    ],
-                    1
-                  )
-                ],
+                "v-flex",
+                { attrs: { xs8: "" } },
+                [_c("v-card-text", [_vm._v("asd")])],
                 1
               )
             ],
             1
           )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c(
-        "v-card",
-        [
-          _c(
-            "v-toolbar",
-            { attrs: { flat: "" } },
-            [
-              _c(
-                "v-toolbar-title",
-                [
-                  _c("v-icon", [_vm._v("mdi-map-marker")]),
-                  _vm._v(
-                    "\n         " +
-                      _vm._s(_vm.$t("title.userDetail.addresses")) +
-                      "\n      "
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("v-spacer")
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-card-title",
-            [
-              _c("v-flex"),
-              _vm._v(" "),
-              _c("v-spacer"),
-              _vm._v(" "),
-              _c(
-                "v-tooltip",
-                {
-                  attrs: { bottom: "" },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "activator",
-                      fn: function(ref) {
-                        var on = ref.on
-                        return [
-                          _c(
-                            "v-btn",
-                            _vm._g(
-                              {
-                                attrs: { color: "primary", fab: "", small: "" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.editItem(_vm.data)
-                                  }
-                                }
-                              },
-                              on
-                            ),
-                            [_c("v-icon", [_vm._v("mdi-pencil")])],
-                            1
-                          )
-                        ]
-                      }
-                    }
-                  ])
-                },
-                [
-                  _vm._v(" "),
-                  _c("span", [_vm._v(_vm._s(_vm.$t("general.edit")))])
-                ]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("v-divider", { attrs: { light: "" } }),
-          _vm._v(" "),
-          _c("v-card-actions", { staticClass: "pa-3" })
         ],
         1
       ),

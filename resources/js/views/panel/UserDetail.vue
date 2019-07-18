@@ -1,188 +1,73 @@
 <template v-slot:extension>
   <v-container>
-    <v-dialog v-model="dialog" max-width="600px">
-      <v-card>
-        <v-toolbar dark color="primary">
-          <v-btn icon dark @click="close">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-          <v-toolbar-title>{{ $t('general.edit') }}</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn dark flat @click="save">{{ $t('general.save') }}</v-btn>
-          </v-toolbar-items>
-        </v-toolbar>
-        <v-card-text>
-          <v-container grid-list-md>
-            <v-layout wrap>
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editedItem.first_name" :label="$t('form.first_name')"></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editedItem.last_name" :label="$t('form.last_name')"></v-text-field>
-              </v-flex>
-              <v-flex xs6 sm6 md6>
-                <input type="file" v-on:change="onFileChange" />
-              </v-flex>
-              <v-flex xs6 sm6 md6>
-                <img v-if="file!==''" :src="file" width="125px" class="img-responsive" />
-                <img v-else :src="editedItem.avatar" width="125px" class="img-responsive" />
-              </v-flex>
-            </v-layout>
-          </v-container>
-          <small class="red--text darken-4">{{ $t('validation.requiredMessage') }}</small>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
-    <v-layout>
-      <v-spacer></v-spacer>
-      <v-btn to="/user" color="primary">{{ $t('general.back') }}</v-btn>
-    </v-layout>
     <v-card>
-      <v-toolbar flat>
-        <v-toolbar-title>
-          <v-icon>mdi-account-card-details</v-icon>
-          &nbsp;{{ $t('title.userDetail.userInformation') }}
-        </v-toolbar-title>
-        <v-spacer></v-spacer>
-      </v-toolbar>
-      <v-card-title>
-        <v-flex xs2 class="pa-2">
-          <v-img :src="data.avatar" width="100%"></v-img>
+      <v-layout>
+        <v-flex xs4>
+          <v-card-text style="padding: 0">
+            <v-navigation-drawer width="auto" v-model="drawer" permanent right>
+              <v-toolbar height="auto" flat class="transparent">
+                <v-list two-line class="pa-0">
+                  <v-subheader inset>{{ $t('title.userDetail.userInformation') }}</v-subheader>
+                  <v-list-tile avatar>
+                    <v-list-tile-avatar>
+                      <img :src="data.avatar" />
+                    </v-list-tile-avatar>
+                    <v-list-tile-content>
+                      <v-list-tile-title>
+                        {{ data.full_name }}
+                        <v-tooltip bottom v-if="data.status == true">
+                          <template v-slot:activator="{ on }">
+                            <v-icon small color="green" v-on="on">mdi-circle</v-icon>
+                          </template>
+                          <span>{{ $t('form.enable') }}</span>
+                        </v-tooltip>
+                        <v-tooltip bottom v-else>
+                          <template v-slot:activator="{ on }">
+                            <v-icon small color="red" v-on="on">mdi-circle</v-icon>
+                          </template>
+                          <span>{{ $t('form.disable') }}</span>
+                        </v-tooltip>
+                      </v-list-tile-title>
+                      <v-list-tile-sub-title>{{ data.created_at }}</v-list-tile-sub-title>
+                    </v-list-tile-content>
+                    <v-list-tile-action>
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                          <v-switch
+                            v-on="on"
+                            v-model="data.status"
+                            color="primary"
+                            @change="changeState(data.id)"
+                          ></v-switch>
+                        </template>
+                        <span>{{ $t('form.status') }}</span>
+                      </v-tooltip>
+                    </v-list-tile-action>
+                    <span></span>
+                  </v-list-tile>
+                </v-list>
+              </v-toolbar>
+
+              <v-list class="pt-1" dense>
+                <v-divider></v-divider>
+
+                <v-list-tile v-for="item in items" :key="item.title">
+                  <v-list-tile-action>
+                    <v-icon>{{ item.icon }}</v-icon>
+                  </v-list-tile-action>
+
+                  <v-list-tile-content>
+                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                  </v-list-tile-content>
+                </v-list-tile>
+              </v-list>
+            </v-navigation-drawer>
+          </v-card-text>
         </v-flex>
-        <v-flex class="pa-2">
-          <v-layout class="font-weight-black">
-            <v-flex xs4>
-              {{ data.full_name }}
-              <v-tooltip bottom v-if="data.status == true">
-                <template v-slot:activator="{ on }">
-                  <v-icon small color="green" v-on="on">mdi-circle</v-icon>
-                </template>
-                <span>{{ $t('form.enable') }}</span>
-              </v-tooltip>
-              <v-tooltip bottom v-else>
-                <template v-slot:activator="{ on }">
-                  <v-icon small color="red" v-on="on">mdi-circle</v-icon>
-                </template>
-                <span>{{ $t('form.disable') }}</span>
-              </v-tooltip>
-            </v-flex>
-            <v-flex xs6>
-              <span>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-switch
-                      v-on="on"
-                      v-model="data.status"
-                      color="primary"
-                      @change="changeState(data.id)"
-                    ></v-switch>
-                  </template>
-                  <span>{{ $t('form.status') }}</span>
-                </v-tooltip>
-              </span>
-            </v-flex>
-          </v-layout>
-          <div class="mt-2">
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <span v-on="on">
-                  <v-icon small>mdi-phone</v-icon>
-                  {{ data.mobile }}
-                </span>
-              </template>
-              <span>{{ $t('form.mobile') }}</span>
-            </v-tooltip>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <span v-on="on">
-                  <v-icon small>mdi-calendar-plus</v-icon>
-                  {{ data.created_at }}
-                </span>
-              </template>
-              <span>{{ $t('form.createdAt') }}</span>
-            </v-tooltip>
-          </div>
+        <v-flex xs8>
+          <v-card-text>asd</v-card-text>
         </v-flex>
-        <v-spacer></v-spacer>
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on }">
-            <v-btn color="primary" fab small v-on="on" @click="editItem(data)">
-              <v-icon>mdi-pencil</v-icon>
-            </v-btn>
-          </template>
-          <span>ویرایش</span>
-        </v-tooltip>
-      </v-card-title>
-      <v-divider light></v-divider>
-      <v-card-actions class="pa-3">
-        <v-layout xs12>
-          <v-flex class="text-xs-center">
-            <a :href="data.facebook" target="_blank">
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                  <v-icon v-on="on">mdi-facebook</v-icon>
-                </template>
-                <span>{{ $t('socialNetwork.facebook') }}</span>
-              </v-tooltip>
-            </a>
-          </v-flex>
-          <v-flex class="text-xs-center">
-            <a :href="data.twitter" target="_blank">
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                  <v-icon v-on="on">mdi-twitter</v-icon>
-                </template>
-                <span>{{ $t('socialNetwork.twitter') }}</span>
-              </v-tooltip>
-            </a>
-          </v-flex>
-          <v-flex class="text-xs-center">
-            <a :href="data.telegram" target="_blank">
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                  <v-icon v-on="on">mdi-telegram</v-icon>
-                </template>
-                <span>{{ $t('socialNetwork.telegram') }}</span>
-              </v-tooltip>
-            </a>
-          </v-flex>
-          <v-flex class="text-xs-center">
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <a :href="data.instagram" v-on="on" target="_blank">
-                  <v-icon>mdi-instagram</v-icon>
-                </a>
-              </template>
-              <span>{{ $t('socialNetwork.instagram') }}</span>
-            </v-tooltip>
-          </v-flex>
-        </v-layout>
-      </v-card-actions>
-    </v-card>
-    <br />
-    <v-card>
-      <v-toolbar flat>
-        <v-toolbar-title>
-          <v-icon>mdi-map-marker</v-icon>
-          &nbsp;{{ $t('title.userDetail.addresses') }}
-        </v-toolbar-title>
-        <v-spacer></v-spacer>
-      </v-toolbar>
-      <v-card-title>
-        <v-flex></v-flex>
-        <v-spacer></v-spacer>
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on }">
-            <v-btn color="primary" fab small v-on="on" @click="editItem(data)">
-              <v-icon>mdi-pencil</v-icon>
-            </v-btn>
-          </template>
-          <span>{{ $t('general.edit') }}</span>
-        </v-tooltip>
-      </v-card-title>
-      <v-divider light></v-divider>
-      <v-card-actions class="pa-3"></v-card-actions>
+      </v-layout>
     </v-card>
     <v-snackbar v-model="snack" :timeout="3000" :color="snackColor">
       {{ snackText }}
@@ -196,6 +81,13 @@ import Api from "../../api/User.js";
 
 export default {
   data: () => ({
+    drawer: true,
+    items: [
+      { title: "آدرس ها", icon: "mdi-map-marker" },
+      { title: "پرداخت ها", icon: "mdi-credit-card-settings" },
+      { title: "پیام ها", icon: "mdi-forum" }
+    ],
+    right: null,
     modal: false,
     dialog: false,
     editedIndex: -1,
