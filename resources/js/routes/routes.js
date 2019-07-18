@@ -6,7 +6,7 @@ import SettingComment from '../views/panel/SettingComment'
 import Color from '../views/panel/Color'
 import Category from '../views/panel/Category'
 import UserDetail from '../views/panel/UserDetail'
-
+import CategoryComments from '../views/panel/CategoryComments'
 import Comment from '../views/panel/Message'
 
 export default [{
@@ -43,6 +43,11 @@ export default [{
         path: '/category',
         name: 'Category',
         component: Category
+    },
+    {
+        path: '/category/getComments/:id',
+        name: 'CategoryComments',
+        component: CategoryComments
     },
     {
         path: '/color',

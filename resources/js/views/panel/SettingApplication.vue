@@ -84,11 +84,6 @@ import { type } from 'os';
           this.results = res.data.data;
           this.total = res.data.meta.total;
         })
-          .then(res => {
-            this.loading = false;
-            this.results = res.data.data;
-            this.total = res.data.meta.total;
-          })
           .catch(err => console.log(err.data))
           .finally(() => (this.loading = false));
        },

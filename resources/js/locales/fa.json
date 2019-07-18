@@ -9,6 +9,7 @@
     "menu": {
         "list": {
             "Category": "دسته بندی ها",
+            "CategoryComments":"نظرات دسته بندی",
             "Index": "صفحه اصلی",
             "User": "کاربران",
             "UserDetail": "جزئیات کاربر",
