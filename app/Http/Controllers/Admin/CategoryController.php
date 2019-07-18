@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\CategoryResource;
-use App\Http\Resources\Admin\CommentResource;
+use App\Http\Resources\Admin\SettingResource;
 use App\Category;
 use App\Describe;
 use CategoriesTableSeeder;
@@ -71,7 +71,7 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
         $comments = $category->describes()->ofType(6)->get();
-        return CommentResource::collection($comments);
+        return SettingResource::collection($comments);
     }
 
     public function createComment()

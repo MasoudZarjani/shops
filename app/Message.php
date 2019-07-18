@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Message extends Model
 {
     use CreateUuid, SoftDeletes;
-
+    protected $guarded = [];
     /**
      * Get all of the owning message_able models.
      */
@@ -42,6 +42,11 @@ class Message extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
+
+    public function scopeOfId($query, $id)
+    {
+        return $query->where('id', $id);
+    }
 
     /**
      * Scope a query to return type from message.
@@ -168,5 +173,19 @@ class Message extends Model
         $direction = request('direction')  ?? 'asc';
         $sortBy = request('sortBy') ?? 'id';
         return Message::ofType($type)->orderBy($sortBy, $direction)->paginate($per_page);
+    }
+
+    public static function getByFilter($type)
+    {
+        $per_page = empty(request('per_page')) ? 10 : (int) request('per_page');
+        return Message::where(function ($query) {
+            $query->whereHas('describes', function ($query) {
+                $query->where('title', 'LIKE', '%' . request('query') . '%');
+                $query->ofType(config('constants.describe.type.text'));
+            });
+        })
+        ->ofType($type)
+        ->active()
+        ->paginate($per_page);
     }
 }

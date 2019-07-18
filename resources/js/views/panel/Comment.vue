@@ -35,9 +35,7 @@
                 <v-flex xs12 sm4 md4 >
                   <v-switch v-model="editedItem.status" label="وضعیت" ></v-switch>
                 </v-flex>
-                <v-flex xs12 sm8 md8>
-                  <input type="file" v-on:change="onFileChange" />
-                </v-flex>
+                
                 <v-flex xs12 sm4 md4>
                   <img v-if="file!==''" :src="file" class="img-responsive" />
                   <img v-else :src="editedItem.image" class="img-responsive" />
@@ -84,8 +82,7 @@
           ></v-switch>
         </td>
         <td>
-          <v-icon small class="mr-2" color="blue" @click="editItem(props.item)" >mdi-pencil</v-icon>
-          <v-icon small color="blue" @click="getChildren(props.item.id)" v-if='(props.item.countChildren>0)'>mdi-clipboard-text</v-icon>
+          <v-icon small class="mr-2" color="blue" @click="editItem(props.item)" >mdi-comment-text</v-icon>
         </td>
       </template>
     </v-data-table>
@@ -165,7 +162,7 @@ export default {
     getByPagination() {
       this.loading = true;
       if (this.search) {
-        Api.getFilter({
+        Api.getFilterComment({
           query: this.search,
           page: this.pagination.page,
           per_page: this.pagination.rowsPerPage
@@ -181,7 +178,7 @@ export default {
       // get by sort option
       if (this.pagination.sortBy && !this.search) {
         const direction = this.pagination.descending ? "desc" : "asc";
-        Api.getOrder({
+        Api.getOrderComment({
           direction: direction,
           sortBy: this.pagination.sortBy,
           page: this.pagination.page,
@@ -194,7 +191,7 @@ export default {
         });
       }
       if (!this.search && !this.pagination.sortBy) {
-        Api.get({
+        Api.getComment({
           page: this.pagination.page,
           per_page: this.pagination.rowsPerPage
         })
@@ -226,7 +223,7 @@ export default {
       this.editedItem.image = this.file;
       if (this.editedIndex > -1) {
         console.log(this.editedItem);
-        Api.update(this.editedItem)
+        Api.updateComment(this.editedItem)
           .then(() => {
             this.snackColor = "success";
             this.snackText = this.$t("message.update.success");
@@ -240,7 +237,7 @@ export default {
             this.snackText = this.$t("message.update.error");
           });
       } else {
-        Api.create(this.editedItem)
+        Api.createComment(this.editedItem)
           .then(({ data }) => {
             this.snack = true;
             this.snackColor = "success";
@@ -258,7 +255,7 @@ export default {
     },
 
     changeState(item) {
-      Api.changeState(item)
+      Api.changeStateComment(item)
         .then(() => {
           this.snack = true;
           this.snackColor = "success";
@@ -270,21 +267,6 @@ export default {
           this.snackText = this.$t("message.changeState.error");
         });
     },
-
-    onFileChange(e) {
-      let files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return;
-      this.createImage(files[0]);
-    },
-
-    createImage(file) {
-      let reader = new FileReader();
-      let vm = this;
-      reader.onload = e => {
-        vm.file = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
   }
 };
 </script>

@@ -1,22 +1,22 @@
 import axios from '../config/axios.js'
 
 export default {
-    getFilter(data) {
-        return axios.post('message/filter', data)
+    getFilterComment(data) {
+        return axios.post('comment/filter', data)
     },
-    getOrder(data) {
-        return axios.post('message/order', data)
+    getOrderComment(data) {
+        return axios.post('comment/order', data)
     },
-    get(data) {
-        return axios.post('message/index', data)
+    getComment(data) {
+        return axios.post('comment/index', data)
     },
-    changeState(id) {
-        return axios.get('message/changeState/' + id)
+    changeStateComment(id) {
+        return axios.get('comment/changeState/' + id)
     },
-    getDetail(id) {
-        return axios.get('message/detail/' + id)
+    getDetailComment(id) {
+        return axios.get('comment/detail/' + id)
     },
-    update(data){
-        return axios.get('message/update'+ data)
+    updateComment(data){
+        return axios.get('comment/update'+ data)
     }
 }
