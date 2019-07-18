@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Message;
 use Validator;
-use App\Http\Resources\Admin\MessageResource;
+use App\Http\Resources\Admin\CommentResource;
 
 class MessageController extends Controller
 {
@@ -14,58 +14,36 @@ class MessageController extends Controller
      * Get user without sorting
      * @return resource user
      */
-    public function index()
+    public function indexComment()
     {
-        $messages = Message::OfType(config('constants.message.type.comment'))->user->get();
-        return MessageResource::collection($messages);
+        $messages = Message::OfType(config('constants.message.type.comment'))->get();
+        return CommentResource::collection($messages);
     }
 
-    public function order()
+    public function orderComment()
     {
         $messages = Message::getByOrder(config('constants.message.type.comment'));
-        return MessageResource::collection($messages);
+        return CommentResource::collection($messages);
     }
 
-    public function create(Request $request)
+    public function filterComment()
     {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'title' => 'required',
-                'description' => 'required',
-            ],
-            [
-                'title.required' => 'پر کردن این فیلد الزامی است',
-                'description.required' => 'پر کردن این فیلد الزامی است',
-            ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->messages()->all(),
-                'keys' => $validator->messages()->keys()
-            ], 400);
-        }
-        $Describe= new Describe();
-        return $Describe->setWithType(config("constants.describe.type.setting"));
+        $messages = Message::getByFilter(config('constants.message.type.comment'));
+        return CommentResource::collection($messages);
     }
 
-    public function delete($id)
+    public function changeStateComment($id)
     {
-        return Describe::ofId($id)->delete();
-    }
-
-    public function changeState($id)
-    {
-        $user = User::ofId($id)->first();
-        if ($user->status == 1)
+        $Message = Message::ofId($id)->first();
+        if ($Message->status == 1)
             $status = 0;
         else {
             $status = 1;
         }
-        $user->update([
+        $Message->update([
             'status' => $status
         ]);
 
-        return $user;
+        return $Message;
     }
 }

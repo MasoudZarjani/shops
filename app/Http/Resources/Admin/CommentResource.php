@@ -16,7 +16,10 @@ class CommentResource extends JsonResource
     {
         return [
             'id' => $this->id ?? "",
-            'title' => $this->title ?? "",
+            'user' => $this->user ? ($this->user->profile? $this->user->profile->full_name : '') : '',
+            'product' => $this->message_able ? ($this->message_able->describe ? ($this->message_able->describe->title?? '') : '' ) : '',
+            'title' => $this->describe ? $this->describe->title : '',
+            'status' => $this->status,
         ];
     }
 }

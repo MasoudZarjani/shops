@@ -51,12 +51,12 @@ Route::middleware(['auth'])->group(function () {
             Route::put('update', 'Admin\ColorController@update');
         });
 
-        Route::group(['prefix' => 'message'], function () {
-            Route::post('index', 'Admin\MessageController@index');
-            Route::post('order', 'Admin\MessageController@order');
-            Route::post('filter', 'Admin\MessageController@filter');
-            Route::get('changeState/{id}', 'Admin\MessageController@changeState');
-            Route::get('detail/{id}', 'Admin\MessageController@detail');
+        Route::group(['prefix' => 'comment'], function () {
+            Route::post('index', 'Admin\MessageController@indexComment');
+            Route::post('order', 'Admin\MessageController@orderComment');
+            Route::post('filter', 'Admin\MessageController@filterComment');
+            Route::get('changeState/{id}', 'Admin\MessageController@changeStateComment');
+            Route::get('detail/{id}', 'Admin\MessageController@detailComment');
         });
     });
 });
