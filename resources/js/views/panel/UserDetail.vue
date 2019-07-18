@@ -2,12 +2,16 @@
   <v-container>
     <v-card>
       <v-layout>
-        <v-flex xs4>
+        <v-flex xs6 sm4 md4>
           <v-card-text style="padding: 0">
-            <v-navigation-drawer width="auto" v-model="drawer" permanent right>
-              <v-toolbar height="auto" flat class="transparent">
+            <v-navigation-drawer v-model="drawer" permanent right>
+              <v-toolbar height="150" flat class="transparent">
                 <v-list two-line class="pa-0">
-                  <v-subheader inset>{{ $t('title.userDetail.userInformation') }}</v-subheader>
+                  <v-subheader inset>
+                    {{ $t('title.userDetail.userInformation') }}
+                    <v-spacer></v-spacer>
+                    <v-icon color="blue">mdi-chat</v-icon>
+                  </v-subheader>
                   <v-list-tile avatar>
                     <v-list-tile-avatar>
                       <img :src="data.avatar" />
@@ -28,7 +32,17 @@
                           <span>{{ $t('form.disable') }}</span>
                         </v-tooltip>
                       </v-list-tile-title>
-                      <v-list-tile-sub-title>{{ data.created_at }}</v-list-tile-sub-title>
+                      <v-list-tile-sub-title>
+                        <v-tooltip bottom>
+                          <template v-slot:activator="{ on }">
+                            <span v-on="on">
+                              <v-icon small>mdi-calendar-plus</v-icon>
+                              {{ data.created_at }}
+                            </span>
+                          </template>
+                          <span>{{ $t('form.createdAt') }}</span>
+                        </v-tooltip>
+                      </v-list-tile-sub-title>
                     </v-list-tile-content>
                     <v-list-tile-action>
                       <v-tooltip bottom>
@@ -51,7 +65,7 @@
               <v-list class="pt-1" dense>
                 <v-divider></v-divider>
 
-                <v-list-tile v-for="item in items" :key="item.title">
+                <v-list-tile v-for="item in items" :key="item.title" @click="showTab(item.name)">
                   <v-list-tile-action>
                     <v-icon>{{ item.icon }}</v-icon>
                   </v-list-tile-action>
@@ -64,8 +78,10 @@
             </v-navigation-drawer>
           </v-card-text>
         </v-flex>
-        <v-flex xs8>
-          <v-card-text>asd</v-card-text>
+        <v-flex xs6 sm8 md8>
+          <v-card-text v-if="address">address</v-card-text>
+          <v-card-text v-if="payment">payment</v-card-text>
+          <v-card-text v-if="message">message</v-card-text>
         </v-flex>
       </v-layout>
     </v-card>
@@ -83,13 +99,16 @@ export default {
   data: () => ({
     drawer: true,
     items: [
-      { title: "آدرس ها", icon: "mdi-map-marker" },
-      { title: "پرداخت ها", icon: "mdi-credit-card-settings" },
-      { title: "پیام ها", icon: "mdi-forum" }
+      { title: "آدرس ها", name: "address", icon: "mdi-map-marker" },
+      { title: "پرداخت ها", name: "payment", icon: "mdi-credit-card-settings" },
+      { title: "پیام ها", name: "message", icon: "mdi-forum" }
     ],
     right: null,
     modal: false,
     dialog: false,
+    address: false,
+    payment: false,
+    message: false,
     editedIndex: -1,
     editedItem: {
       avatar: "",
@@ -122,6 +141,24 @@ export default {
     }
   },
   methods: {
+    showTab(name) {
+      this.address = false;
+      this.payment = false;
+      this.message = false;
+      switch (name) {
+        case "address":
+          this.address = true;
+          break;
+        case "payment":
+          this.payment = true;
+          break;
+        case "message":
+          this.message = true;
+          break;
+        default:
+          break;
+      }
+    },
     getDetail() {
       this.snack = false;
       Api.getDetail(this.$route.params.id)
