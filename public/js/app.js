@@ -2516,7 +2516,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2534,12 +2533,10 @@ __webpack_require__.r(__webpack_exports__);
       dialog: false,
       editedIndex: -1,
       editedItem: {
-        title: "",
-        categoryId: ""
+        title: ""
       },
       defaultItem: {
-        title: "",
-        categoryId: ""
+        title: ""
       },
       headers: [{
         text: "ردیف",
@@ -2576,6 +2573,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       _api_Category_js__WEBPACK_IMPORTED_MODULE_0__["default"].getComments(this.$route.params.id).then(function (res) {
+        console.log(res.data.data);
         _this.loading = false;
         _this.results = res.data.data;
         _this.total = res.data.meta.total;
@@ -2621,7 +2619,10 @@ __webpack_require__.r(__webpack_exports__);
     save: function save() {
       var _this4 = this;
 
+      this.editedItem.categoryId = this.$route.params.id;
+
       if (this.editedIndex > -1) {
+        console.log();
         _api_Category_js__WEBPACK_IMPORTED_MODULE_0__["default"].updateComment(this.editedItem).then(function () {
           _this4.snackColor = "success";
           _this4.snackText = _this4.$t("message.update.success");
@@ -42845,20 +42846,6 @@ var render = function() {
                                         _vm.$set(_vm.editedItem, "title", $$v)
                                       },
                                       expression: "editedItem.title"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("v-text-field", {
-                                    model: {
-                                      value: _vm.editedItem.categoryId,
-                                      callback: function($$v) {
-                                        _vm.$set(
-                                          _vm.editedItem,
-                                          "categoryId",
-                                          $$v
-                                        )
-                                      },
-                                      expression: "editedItem.categoryId"
                                     }
                                   })
                                 ],
@@ -86225,14 +86212,6 @@ __webpack_require__.r(__webpack_exports__);
   path: '/category/getComments/:id',
   name: 'CategoryComments',
   component: _views_panel_CategoryComments__WEBPACK_IMPORTED_MODULE_8__["default"]
-}, {
-  path: '/color',
-  name: 'Color',
-  component: Color
-}, {
-  path: '/comment',
-  name: 'Comment',
-  component: _views_panel_Message__WEBPACK_IMPORTED_MODULE_9__["default"]
 }]);
 
 /***/ }),

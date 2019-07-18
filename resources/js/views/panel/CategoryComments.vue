@@ -32,7 +32,6 @@
               <v-layout wrap>
                 <v-flex xs12 sm12 md12 >
                   <v-text-field v-model="editedItem.title" label="عنوان*" ></v-text-field>
-                  <v-text-field v-model="editedItem.categoryId"></v-text-field>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -106,13 +105,12 @@ export default {
     pagination: {},
     dialog: false,
     editedIndex: -1,
+
     editedItem: {
       title: "",
-      categoryId : "",
     },
     defaultItem: {
       title: "",
-      categoryId : "",
     },
     headers: [
       { text: "ردیف", value: "id", align: "center" },
@@ -143,6 +141,7 @@ export default {
     getByPagination() {
         Api.getComments(this.$route.params.id)
           .then(res => {
+            console.log(res.data.data);
             this.loading = false;
             this.results = res.data.data;
             this.total = res.data.meta.total;
@@ -184,7 +183,9 @@ export default {
     },
 
     save() {
+this.editedItem.categoryId = this.$route.params.id;
       if (this.editedIndex > -1) {
+        console.log();
         Api.updateComment(this.editedItem)
           .then(() => {
             this.snackColor = "success";

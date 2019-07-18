@@ -53,15 +53,5 @@ export default [{
         path: '/category/getComments/:id',
         name: 'CategoryComments',
         component: CategoryComments
-    },
-    {
-        path: '/color',
-        name: 'Color',
-        component: Color
-    },
-    {
-        path: '/comment',
-        name: 'Comment',
-        component: Comment
-    },
+    }
 ]
