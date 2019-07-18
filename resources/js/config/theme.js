@@ -1,10 +1,10 @@
 export default {
     primary: '#34c3c9',
-    secondary: '#34c3c9',
+    secondary: '#ff9941',
     tertiary: '#495057',
     accent: '#82B1FF',
-    error: '#f55a4e',
-    info: '#00d3ee',
-    success: '#5cb860',
-    warning: '#ffa21a'
+    error: '#ff6b63',
+    info: '#7a97ff',
+    success: '#66ba2e',
+    warning: '#ffbb00'
 }

@@ -65,7 +65,12 @@
         "mobile": "موبایل",
         "enable": "فعال",
         "disable": "غیرفعال",
-        "createdAt": "تاریخ ثبت"
+        "createdAt": "تاریخ ثبت",
+        "chat": "گفتگو",
+        "province": "استان",
+        "city": "شهر",
+        "address": "آدرس",
+        "phone": "شماره تماس"
     },
     "validation": {
         "required": "الزامی می باشد.",
