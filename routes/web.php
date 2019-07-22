@@ -58,6 +58,14 @@ Route::middleware(['auth'])->group(function () {
             Route::get('changeState/{id}', 'Admin\MessageController@changeStateComment');
             Route::get('detail/{id}', 'Admin\MessageController@detailComment');
         });
+
+        Route::group(['prefix' => 'discuss'], function () {
+            Route::post('index', 'Admin\MessageController@indexDiscuss');
+            Route::post('order', 'Admin\MessageController@orderDiscuss');
+            Route::post('filter', 'Admin\MessageController@filterDiscuss');
+            Route::get('changeState/{id}', 'Admin\MessageController@changeStateDiscuss');
+            Route::put('update', 'Admin\MessageController@updateDiscuss');
+        });
     });
 });
 Route::get('/home', 'HomeController@index')->name('home');

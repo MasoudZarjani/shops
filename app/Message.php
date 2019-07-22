@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\CreateUuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
+Use App\Helpers\UploadAdmin;
 
 class Message extends Model
 {
@@ -32,6 +33,11 @@ class Message extends Model
     public function describe()
     {
         return $this->morphOne(Describe::class, 'describe_able');
+    }
+
+    public function file()
+    {
+        return $this->morphOne(File::class, 'file_able');
     }
 
     /**
@@ -179,13 +185,42 @@ class Message extends Model
     {
         $per_page = empty(request('per_page')) ? 10 : (int) request('per_page');
         return Message::where(function ($query) {
-            $query->whereHas('describes', function ($query) {
+            $query->whereHas('describe', function ($query) {
                 $query->where('title', 'LIKE', '%' . request('query') . '%');
                 $query->ofType(config('constants.describe.type.text'));
             });
         })
         ->ofType($type)
-        ->active()
         ->paginate($per_page);
+    }
+
+    public static function setUpdate($id)
+    {
+        $message = Message::ofId($id)->first();
+        $message->status = request('status');
+        $message->save();
+
+        $describe = $message->describe()->ofType(config("constants.describe.type.text"))->first();
+        $describe->title = request('title');
+        $describe->description = request('description');
+        $describe->save;
+
+        $uploadAdmin = new UploadAdmin();
+        if ($result = $uploadAdmin->image(request('file_admin'), 'discuss'))
+            $message->setFile($result, 0, 0, config('constants.file.position.discussAdmin'));
+      
+    }
+
+    public function fileAdmin()
+    {
+        return $this->file()->ofPosition(config('constants.file.position.discussAdmin'))->first();
+    }
+
+    public function setFile($path, $size, $type, $position)
+    {
+        if (!$file = $this->fileAdmin())
+            $file = new File();
+        $file->set($path, $size, $type, $position);
+        return $this->file()->save($file);
     }
 }

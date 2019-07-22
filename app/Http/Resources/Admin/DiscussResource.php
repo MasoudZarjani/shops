@@ -4,7 +4,7 @@ namespace App\Http\Resources\admin;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CommentResource extends JsonResource
+class DiscussResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,7 +20,8 @@ class CommentResource extends JsonResource
             'product' => $this->message_able ? ($this->message_able->describe ? ($this->message_able->describe->title?? '') : '' ) : '',
             'title' => $this->describe ? $this->describe->title : '',
             'status' => $this->status,
-            'file' => $this->file->path ?? '/images/login-background1.jpg',
+            'file_user' => $this->file->path ?? '/images/login-background1.jpg',
+            'file_admin' => $this->file->path ?? '/images/login-background1.jpg',
         ];
     }
 }

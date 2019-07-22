@@ -8,6 +8,7 @@ import Category from '../views/panel/Category'
 import UserDetail from '../views/panel/UserDetail'
 import CategoryComments from '../views/panel/CategoryComments'
 import Comment from '../views/panel/Comment'
+import Discuss from '../views/panel/Discuss'
 
 export default [{
         path: '*',
@@ -58,5 +59,10 @@ export default [{
         path: '/comment',
         name: 'Comment',
         component: Comment
+    },
+    {
+        path: '/discuss',
+        name: 'Discuss',
+        component: Discuss
     },
 ]
