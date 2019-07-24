@@ -64,11 +64,9 @@
       class="elevation-1"
     >
       <template v-slot:items="props">
-        <td>{{ (pagination.rowsPerPage*(pagination.page-1))+(props.index+1) }}</td>
-        
+        <td class="text-xs-center">{{ (pagination.rowsPerPage*(pagination.page-1))+(props.index+1) }}</td>
         <td class="text-xs-center">{{ props.item.title }}</td>
-        
-        <td>
+        <td class="text-xs-center">
           <v-icon small class="mr-2" color="blue" @click="editItem(props.item)" >mdi-pencil</v-icon>
           <v-icon small color="red" @click="deleteItem(props.item)" >mdi-delete</v-icon>
         </td>
@@ -115,6 +113,7 @@ export default {
     headers: [
       { text: "ردیف", value: "id", align: "center" },
       { text: "عنوان", value: "title", align: "center" },
+       { text: "عملیات", value: "action", align: "center" }
     ],
     rowsPerPageItems: [5, 10, 20, 50, 100]
   }),
@@ -139,7 +138,7 @@ export default {
   methods: {
     
     getByPagination() {
-        Api.getComments(this.$route.params.id)
+        Api.getSpecifications(this.$route.params.id)
           .then(res => {
             console.log(res.data.data);
             this.loading = false;
@@ -159,7 +158,7 @@ export default {
     deleteItem(item) {
       const index = this.results.indexOf(item);
       if (confirm("از حذف مطمئن هستید؟")) {
-        Api.deleteComment(item.id)
+        Api.deleteSpecification(item.id)
           .then(() => {
             this.results.splice(index, 1);
             this.snack = true;
@@ -183,10 +182,10 @@ export default {
     },
 
     save() {
-this.editedItem.categoryId = this.$route.params.id;
+    this.editedItem.categoryId = this.$route.params.id;
       if (this.editedIndex > -1) {
         console.log();
-        Api.updateComment(this.editedItem)
+        Api.updateSpecification(this.editedItem)
           .then(() => {
             this.snackColor = "success";
             this.snackText = this.$t("message.update.success");
@@ -200,7 +199,7 @@ this.editedItem.categoryId = this.$route.params.id;
             this.snackText = this.$t("message.update.error");
           });
       } else {
-        Api.createComment(this.editedItem)
+        Api.createSpecification(this.editedItem)
           .then(({ data }) => {
             this.snack = true;
             this.snackColor = "success";

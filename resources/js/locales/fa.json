@@ -10,6 +10,7 @@
         "list": {
             "Category": "دسته بندی ها",
             "CategoryComments":"نظرات دسته بندی",
+            "CategorySpecification":"ویژگی های دسته بندی",
             "Index": "صفحه اصلی",
             "User": "کاربران",
             "UserDetail": "جزئیات کاربر",

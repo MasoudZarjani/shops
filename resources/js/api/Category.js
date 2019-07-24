@@ -36,4 +36,18 @@ export default {
     deleteComment(id) {
         return axios.delete('category/deleteComment/' + id)
     },
+
+
+    getSpecifications(id) {
+        return axios.get('category/getSpecifications/'+ id)
+    },
+    createSpecification(data) {
+        return axios.post('category/createSpecification', data)
+    },
+    updateSpecification(data) {
+        return axios.put('category/updateSpecification', data)
+    },
+    deleteSpecification(id) {
+        return axios.delete('category/deleteSpecification/' + id)
+    },
 }

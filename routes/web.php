@@ -29,6 +29,11 @@ Route::middleware(['auth'])->group(function () {
             Route::post('order', 'Admin\CategoryController@order');
             Route::get('changeState/{id}', 'Admin\CategoryController@changeState');
 
+            Route::get('getSpecifications/{id}', 'Admin\CategoryController@getSpecifications');
+            Route::post('createSpecification', 'Admin\CategoryController@createSpecification');
+            Route::put('updateSpecification', 'Admin\CategoryController@updateSpecification');
+            Route::delete('deleteSpecification/{id}', 'Admin\CategoryController@deleteSpecification');
+
             Route::get('getComments/{id}', 'Admin\CategoryController@getComments');
             Route::post('createComment', 'Admin\CategoryController@createComment');
             Route::put('updateComment', 'Admin\CategoryController@updateComment');

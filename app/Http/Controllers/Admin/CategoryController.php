@@ -7,8 +7,6 @@ use App\Http\Resources\Admin\CategoryResource;
 use App\Http\Resources\Admin\SettingResource;
 use App\Category;
 use App\Describe;
-use CategoriesTableSeeder;
-use config;
 class CategoryController extends Controller
 {
     /**
@@ -93,4 +91,34 @@ class CategoryController extends Controller
     {
         return Describe::ofId($id)->delete();
     }
+
+    //============comment
+
+    public function getSpecifications($id)
+    {
+        $category = Category::find($id);
+        $specifications = $category->describes()->ofType(7)->get();
+        return SettingResource::collection($specifications);
+    }
+
+    public function createSpecification()
+    {
+        $category = Category::find(request("categoryId"));
+        $description = new Describe();
+        $description->title = request("title");
+        $description->type = 7;
+        return $category->describes()->save($description);
+    }
+
+    public function updateSpecification()
+    {
+        $description = Describe::find(request('id'));
+        return $description->set();
+    }
+
+    public function deleteSpecification($id)
+    {
+        return Describe::ofId($id)->delete();
+    }
+
 }
