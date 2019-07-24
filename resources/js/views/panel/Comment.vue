@@ -37,11 +37,31 @@
                 <v-flex xs12 sm6 md6 >
                   <v-text-field v-model="editedItem.title" label="عنوان*" ></v-text-field>
                 </v-flex>
-                <v-flex xs12 sm6 md6 >
+                <v-flex xs12 sm12 md12>
                   <v-text-field
                     v-model="editedItem.description"
                     label="توضیحات*" ></v-text-field>
                 </v-flex>
+                <v-flex xs12 sm6 md6>
+                  <label>نقاط ضعف</label>
+                  <ul>
+                    <li v-for="weakness in editedItem.weaknesses">{{ weakness }}</li>
+                  </ul>
+                </v-flex>
+                <v-flex xs12 sm6 md6>
+                  <label>نقاط قوت</label>
+                  <ul>
+                    <li v-for="strength in editedItem.strengths">{{ strength }}</li>
+                  </ul>
+                </v-flex>
+                <v-flex xs12 sm12 md12>
+                  <ul>
+                    <li v-for="point in editedItem.points">
+                      {{ point.description }} : {{ point.score }} امتیاز
+                    </li>
+                  </ul>
+                </v-flex>
+
                 <v-flex xs12 sm4 md4 >
                   <v-switch v-model="editedItem.status" label="وضعیت" ></v-switch>
                 </v-flex>
@@ -115,6 +135,7 @@ import Api from "../../api/Message.js";
 
 export default {
   data: () => ({
+
     snack: false,
     modal: false,
     snackColor: "",

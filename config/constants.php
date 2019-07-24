@@ -96,8 +96,9 @@ return [
             'productMainImage' => 2,
             'productSliderFile' => 3,
             'avatar' => 4,
-            'discussUser'=>5,
-            'discussAdmin'=>6
+            'discussUser' => 5,
+            'discussAdmin' => 6,
+            'CommentUser' => 7
         ]
     ],
     'action' => [

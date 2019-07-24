@@ -69,7 +69,9 @@ class MessageController extends Controller
 
     public function changeStateDiscuss($id)
     {
+
         $Message = Message::ofId($id)->first();
+       
         if ($Message->status == 1)
             $status = 0;
         else {

@@ -40,6 +40,11 @@ class Message extends Model
         return $this->morphOne(File::class, 'file_able');
     }
 
+    public function detail()
+    {
+        return $this->morphOne(Detail::class, 'detail_able');
+    }
+
     /**
      * Get the message's user.
      */

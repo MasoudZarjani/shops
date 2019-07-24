@@ -14,14 +14,18 @@ class DiscussResource extends JsonResource
      */
     public function toArray($request)
     {
+        
         return [
             'id' => $this->id ?? "",
             'user' => $this->user ? ($this->user->profile? $this->user->profile->full_name : '') : '',
             'product' => $this->message_able ? ($this->message_able->describe ? ($this->message_able->describe->title?? '') : '' ) : '',
             'title' => $this->describe ? $this->describe->title : '',
             'status' => $this->status,
-            'file_user' => $this->file->path ?? '/images/login-background1.jpg',
-            'file_admin' => $this->file->path ?? '/images/login-background1.jpg',
+            // 'file_user' => $this->file->ofPosition(config("constants.file.position.discussUser"))->first()->path ?? '',
+            // 'file_admin' => $this->file->ofPosition(config("constants.file.position.discussAdmin"))->first()->path ?? '',
+            'file_user' => $this->file->ofPosition(5)->first()->path ?? '',
+            'file_admin' => $this->file->ofPosition(6)->first()->path ?? '',
+
         ];
     }
 }
