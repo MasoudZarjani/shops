@@ -13,4 +13,12 @@ class City extends Model
     {
         return $this->hasOne(UserCommunication::class);
     }
+
+    /**
+     * Get the province associated with the city.
+     */
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
 }

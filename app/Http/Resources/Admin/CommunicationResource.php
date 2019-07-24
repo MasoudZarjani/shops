@@ -15,11 +15,13 @@ class CommunicationResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'address' => $this->address,
-            'phone' => $this->phone,
-            'fax' => $this->fax,
-            'postal_code' => $this->postal_code,
-            'city' => $this->city->name,
+            'uuid' => $this->uuid ?? "",
+            'address' => $this->address ?? "",
+            'phone' => $this->phone ?? "",
+            'fax' => $this->fax ?? "",
+            'postal_code' => $this->postal_code ?? "",
+            'city' => $this->city->name ?? "",
+            'province' => $this->city->province->name ?? ""
         ];
     }
 }

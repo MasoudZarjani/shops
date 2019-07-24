@@ -3,14 +3,19 @@
     <v-card>
       <v-layout>
         <v-flex xs6 sm4 md4>
-          <v-card-text style="padding: 0">
+          <v-card-text style="padding: 0" class="fill-height">
             <v-navigation-drawer v-model="drawer" permanent right>
               <v-toolbar height="150" flat class="transparent">
                 <v-list two-line class="pa-0">
-                  <v-subheader inset>
+                  <v-subheader>
                     {{ $t('title.userDetail.userInformation') }}
                     <v-spacer></v-spacer>
-                    <v-icon color="blue">mdi-chat</v-icon>
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on }">
+                        <v-icon color="info" v-on="on">mdi-chat</v-icon>
+                      </template>
+                      <span>{{ $t('form.chat') }}</span>
+                    </v-tooltip>
                   </v-subheader>
                   <v-list-tile avatar>
                     <v-list-tile-avatar>
@@ -21,13 +26,13 @@
                         {{ data.full_name }}
                         <v-tooltip bottom v-if="data.status == true">
                           <template v-slot:activator="{ on }">
-                            <v-icon small color="green" v-on="on">mdi-circle</v-icon>
+                            <v-icon small color="success" v-on="on">mdi-circle</v-icon>
                           </template>
                           <span>{{ $t('form.enable') }}</span>
                         </v-tooltip>
                         <v-tooltip bottom v-else>
                           <template v-slot:activator="{ on }">
-                            <v-icon small color="red" v-on="on">mdi-circle</v-icon>
+                            <v-icon small color="error" v-on="on">mdi-circle</v-icon>
                           </template>
                           <span>{{ $t('form.disable') }}</span>
                         </v-tooltip>
@@ -50,7 +55,7 @@
                           <v-switch
                             v-on="on"
                             v-model="data.status"
-                            color="primary"
+                            color="secondary"
                             @change="changeState(data.id)"
                           ></v-switch>
                         </template>
@@ -61,15 +66,12 @@
                   </v-list-tile>
                 </v-list>
               </v-toolbar>
-
               <v-list class="pt-1" dense>
                 <v-divider></v-divider>
-
                 <v-list-tile v-for="item in items" :key="item.title" @click="showTab(item.name)">
                   <v-list-tile-action>
                     <v-icon>{{ item.icon }}</v-icon>
                   </v-list-tile-action>
-
                   <v-list-tile-content>
                     <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                   </v-list-tile-content>
@@ -79,7 +81,20 @@
           </v-card-text>
         </v-flex>
         <v-flex xs6 sm8 md8>
-          <v-card-text v-if="address">address</v-card-text>
+          <v-card-text v-if="address">
+            <span v-for="(communication, key) in data.communication" v-bind:key="key">
+              <div class="mt-2">{{$t('form.province')}}: {{ communication.province }}</div>
+              <div>{{$t('form.city')}}: {{ communication.city }}</div>
+              <div>{{$t('form.address')}}: {{ communication.address }}</div>
+              <div class="mb-2">
+                {{$t('form.phone')}}:
+                <span
+                  dir="ltr"
+                >{{ communication.postal_code }}-{{ communication.phone }}</span>
+              </div>
+              <v-divider></v-divider>
+            </span>
+          </v-card-text>
           <v-card-text v-if="payment">payment</v-card-text>
           <v-card-text v-if="message">message</v-card-text>
         </v-flex>
@@ -106,7 +121,7 @@ export default {
     right: null,
     modal: false,
     dialog: false,
-    address: false,
+    address: true,
     payment: false,
     message: false,
     editedIndex: -1,
@@ -164,6 +179,7 @@ export default {
       Api.getDetail(this.$route.params.id)
         .then(result => {
           this.data = result.data.data;
+          console.log(this.data)
         })
         .catch(error => {
           this.snack = true;
