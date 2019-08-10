@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use App\Helpers\Relation;
 
-class CreateWarrantorsTable extends Migration
+class CreateSellerAblesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,12 +14,11 @@ class CreateWarrantorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('warrantors', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->uuid('uuid')->unique()->nullable();
-            Relation::status($table, 'status', 'category.status.active');
-            $table->softDeletes();
+        Schema::create('seller_ables', function (Blueprint $table) {
+            Relation::pointer($table, 'seller');
+            $table->nullableMorphs('seller_able');
             $table->timestamps();
+        
         });
     }
 
@@ -30,6 +29,6 @@ class CreateWarrantorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('warrantors');
+        Schema::dropIfExists('seller_ables');
     }
 }

@@ -19,7 +19,11 @@
             "NotFound": "خطا",
             "SettingColor": "رنگ ها",
             "Comment": "نظرات",
-            "Discuss": "پرسش و پاسخ"
+            "Discuss": "پرسش و پاسخ",
+            "Product":"محصول",
+            "ProductDetail":"جزئیات محصول",
+            "Seller" : "فروشنده",
+            "Warranty" : "گارانتی"
         }
     },
     "message": {

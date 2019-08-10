@@ -3,9 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Helpers\Relation;
-
-class CreateWarrantorsTable extends Migration
+class CreateDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +12,14 @@ class CreateWarrantorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('warrantors', function (Blueprint $table) {
+        Schema::create('details', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->uuid('uuid')->unique()->nullable();
-            Relation::status($table, 'status', 'category.status.active');
+            $table->text('properties')->nullable();
+
+            $table->nullableMorphs('detail_able');
+
             $table->softDeletes();
+            
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateWarrantorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('warrantors');
+        Schema::dropIfExists('details');
     }
 }

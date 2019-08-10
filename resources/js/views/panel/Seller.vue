@@ -6,7 +6,6 @@
           
           <v-text-field v-model="search" append-icon="search" label="جستجو" single-line hide-details ></v-text-field>
           <v-spacer></v-spacer>
-          <v-btn color="primary" class="mb-2" @click="getParent()" >بازگشت</v-btn>
           <v-btn color="primary" class="mb-2" v-on="on" >افزودن</v-btn>
 
         </template>
@@ -23,9 +22,6 @@
                 </v-flex>
                 <v-flex xs12 sm6 md6 >
                   <v-text-field v-model="editedItem.description" label="توضیحات*" ></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md6 >
-                  <v-text-field v-model="editedItem.sort" label="ترتیب*" ></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm4 md4 >
                   <v-switch v-model="editedItem.status" label="وضعیت" ></v-switch>
@@ -65,16 +61,12 @@
           <v-img width="80" :src="props.item.image"></v-img>
         </td>
         <td class="text-xs-center">{{ props.item.title }}</td>
-        <td class="text-xs-center">{{ props.item.countChildren }}</td>
         <td class="text-xs-center">
           <v-switch v-model="props.item.status" @change="changeState(props.item.id)" ></v-switch>
         </td>
         <td>
           <v-icon small class="mr-2" color="blue" @click="editItem(props.item)" title="ویرایش">mdi-pencil</v-icon>
           <v-icon small color="red" @click="deleteItem(props.item)" title="حذف">mdi-delete</v-icon>
-          <v-icon small color="blue" @click="getChildren(props.item.id)" v-if='(props.item.countChildren>0)' title="زیردسته بندی">mdi-clipboard-text</v-icon>
-          <v-icon small color="blue" @click="$router.push({ path: `/category/getComments/${props.item.id}` })" title="نظرات">mdi-message-settings-variant</v-icon>
-          <v-icon small color="blue" @click="$router.push({ path: `/category/getSpecifications/${props.item.id}` })" title="ویژگی">mdi-format-list-bulleted</v-icon>
         </td>
       </template>
     </v-data-table>
@@ -86,7 +78,7 @@
 </template>
 
 <script>
-import Api from "../../api/Category.js";
+import Api from "../../api/Seller.js";
 
 export default {
   data: () => ({
@@ -102,29 +94,22 @@ export default {
     pagination: {},
     dialog: false,
     editedIndex: -1,
-    parentId: 0,
-    currentParentId: 0,
     editedItem: {
       image: "",
       title: "",
       description: "",
       status: 0,
-      sort:0,
-      parentId : 0,
     },
     defaultItem: {
       image: "",
       title: "",
       description: "",
       status: 0,
-      sort:0,
-      parentId : 0,
     },
     headers: [
       { text: "ردیف", value: "id", align: "center" },
       { text: "تصویر ", value: "image", align: "center", sortable: false },
       { text: "عنوان", value: "title", align: "center" },
-      { text: "تعداد زیردسته", value: "countChildren", align: "center" },
       { text: "وضعیت", value: "status", align: "center" },
       { text: "عملیات", value: "action", align: "center" }
     ],
@@ -149,17 +134,6 @@ export default {
     }
   },
   methods: {
-    getParent() {
-      this.parentId = this.currentParentId;
-      this.currentParentId = 0;
-      this.getByPagination();
-    },
-    getChildren(parentId) {
-
-      this.currentParentId = this.parentId;
-      this.parentId = parentId;
-      this.getByPagination();
-    },
     getByPagination() {
       this.loading = true;
       if (this.search) {
@@ -184,8 +158,6 @@ export default {
           sortBy: this.pagination.sortBy,
           page: this.pagination.page,
           per_page: this.pagination.rowsPerPage,
-          parentId: this.parentId,
-          currentParentId : this.currentParentId,
         }).then(res => {
           console.log(res);
           this.loading = false;
@@ -244,8 +216,6 @@ export default {
       
       if(this.file!='')
         this.editedItem.image = this.file;
-      
-      this.editedItem.parentId = this.parentId;
       if (this.editedIndex > -1) {
         Api.update(this.editedItem)
           .then(() => {
@@ -319,4 +289,3 @@ img {
   max-height: 100px;
 }
 </style>
-

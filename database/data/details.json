@@ -1,0 +1,12 @@
+[
+    {
+        "properties": "{'price':'100','discount':'10','category_id':'1'}",
+        "describe_able_type": "App\\Product",
+        "describe_able_id": 1
+    },
+    {
+        "properties": "{'weaknesses':['جنس نامناسب','شکننده بودن','نداشتن سنسور '],'strengths':['ندارد',''],'points':[{'id':93,'score':5},{'id':94,'score':2}]}",
+        "describe_able_type": "App\\Message",
+        "describe_able_id": 1
+    },
+}

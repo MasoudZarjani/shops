@@ -16,9 +16,7 @@ class WarrantorsTableSeeder extends Seeder
         $warrantors = json_decode($warrantors);
         foreach ($warrantors as $warrantor) {
             $warrantorModel = new Warrantor();
-            $warrantorModel->name = $warrantor->name;
-            $warrantorModel->warrantor_able_type = $warrantor->warrantor_able_type;
-            $warrantorModel->warrantor_able_id = $warrantor->warrantor_able_id;
+            $warrantorModel->status = $warrantor->status;
             $warrantorModel->save();
         }
     }

@@ -19,10 +19,10 @@ class CommentResource extends JsonResource
         $strengths = [];
         $points = [];
 
-        $detail = $this->detail->properties;
         
-        if($detail)
+        if($this->detail)
         {
+            $detail = $this->detail->properties;
             $weaknesses = $detail['weaknesses'] ?? [];
             $strengths = $detail['strengths'] ?? [];
             if($detail['points'])

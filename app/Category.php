@@ -172,7 +172,7 @@ class Category extends Model
             });
         })
         ->ofType(config('constants.category.type.main'))
-        ->active()
+        //->active()
         ->paginate($per_page);
     }
 
@@ -217,9 +217,14 @@ class Category extends Model
         $describe->description = request('description');
         $describe->save;
 
-        $uploadAdmin = new UploadAdmin();
-        if ($result = $uploadAdmin->image(request('image'), 'category'))
-            $category->setFile($result, 0, 0, config('constants.file.position.category'));
+        
+        if(strlen(request('image')) > 50){
+
+            $uploadAdmin = new UploadAdmin();
+            if ($result = $uploadAdmin->image(request('image'), 'category'))
+                $category->setFile($result, 0, 0, config('constants.file.position.category'));
+
+        }
       
     }
 }

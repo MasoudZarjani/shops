@@ -10,6 +10,11 @@ import CategoryComment from '../views/panel/CategoryComment'
 import CategorySpecification from '../views/panel/CategorySpecification'
 import Comment from '../views/panel/Comment'
 import Discuss from '../views/panel/Discuss'
+import Product from '../views/panel/Product'
+import ProductDetail from '../views/panel/ProductDetail'
+import Brand from '../views/panel/Brand'
+import Seller from '../views/panel/Seller'
+import Warranty from '../views/panel/Warranty'
 
 export default [{
         path: '*',
@@ -70,5 +75,30 @@ export default [{
         path: '/discuss',
         name: 'Discuss',
         component: Discuss
+    },
+    {
+        path: '/product',
+        name: 'Product',
+        component: Product
+    },
+    {
+        path: '/product/detail/:id',
+        name: 'ProductDetail',
+        component: ProductDetail
+    },
+    {
+        path: '/brand',
+        name: 'Brand',
+        component: Brand
+    },
+    {
+        path: '/seller',
+        name: 'Seller',
+        component: Seller
+    },
+    {
+        path: '/warranty',
+        name: 'Warranty',
+        component: Warranty
     },
 ]

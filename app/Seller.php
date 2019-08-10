@@ -4,51 +4,29 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Http\Resources\Api\v1\SellerResource;
 use App\Traits\CreateUuid;
 Use App\Helpers\UploadAdmin;
 
-class Warrantor extends Model
+class Seller extends Model
 {
-    use CreateUuid, SoftDeletes;
+
+    use  SoftDeletes, CreateUuid;
+
+    protected $fillable = [
+        'status'
+    ];
     protected $guarded = [];
-    /**
-     * Get all of the owning warrantor_able models.
-     */
-    public function warrantor_able()
-    {
-        return $this->morphTo();
-    }
 
     /**
-     * Get all of the prices for the warrantor.
+     * Get all of the products that are assigned this tag.
      */
-    public function prices()
+    public function products()
     {
-        return $this->morphToMany(Price::class, 'price_able');
+        return $this->morphedByMany(Product::class, 'seller_able');
     }
 
-    /**
-     * Get the warranty's baskets.
-     */
-    public function baskets()
-    {
-        return $this->hasMany(Basket::class);
-    }
-
-
-     /**
-     * Get the warranty's description.
-     */
-
-    public function describe()
-    {
-        return $this->morphOne(Describe::class, 'describe_able');
-    }
-
-    /**
-     * Get the warranty's image.
-     */
-
+    
     public function file()
     {
         return $this->morphOne(File::class, 'file_able');
@@ -59,13 +37,11 @@ class Warrantor extends Model
         return $this->file()->ofPosition(config('constants.file.position.avatar'))->first();
     }
 
-    /**
-     * Scope a query to return uuid from warrantors.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
-     * @param  mixed $uuid
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
+    public function describe()
+    {
+        return $this->morphOne(Describe::class, 'describe_able');
+    }
+
     public function scopeOfUuid($query, $uuid)
     {
         return $query->where('uuid', $uuid);
@@ -76,11 +52,6 @@ class Warrantor extends Model
         return $query->where('id', $id);
     }
 
-    public static function getWithUuid()
-    {
-        return Warrantor::ofUuid(request('warrantor_uuid'))->first();
-    }
-    
 
 
     public static function getByOrder()
@@ -88,13 +59,13 @@ class Warrantor extends Model
         $per_page = empty(request('per_page')) ? 10 : (int) request('per_page');
         $direction = request('direction')  ?? 'asc';
         $sortBy = request('sortBy') ?? 'id';
-        return Warrantor::orderBy($sortBy, $direction)->paginate($per_page);
+        return Seller::orderBy($sortBy, $direction)->paginate($per_page);
     }
 
     public static function getByFilter()
     {
         $per_page = empty(request('per_page')) ? 10 : (int) request('per_page');
-        return Warrantor::where(function ($query) {
+        return Seller::where(function ($query) {
             $query->whereHas('describe', function ($query) {
                 $query->where('title', 'LIKE', '%' . request('query') . '%');
                 $query->ofType(config('constants.describe.type.text'));
@@ -113,29 +84,29 @@ class Warrantor extends Model
 
     public static function set(){
 
-        $warranty = new Warrantor();
-        $warranty->status = request('status');
-        $warranty->save();
+        $seller = new Seller();
+        $seller->status = request('status');
+        $seller->save();
 
         $describe = new Describe();
         $describe->title = request('title');
         $describe->description = request('description');
         $describe->type = config("constants.describe.type.text");
         $describe->save();
-        $warranty->describe()->save($describe);
+        $seller->describe()->save($describe);
 
         $uploadAdmin = new UploadAdmin();
-        if ($result = $uploadAdmin->image(request('image'), 'warranty'))
-            $warranty->setFile($result, 0, 0, config('constants.file.position.avatar'));
+        if ($result = $uploadAdmin->image(request('image'), 'seller'))
+            $seller->setFile($result, 0, 0, config('constants.file.position.avatar'));
     }
 
     public static function setUpdate($id)
     {
-        $warranty = Warrantor::ofId($id)->first();
-        $warranty->status = request('status');
-        $warranty->save();
+        $seller = Seller::ofId($id)->first();
+        $seller->status = request('status');
+        $seller->save();
 
-        $describe = $warranty->describe->ofType(config("constants.describe.type.text"))->first();
+        $describe = $seller->describe->ofType(config("constants.describe.type.text"))->first();
         $describe->title = request('title');
         $describe->description = request('description');
         $describe->save;
@@ -144,8 +115,8 @@ class Warrantor extends Model
         if(strlen(request('image')) > 50){
 
             $uploadAdmin = new UploadAdmin();
-            if ($result = $uploadAdmin->image(request('image'), 'warranty'))
-                $warranty->setFile($result, 0, 0, config('constants.file.position.avatar'));
+            if ($result = $uploadAdmin->image(request('image'), 'seller'))
+                $seller->setFile($result, 0, 0, config('constants.file.position.avatar'));
 
         }
       

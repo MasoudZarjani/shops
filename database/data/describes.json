@@ -702,5 +702,69 @@
         "type": 6,
         "describe_able_type": null,
         "describe_able_id": null
+    },
+    {
+        "id": 89,
+        "title": "سامسونگ",
+        "description": "sumsong",
+        "type": 0,
+        "describe_able_type": "App\\Brand",
+        "describe_able_id": 1
+    },
+    {
+        "id": 90,
+        "title": "سونی",
+        "description": "sony",
+        "type": 0,
+        "describe_able_type": "App\\Brand",
+        "describe_able_id": 2
+    },
+    {
+        "id": 91,
+        "title": " دیجی کالا ",
+        "description": "DigiKAla",
+        "type": 0,
+        "describe_able_type": "App\\Seller",
+        "describe_able_id": 1
+    },
+    {
+        "id": 92,
+        "title": " دیجی کالا ",
+        "description": "Digi",
+        "type": 0,
+        "describe_able_type": "App\\Seller",
+        "describe_able_id": 2
+    },
+    {
+        "id": 93,
+        "title": "سرویس ویژه دیجی کالا: 7 روز تضمین بازگشت کالا",
+        "description": "",
+        "type": 0,
+        "describe_able_type": "App\\Warrantor",
+        "describe_able_id": 2
+    },
+    {
+        "id": 94,
+        "title": "گارانتی اصالت و سلامت فیزیکی کالا",
+        "description": "",
+        "type": 0,
+        "describe_able_type": "App\\Warrantor",
+        "describe_able_id": 2
+    },
+    {
+        "id": 95,
+        "title": "گارانتی 18 ماهه داریا همراه پایتخت",
+        "description": "",
+        "type": 0,
+        "describe_able_type": "App\\Warrantor",
+        "describe_able_id": 3
+    },
+    {
+        "id": 96,
+        "title": "گارانتی 36 ماهه ایده آل",
+        "description": "",
+        "type": 0,
+        "describe_able_type": "App\\Warrantor",
+        "describe_able_id": 4
     }
 ]

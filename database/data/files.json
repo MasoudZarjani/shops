@@ -478,5 +478,37 @@
         "position": 5,
         "file_able_type": "App\\User",
         "file_able_id": 1
+    },
+    {
+        "path": "https://www.samsung.com/us/images/common/samsung_logo_seo.jpg",
+        "size": "5000",
+        "type": 0,
+        "position": 4,
+        "file_able_type": "App\\Brand",
+        "file_able_id": 1
+    },
+    {
+        "path": "https://bf.arsagera.ru/files/BF/sony.jpg",
+        "size": "5000",
+        "type": 0,
+        "position": 4,
+        "file_able_type": "App\\Brand",
+        "file_able_id": 2
+    },
+    {
+        "path": "https://cdn.sibapp.com/attachments/Sibapp/Domains/ApplicationDomain/Models/Application/icons/000/001/006/medium/DK%20-%20Logo%20-%20iOS.png",
+        "size": "5000",
+        "type": 0,
+        "position": 4,
+        "file_able_type": "App\\Seller",
+        "file_able_id": 1
+    },
+    {
+        "path": "https://emalls.ir/files/shoplogo/v520ilsgtv3aj6avz1rfdzpwg5jjoujwwzn85zccel3x5xxy6r.jpg",
+        "size": "5000",
+        "type": 0,
+        "position": 4,
+        "file_able_type": "App\\Seller",
+        "file_able_id": 2
     }
 ]

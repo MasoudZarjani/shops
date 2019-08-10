@@ -91,18 +91,6 @@ __webpack_require__.r(__webpack_exports__);
         icon: "mdi-sitemap",
         to: "/category"
       }, {
-        title: "برند",
-        icon: "mdi-factory",
-        to: "/brand"
-      }, {
-        title: "گارانتی",
-        icon: "mdi-security",
-        to: "/warranty"
-      }, {
-        title: "فروشنده",
-        icon: "mdi-shopping",
-        to: "/seller"
-      }, {
         title: "محصولات",
         icon: "mdi-package-variant-closed",
         to: "/product"
@@ -141,6 +129,18 @@ __webpack_require__.r(__webpack_exports__);
           title: "نظرات",
           to: "setting/comment",
           icon: "mdi-phone-settings"
+        }, {
+          title: "برند",
+          icon: "mdi-factory",
+          to: "/brand"
+        }, {
+          title: "گارانتی",
+          icon: "mdi-security",
+          to: "/warranty"
+        }, {
+          title: "فروشنده",
+          icon: "mdi-shopping",
+          to: "/seller"
         }]
       }],
       logo: "/images/vesam-logo.jpg"

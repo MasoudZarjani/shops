@@ -71,9 +71,7 @@ export default {
       { title: "صفحه اصلی", icon: "mdi-view-dashboard", to: "/" },
       { title: "کاربران", icon: "mdi-account-group", to: "/user" },
       { title: "دسته بندی", icon: "mdi-sitemap", to: "/category" },
-      { title: "برند", icon: "mdi-factory", to: "/brand" },
-      { title: "گارانتی", icon: "mdi-security", to: "/warranty" },
-       { title: "فروشنده", icon: "mdi-shopping", to: "/seller" },
+      
       { title: "محصولات", icon: "mdi-package-variant-closed", to: "/product" },
       { title: "سفارشات", icon: "mdi-cart", to: "/cart" },
       {
@@ -94,7 +92,10 @@ export default {
         children: [
           { title: "رنگ", to: "setting/color", icon: "mdi-palette" },
           { title: "اپلیکیشن",to: "setting/application",icon: "mdi-cellphone-settings-variant" },
-          { title: "نظرات",to: "setting/comment",icon: "mdi-phone-settings" }
+          { title: "نظرات",to: "setting/comment",icon: "mdi-phone-settings" },
+          { title: "برند", icon: "mdi-factory", to: "/brand" },
+          { title: "گارانتی", icon: "mdi-security", to: "/warranty" },
+          { title: "فروشنده", icon: "mdi-shopping", to: "/seller" },
         ]
       }
     ],

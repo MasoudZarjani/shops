@@ -1,4 +1,5 @@
 ﻿@import url(fontiran.css);
+@import url(bulma/bulma.sass);
 /* لینک فایلی که وظیفه بارگذاری فونت ها را برعهده دارد */
 
 body {

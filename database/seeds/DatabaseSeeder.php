@@ -36,7 +36,9 @@ class DatabaseSeeder extends Seeder
             UserDevicesTableSeeder::class,
             UserProfilesTableSeeder::class,
             UserCommunicationsTableSeeder::class,
-            CitiesTableSeeder::class
+            CitiesTableSeeder::class,
+            BrandsTableSeeder::class,
+            SellersTableSeeder::class,
         ]);
         $group = Group::find(2);
         $products = Product::all();

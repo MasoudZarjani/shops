@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use App\Helpers\Relation;
 
-class CreateWarrantorsTable extends Migration
+class CreateBrandsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class CreateWarrantorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('warrantors', function (Blueprint $table) {
+        Schema::create('brands', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique()->nullable();
             Relation::status($table, 'status', 'category.status.active');
@@ -30,6 +30,6 @@ class CreateWarrantorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('warrantors');
+        Schema::dropIfExists('brands');
     }
 }

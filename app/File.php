@@ -46,6 +46,11 @@ class File extends Model
         return $query->where('position', $position);
     }
 
+    public function scopeOfId($query, $id)
+    {
+        return $query->where('id', $id);
+    }
+
     /**
      * Get files information
      */
