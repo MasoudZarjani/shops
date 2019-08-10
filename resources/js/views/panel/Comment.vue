@@ -24,25 +24,55 @@
           <v-card-text>
             <v-container grid-list-md>
               <v-layout wrap>
-                <v-flex xs12 sm6 md6 >
-                  <v-text-field v-model="editedItem.title" label="عنوان*" ></v-text-field>
+                <v-flex xs12 sm12 md12 >
+                  <v-text-field
+                    v-model="editedItem.product"
+                    label="محصول*" ></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md6 >
                   <v-text-field
-                    v-model="editedItem.description"
-                    label="محتوی*" ></v-text-field>
+                    v-model="editedItem.user"
+                    label="نام کاربر*" ></v-text-field>
                 </v-flex>
+                <v-flex xs12 sm6 md6 >
+                  <v-text-field v-model="editedItem.title" label="عنوان*" ></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm12 md12>
+                  <v-text-field
+                    v-model="editedItem.description"
+                    label="توضیحات*" ></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md6>
+                  <label>نقاط ضعف</label>
+                  <ul>
+                    <li v-for="weakness in editedItem.weaknesses">{{ weakness }}</li>
+                  </ul>
+                </v-flex>
+                <v-flex xs12 sm6 md6>
+                  <label>نقاط قوت</label>
+                  <ul>
+                    <li v-for="strength in editedItem.strengths">{{ strength }}</li>
+                  </ul>
+                </v-flex>
+                <v-flex xs12 sm12 md12>
+                  <ul>
+                    <li v-for="point in editedItem.points">
+                      {{ point.description }} : {{ point.score }} امتیاز
+                    </li>
+                  </ul>
+                </v-flex>
+
                 <v-flex xs12 sm4 md4 >
                   <v-switch v-model="editedItem.status" label="وضعیت" ></v-switch>
                 </v-flex>
                 
                 <v-flex xs12 sm4 md4>
                   <img v-if="file!==''" :src="file" class="img-responsive" />
-                  <img v-else :src="editedItem.image" class="img-responsive" />
+                  <img v-else :src="editedItem.file" class="img-responsive" />
                 </v-flex>
               </v-layout>
             </v-container>
-            <small>* فیلدهای الزامی را مشخص می نماید.</small>
+            
           </v-card-text>
 
           <v-card-actions>
@@ -51,12 +81,12 @@
               color="primary darken-1"
               flat
               @click="close"
-            >رد</v-btn>
-            <v-btn
+            >برگشت</v-btn>
+            <!-- <v-btn
               color="primary darken-1"
               flat
               @click="save"
-            >ذخیره</v-btn>
+            >ذخیره</v-btn> -->
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -105,6 +135,7 @@ import Api from "../../api/Message.js";
 
 export default {
   data: () => ({
+
     snack: false,
     modal: false,
     snackColor: "",
@@ -121,13 +152,13 @@ export default {
       title: "",
       description: "",
       status: 0,
+      file : ""
     },
     defaultItem: {
-      image: "",
       title: "",
       description: "",
       status: 0,
-      sort:0,
+      file : ""
     },
     headers: [
       { text: "ردیف", value: "id", align: "center" },
@@ -220,7 +251,7 @@ export default {
     },
 
     save() {
-      this.editedItem.image = this.file;
+      this.editedItem.file = this.file;
       if (this.editedIndex > -1) {
         console.log(this.editedItem);
         Api.updateComment(this.editedItem)
@@ -266,6 +297,11 @@ export default {
           this.snackColor = "error";
           this.snackText = this.$t("message.changeState.error");
         });
+    },
+    onFileChange(e) {
+      let files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+      this.createImage(files[0]);
     },
   }
 };

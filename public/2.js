@@ -71,7 +71,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.v-input__control {\n  height: 100% !important;\n}\n.v-input__slot {\n  height: 100% !important;\n}\n.gradiant {\n  background-image: linear-gradient(to right, #135589, #33d0cd);\n}\n", ""]);
+exports.push([module.i, "\n.v-input__control {\r\n  height: 100% !important;\n}\n.v-input__slot {\r\n  height: 100% !important;\n}\n.gradiant {\r\n  background-image: linear-gradient(to right, #135589, #33d0cd);\n}\r\n", ""]);
 
 // exports
 

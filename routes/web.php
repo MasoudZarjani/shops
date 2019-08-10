@@ -29,6 +29,11 @@ Route::middleware(['auth'])->group(function () {
             Route::post('order', 'Admin\CategoryController@order');
             Route::get('changeState/{id}', 'Admin\CategoryController@changeState');
 
+            Route::get('getSpecifications/{id}', 'Admin\CategoryController@getSpecifications');
+            Route::post('createSpecification', 'Admin\CategoryController@createSpecification');
+            Route::put('updateSpecification', 'Admin\CategoryController@updateSpecification');
+            Route::delete('deleteSpecification/{id}', 'Admin\CategoryController@deleteSpecification');
+
             Route::get('getComments/{id}', 'Admin\CategoryController@getComments');
             Route::post('createComment', 'Admin\CategoryController@createComment');
             Route::put('updateComment', 'Admin\CategoryController@updateComment');
@@ -57,6 +62,14 @@ Route::middleware(['auth'])->group(function () {
             Route::post('filter', 'Admin\MessageController@filterComment');
             Route::get('changeState/{id}', 'Admin\MessageController@changeStateComment');
             Route::get('detail/{id}', 'Admin\MessageController@detailComment');
+        });
+
+        Route::group(['prefix' => 'discuss'], function () {
+            Route::post('index', 'Admin\MessageController@indexDiscuss');
+            Route::post('order', 'Admin\MessageController@orderDiscuss');
+            Route::post('filter', 'Admin\MessageController@filterDiscuss');
+            Route::get('changeState/{id}', 'Admin\MessageController@changeStateDiscuss');
+            Route::put('update', 'Admin\MessageController@updateDiscuss');
         });
     });
 });

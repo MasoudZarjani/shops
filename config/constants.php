@@ -81,7 +81,8 @@ return [
             'layoutStatus' => 3,
             'group' => 4,
             'color' => 5,
-            'comment' => 6,
+            'categoryComment' => 6,
+            'categorySpecification' => 7,
         ]
     ],
     'file' => [
@@ -95,7 +96,10 @@ return [
             'mainSlider' => 1,
             'productMainImage' => 2,
             'productSliderFile' => 3,
-            'avatar' => 4
+            'avatar' => 4,
+            'discussUser' => 5,
+            'discussAdmin' => 6,
+            'CommentUser' => 7
         ]
     ],
     'action' => [

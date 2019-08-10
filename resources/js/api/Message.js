@@ -16,7 +16,21 @@ export default {
     getDetailComment(id) {
         return axios.get('comment/detail/' + id)
     },
-    updateComment(data){
-        return axios.get('comment/update'+ data)
+
+
+    getFilterDiscuss(data) {
+        return axios.post('discuss/filter', data)
+    },
+    getOrderDiscuss(data) {
+        return axios.post('discuss/order', data)
+    },
+    getDiscuss(data) {
+        return axios.post('discuss/index', data)
+    },
+    changeStateDiscuss(id) {
+        return axios.get('discuss/changeState/' + id)
+    },
+    updateDiscuss(data){
+        return axios.put('discuss/update', data)
     }
 }

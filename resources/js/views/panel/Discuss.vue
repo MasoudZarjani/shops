@@ -15,17 +15,6 @@
             hide-details
           ></v-text-field>
 
-          <v-spacer></v-spacer>
-          <v-btn
-            color="primary"
-            class="mb-2"
-            @click="getParent()"
-          >بازگشت</v-btn>
-          <v-btn
-            color="primary"
-            class="mb-2"
-            v-on="on"
-          >افزودن</v-btn>
         </template>
         <v-card>
           <v-card-title>
@@ -35,28 +24,39 @@
           <v-card-text>
             <v-container grid-list-md>
               <v-layout wrap>
-                <v-flex xs12 sm6 md6 >
-                  <v-text-field v-model="editedItem.title" label="عنوان*" ></v-text-field>
+                <v-flex xs12 sm12 md12 >
+                  <v-text-field v-model="editedItem.product" label="نام کالا*" ></v-text-field>
+                </v-flex>
+                 <v-flex xs12 sm6 md6 >
+                  <v-text-field
+                    v-model="editedItem.user"
+                    label="نام کاربر*" ></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md6 >
+                  <v-text-field
+                    v-model="editedItem.title"
+                    label="عنوان*" ></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm12 md12 >
                   <v-text-field
                     v-model="editedItem.description"
                     label="توضیحات*" ></v-text-field>
                 </v-flex>
-                <v-flex xs12 sm6 md6 >
-                  <v-text-field
-                    v-model="editedItem.sort"
-                    label="ترتیب*" ></v-text-field>
-                </v-flex>
                 <v-flex xs12 sm4 md4 >
                   <v-switch v-model="editedItem.status" label="وضعیت" ></v-switch>
                 </v-flex>
+                
+                <v-flex xs12 sm4 md4>
+                  <img v-if="fileUser!==''" :src="fileUser" class="img-responsive" />
+                  <img v-else :src="editedItem.file_user" class="img-responsive" />
+                </v-flex>
+                
+                <v-flex xs12 sm4 md4>
+                  <img v-if="fileAdmin!==''" :src="fileAdmin" class="img-responsive" />
+                  <img v-else :src="editedItem.file_admin" class="img-responsive" />
+                </v-flex>
                 <v-flex xs12 sm8 md8>
                   <input type="file" v-on:change="onFileChange" />
-                </v-flex>
-                <v-flex xs12 sm4 md4>
-                  <img v-if="file!==''" :src="file" class="img-responsive" />
-                  <img v-else :src="editedItem.image" class="img-responsive" />
                 </v-flex>
               </v-layout>
             </v-container>
@@ -90,12 +90,10 @@
     >
       <template v-slot:items="props">
         <td>{{ (pagination.rowsPerPage*(pagination.page-1))+(props.index+1) }}</td>
-        <td class="text-xs-center">
-          <v-img
-            width="80" :src="props.item.image"></v-img>
-        </td>
+       
+        <td class="text-xs-center">{{ props.item.user }}</td>
         <td class="text-xs-center">{{ props.item.title }}</td>
-        <td class="text-xs-center">{{ props.item.countChildren }}</td>
+        <td class="text-xs-center">{{ props.item.product }}</td>
         <td class="text-xs-center">
           <v-switch
             v-model="props.item.status"
@@ -104,14 +102,6 @@
         </td>
         <td>
           <v-icon small class="mr-2" color="blue" @click="editItem(props.item)" >mdi-pencil</v-icon>
-          <v-icon small color="red" @click="deleteItem(props.item)" >mdi-delete</v-icon>
-          <v-icon small color="blue" @click="getChildren(props.item.id)" v-if='(props.item.countChildren>0)'>mdi-clipboard-text</v-icon>
-          <v-icon small color="blue" 
-          @click="$router.push({ path: `/category/getComments/${props.item.id}` })"
-          >mdi-message-settings-variant</v-icon>
-          <v-icon small color="blue" 
-          @click="$router.push({ path: `/category/getSpecifications/${props.item.id}` })"
-          >mdi-format-list-bulleted</v-icon>
         </td>
       </template>
     </v-data-table>
@@ -130,7 +120,7 @@
 </template>
 
 <script>
-import Api from "../../api/Category.js";
+import Api from "../../api/Message.js";
 
 export default {
   data: () => ({
@@ -138,7 +128,8 @@ export default {
     modal: false,
     snackColor: "",
     snackText: "",
-    file: "",
+    fileUser: "",
+    fileAdmin: "",
     results: [],
     search: "",
     total: 0,
@@ -146,31 +137,25 @@ export default {
     pagination: {},
     dialog: false,
     editedIndex: -1,
-    parentId: 0,
-    currentParentId: 0,
     editedItem: {
-      image: "",
+      file_admin: "",
       title: "",
       description: "",
       status: 0,
-      sort:0,
-      parentId : 0,
     },
     defaultItem: {
-      image: "",
+      file_admin: "",
       title: "",
       description: "",
       status: 0,
-      sort:0,
-      parentId : 0,
     },
     headers: [
-      { text: "ردیف", value: "id", align: "center" },
-      { text: "تصویر ", value: "image", align: "center", sortable: false },
-      { text: "عنوان", value: "title", align: "center" },
-      { text: "تعداد زیردسته", value: "countChildren", align: "center" },
-      { text: "وضعیت", value: "status", align: "center" },
-      { text: "عملیات", value: "action", align: "center" }
+        { text: "ردیف", value: "id", align: "center" },
+        { text: "نام کاربر", value: "user", align: "center" },
+        { text: "عنوان", value: "title", align: "center" },
+        { text: "نام کالا", value: "product", align: "center" },
+        { text: "وضعیت", value: "status", align: "center" },
+        { text: "عملیات", value: "action", align: "center" }
     ],
     rowsPerPageItems: [5, 10, 20, 50, 100]
   }),
@@ -193,21 +178,11 @@ export default {
     }
   },
   methods: {
-    getParent() {
-      this.parentId = this.currentParentId;
-      this.currentParentId = 0;
-      this.getByPagination();
-    },
-    getChildren(parentId) {
 
-      this.currentParentId = this.parentId;
-      this.parentId = parentId;
-      this.getByPagination();
-    },
     getByPagination() {
       this.loading = true;
       if (this.search) {
-        Api.getFilter({
+        Api.getFilterDiscuss({
           query: this.search,
           page: this.pagination.page,
           per_page: this.pagination.rowsPerPage
@@ -223,13 +198,11 @@ export default {
       // get by sort option
       if (this.pagination.sortBy && !this.search) {
         const direction = this.pagination.descending ? "desc" : "asc";
-        Api.getOrder({
+        Api.getOrderDiscuss({
           direction: direction,
           sortBy: this.pagination.sortBy,
           page: this.pagination.page,
           per_page: this.pagination.rowsPerPage,
-          parentId: this.parentId,
-          currentParentId : this.currentParentId,
         }).then(res => {
           console.log(res);
           this.loading = false;
@@ -238,7 +211,7 @@ export default {
         });
       }
       if (!this.search && !this.pagination.sortBy) {
-        Api.get({
+        Api.getDiscuss({
           page: this.pagination.page,
           per_page: this.pagination.rowsPerPage
         })
@@ -258,24 +231,6 @@ export default {
       this.dialog = true;
     },
 
-    deleteItem(item) {
-      const index = this.results.indexOf(item);
-      if (confirm("از حذف مطمئن هستید؟")) {
-        Api.delete(item.id)
-          .then(() => {
-            this.results.splice(index, 1);
-            this.snack = true;
-            this.snackColor = "success";
-            this.snackText = this.$t("message.delete.success");
-          })
-          .catch(error => {
-            this.snack = true;
-            this.snackColor = "error";
-            this.snackText = this.$t("message.delete.error");
-          });
-      }
-    },
-
     close() {
       this.dialog = false;
       setTimeout(() => {
@@ -285,11 +240,11 @@ export default {
     },
 
     save() {
-      this.editedItem.image = this.file;
-      this.editedItem.parentId = this.parentId;
+console.log(this.fileAdmin);
+      this.editedItem.file_admin = this.fileAdmin;
       if (this.editedIndex > -1) {
-        console.log(this.editedItem);
-        Api.update(this.editedItem)
+        
+        Api.updateDiscuss(this.editedItem)
           .then(() => {
             this.snackColor = "success";
             this.snackText = this.$t("message.update.success");
@@ -302,26 +257,27 @@ export default {
             this.snackColor = "error";
             this.snackText = this.$t("message.update.error");
           });
-      } else {
-        Api.create(this.editedItem)
-          .then(({ data }) => {
-            this.snack = true;
-            this.snackColor = "success";
-            this.snackText = this.$t("message.create.success");
-            this.results.push(data.data);
-            this.getByPagination();
-          })
-          .catch(error => {
-            this.snack = true;
-            this.snackColor = "error";
-            this.snackText = this.$t("message.create.error");
-          });
-      }
+      } 
+    //   else {
+    //     Api.create(this.editedItem)
+    //       .then(({ data }) => {
+    //         this.snack = true;
+    //         this.snackColor = "success";
+    //         this.snackText = this.$t("message.create.success");
+    //         this.results.push(data.data);
+    //         this.getByPagination();
+    //       })
+    //       .catch(error => {
+    //         this.snack = true;
+    //         this.snackColor = "error";
+    //         this.snackText = this.$t("message.create.error");
+    //       });
+    //   }
       this.close();
     },
 
     changeState(item) {
-      Api.changeState(item)
+      Api.changeStateDiscuss(item)
         .then(() => {
           this.snack = true;
           this.snackColor = "success";
@@ -344,7 +300,7 @@ export default {
       let reader = new FileReader();
       let vm = this;
       reader.onload = e => {
-        vm.file = e.target.result;
+        vm.fileAdmin = e.target.result;
       };
       reader.readAsDataURL(file);
     }
@@ -361,4 +317,3 @@ img {
   max-height: 100px;
 }
 </style>
-
