@@ -34,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
 
             Route::post('uploadMultiImages', 'Admin\ProductController@uploadMultiImages');
             Route::get('removeImage/{id}', 'Admin\ProductController@removeImage');
+            Route::get('addColor/{color}/{id}', 'Admin\ProductController@adddColor');
         });
 
         Route::group(['prefix' => 'category'], function () {

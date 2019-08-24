@@ -13,6 +13,12 @@ class Color extends Model
     /**
      * Get all of the products that are assigned this color.
      */
+    
+    public function describe()
+    {
+        return $this->morphOne(Describe::class, 'describe_able');
+    }
+
     public function products()
     {
         return $this->morphedByMany(Product::class, 'color_able');

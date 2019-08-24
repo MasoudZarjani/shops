@@ -30,5 +30,8 @@ export default {
     },
     removeImage(id){
         return axios.get('product/removeImage/'+id);
-    }
+    },
+    addColor(color,id){
+        return axios.get('product/addColor/' + color + '/' + id);
+    },
 }

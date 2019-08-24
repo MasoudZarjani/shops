@@ -32,6 +32,9 @@
                 <v-flex xs12 sm4 md4 >
                   <v-switch v-model="data.status" label="وضعیت" ></v-switch>
                 </v-flex>
+                <v-flex xs12 sm4 md4 >
+                  <v-select  v-model="data.brand" :items="data.brandList" label="برند" ></v-select>
+                </v-flex>
                 <v-flex xs12 sm8 md8>
                   <input type="file" v-on:change="onFileChange" />
                 </v-flex>
@@ -47,37 +50,53 @@
 
 
           <v-card-text v-if="galleryTab">
-              
-              <div>
-                  <div class="form-group col-md-12">
-                      <label for="logo" class="control-label">Attachments</label>
-                      <br><br>
-                      <div class="col-md-12">
-                          <input type="file" multiple="multiple" id="attachments" @change="uploadFieldChange">
-                          <hr>
-                          <div class="col-md-12">
-                            <div class="attachment-holder animated fadeIn" v-cloak v-for="(item, key) in results"  v-bind:key="key"> 
-                                <td>{{ item.id }}</td>
-                                <img :src="item.path" class="img-responsive" width="100"/>
-                                <v-icon small color="red" @click="deleteItem(item)" >mdi-delete</v-icon>
-                              </div>
+            <div>
+              <div class="form-group col-md-12">
+                <label for="logo" class="control-label">اسلایدر</label>
+                <br><br>
+                <div class="col-md-12">
+                  <input type="file" multiple="multiple" id="attachments" @change="uploadFieldChange">
+                  <hr>
+                  <div class="col-md-12">
+                    <div class="attachment-holder animated fadeIn" v-cloak v-for="(item, key) in gallery"  v-bind:key="key"> 
+                      <td>{{ item.id }}</td>
+                      <img :src="item.path" class="img-responsive" width="100"/>
+                      <v-icon small color="red" @click="deleteImage(item)" >mdi-delete</v-icon>
+                    </div>
                               
-                              <div class="attachment-holder animated fadeIn" v-cloak v-for="(attachment, key) in attachments"  v-bind:key="key">
-                                <img  :src="newImages[key]" class="img-responsive" width="100"/>
-                                
-                                <span class="label label-primary">{{ attachment.name + ' (' + Number((attachment.size / 1024 / 1024).toFixed(1)) + 'MB)'}}</span> 
-                                <v-icon small color="red" @click="removeAttachment(attachment)" >mdi-delete</v-icon>
-                                <br/><br/>
-                            </div>
-                          </div>
-                      </div>
-                      <br><br>
-                      <button class="btn btn-primary" @click="submit(data)">Upload</button>
+                    <div class="attachment-holder animated fadeIn" v-cloak v-for="(attachment, key) in attachments"  v-bind:key="key">
+                      <img  :src="newImages[key]" class="img-responsive" width="100"/>
+                      
+                      <span class="label label-primary">{{ attachment.name + ' (' + Number((attachment.size / 1024 / 1024).toFixed(1)) + 'MB)'}}</span> 
+                      <v-icon small color="red" @click="removeImage(attachment)" >mdi-delete</v-icon>
+                      <br/><br/>
+                    </div>
                   </div>
+                </div>
+                <br><br>
+                <button class="btn btn-primary" @click="submit(data)">Upload</button>
               </div>
+            </div>
+          </v-card-text>
 
-              
-           </v-card-text>
+          <v-card-text v-if="colorTab">
+            <div>
+              <div class="form-group col-md-12">
+                <label for="logo" class="control-label">رنگ ها</label>
+                <br>
+                <div class="col-md-12">
+                  <div class="attachment-holder animated fadeIn" v-cloak v-for="(item, key) in colors"  v-bind:key="key"> 
+                      <span class="current-color" :style="'background-color: ' + item.code"></span>{{ item.name }}
+                      <v-icon small color="red" @click="deleteColor(item)">mdi-delete</v-icon>
+                  </div>
+
+                  <v-select label="رنگ" :items="data.colorList" item-text="name" item-value="id" @change="setColor"></v-select>
+                  <button class="btn btn-primary" @click="addColor(data.id)">افزودن</button>
+                </div>
+                
+              </div>
+            </div>
+          </v-card-text>
         </v-flex>
       </v-layout>
     </v-card>
@@ -93,17 +112,23 @@ import Api from "../../api/Product.js";
 
 export default {
   data: () => ({
-    results: [],
+    gallery: [],
+    colors: [],
     drawer: true,
     items: [
       { title: "جزئیات", name: "detailTab", icon: "mdi-clipboard-text" },
       { title: "گالری", name: "galleryTab", icon: "mdi-file-image" },
+      { title: "رنگ", name: "colorTab", icon: "mdi-palette" },
+      { title: "فروشنده", name: "sellerTab", icon: "mdi-shopping" },
     ],
     right: null,
     modal: false,
     dialog: false,
     detailTab: true,
     galleryTab: false,
+    colorTab: false,
+    sellerTab: false,
+    selectedColor:0,
     attachments : [],
     mainImage: "",
     newImages : [],
@@ -111,23 +136,25 @@ export default {
     editedItem: {
       title: "",
       description: "",
-      price: "",
       status: 0,
       price : 0,
       discount : 0,
+      brand : 0,
       mainImage : '',
       gallery : [],
+      colors : [],
       newImages : [],
     },
     defaultItem: {
       title: "",
       description: "",
-      price: "",
       status: 0,
       price : 0,
       discount : 0,
+      brand : 0,
       mainImage : '',
       gallery:[],
+      colors : [],
       newImages : [],
     },
     file: "",
@@ -153,15 +180,12 @@ export default {
     showTab(name) {
       this.detailTab = false;
       this.galleryTab = false;
+      this.colorTab = false;
       switch (name) {
-        case "detailTab":
-          this.detailTab = true;
-          break;
-        case "galleryTab":
-          this.galleryTab = true;
-          break;
-        default:
-          break;
+        case "detailTab": this.detailTab = true; break;
+        case "galleryTab": this.galleryTab = true; break;
+        case "colorTab": this.colorTab = true; break;
+        default: break;
       }
     },
     getDetail() {
@@ -169,8 +193,9 @@ export default {
       Api.getDetail(this.$route.params.id)
         .then(result => {
           this.data = result.data.data;
-          this.results = result.data.data.gallery;
-          console.log(this.results);
+          this.gallery = result.data.data.gallery;
+          this.colors = result.data.data.colors;
+          console.log(this.gallery);
         })
         .catch(error => {
           this.snack = true;
@@ -266,7 +291,7 @@ export default {
         this.$forceUpdate();
     },
 
-    removeAttachment(attachment) {
+    removeImage(attachment) {
         this.attachments.splice(this.attachments.indexOf(attachment), 1);
         this.getAttachmentSize();
     },
@@ -291,19 +316,19 @@ export default {
     submit(item) {
       this.editedIndex = item.id;
       this.editedItem = Object.assign({}, item);
-      this.editedItem.mainImage = this.mainImage;
-        this.editedItem.newImages = this.newImages;
-        Api.uploadMultiImages(this.editedItem)
-          .then(() => {
-            this.snack = true;
-            this.snackColor = "success";
-            this.snackText = this.$t("message.changeState.success");
-          })
-          .catch(error => {
-            this.snack = true;
-            this.snackColor = "error";
-            this.snackText = this.$t("message.changeState.error");
-          });
+      //this.editedItem.mainImage = this.mainImage;
+      this.editedItem.newImages = this.newImages;
+      Api.uploadMultiImages(this.editedItem)
+        .then(() => {
+          this.snack = true;
+          this.snackColor = "success";
+          this.snackText = this.$t("message.changeState.success");
+        })
+        .catch(error => {
+          this.snack = true;
+          this.snackColor = "error";
+          this.snackText = this.$t("message.changeState.error");
+        });
     },
     // We want to clear the FormData object on every upload so we can re-calculate new files again.
     // Keep in mind that we can delete files as well so in the future we will need to keep track of that as well
@@ -316,13 +341,12 @@ export default {
     },
 
 
-    deleteItem(item) {
-      const index = this.results.indexOf(item);
-      console.log(index);
+    deleteImage(item) {
+      const index = this.gallery.indexOf(item);
       if (confirm("از حذف مطمئن هستید؟")) {
         Api.removeImage(item.id)
           .then(() => {
-            this.results.splice(index, 1);
+            this.gallery.splice(index, 1);
             this.snack = true;
             this.snackColor = "success";
             this.snackText = this.$t("message.delete.success");
@@ -334,6 +358,25 @@ export default {
           });
       }
     },
+    addColor(itemId) {
+      
+        Api.addColor(this.selectedColor,itemId)
+        .then(result => {
+          console.log(this.colors);
+          this.colors.push(result.data.data);
+          //console.log(this.colors);
+        })
+        .catch(error => {
+          this.snack = true;
+          this.snackColor = "error";
+          this.snackText = this.$t("message.userDetail.error");
+        });
+
+    },
+    setColor(selectedColor)
+    {
+      this.selectedColor = selectedColor;
+    }
 
   }
 };

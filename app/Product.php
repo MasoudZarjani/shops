@@ -202,6 +202,7 @@ class Product extends Model
     {
         $product = Product::ofId(request('id'))->first();
         $product->status = request('status');
+        $product->brand = Describe::ofTitle(request('brand'))->first()->describe_able_id;
         $product->save();
 
         if(!$describe = $product->describe);

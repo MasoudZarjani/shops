@@ -6,7 +6,9 @@ use App\Http\Resources\Admin\ProductResource;
 use App\Product;
 use App\Helpers\UploadAdmin;
 use App\Http\Resources\Admin\ProductDetailResource;
+use App\Http\Resources\Admin\ColorResource;
 use App\File;
+use App\Color;
 
 
 class ProductController extends Controller
@@ -88,5 +90,18 @@ class ProductController extends Controller
     public function removeImage($id)
     {
         return File::ofId($id)->delete();
+    }
+
+    public function adddColor($color,$id)
+    {
+        $product = Product::ofId($id)->first();
+        $color = Color::find($color);
+        $product->colors()->attach($color->id);
+
+        return [
+            'id' => $color->id ?? 0,
+            'name' => $color->name ?? "",
+            'code' => $color->code ?? "",
+        ];;
     }
 }

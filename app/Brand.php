@@ -33,6 +33,11 @@ class Brand extends Model
         return $query->where('uuid', $uuid);
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
+
     public function scopeOfId($query, $id)
     {
         return $query->where('id', $id);

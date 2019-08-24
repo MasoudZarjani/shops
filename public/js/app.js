@@ -4048,8 +4048,8 @@ __webpack_require__.r(__webpack_exports__);
         value: "category",
         align: "center"
       }, {
-        text: "قیمت",
-        value: "price",
+        text: "برند",
+        value: "brand",
         align: "center"
       }, {
         text: "وضعیت",
@@ -4183,8 +4183,29 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _api_Product_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../api/Product.js */ "./resources/js/api/Product.js");
+var _methods;
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4278,10 +4299,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    var _editedItem, _defaultItem;
-
     return {
-      results: [],
+      gallery: [],
+      colors: [],
       drawer: true,
       items: [{
         title: "جزئیات",
@@ -4291,28 +4311,51 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         title: "گالری",
         name: "galleryTab",
         icon: "mdi-file-image"
+      }, {
+        title: "رنگ",
+        name: "colorTab",
+        icon: "mdi-palette"
+      }, {
+        title: "فروشنده",
+        name: "sellerTab",
+        icon: "mdi-shopping"
       }],
       right: null,
       modal: false,
       dialog: false,
       detailTab: true,
       galleryTab: false,
+      colorTab: false,
+      sellerTab: false,
+      selectedColor: 0,
       attachments: [],
       mainImage: "",
       newImages: [],
       editedIndex: -1,
-      editedItem: (_editedItem = {
+      editedItem: {
         title: "",
         description: "",
-        price: "",
-        status: 0
-      }, _defineProperty(_editedItem, "price", 0), _defineProperty(_editedItem, "discount", 0), _defineProperty(_editedItem, "mainImage", ''), _defineProperty(_editedItem, "gallery", []), _defineProperty(_editedItem, "newImages", []), _editedItem),
-      defaultItem: (_defaultItem = {
+        status: 0,
+        price: 0,
+        discount: 0,
+        brand: 0,
+        mainImage: '',
+        gallery: [],
+        colors: [],
+        newImages: []
+      },
+      defaultItem: {
         title: "",
         description: "",
-        price: "",
-        status: 0
-      }, _defineProperty(_defaultItem, "price", 0), _defineProperty(_defaultItem, "discount", 0), _defineProperty(_defaultItem, "mainImage", ''), _defineProperty(_defaultItem, "gallery", []), _defineProperty(_defaultItem, "newImages", []), _defaultItem),
+        status: 0,
+        price: 0,
+        discount: 0,
+        brand: 0,
+        mainImage: '',
+        gallery: [],
+        colors: [],
+        newImages: []
+      },
       file: "",
       snack: false,
       snackColor: "",
@@ -4331,10 +4374,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return this.message.split('').reverse().join('');
     }
   },
-  methods: {
+  methods: (_methods = {
     showTab: function showTab(name) {
       this.detailTab = false;
       this.galleryTab = false;
+      this.colorTab = false;
 
       switch (name) {
         case "detailTab":
@@ -4343,6 +4387,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         case "galleryTab":
           this.galleryTab = true;
+          break;
+
+        case "colorTab":
+          this.colorTab = true;
           break;
 
         default:
@@ -4355,8 +4403,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.snack = false;
       _api_Product_js__WEBPACK_IMPORTED_MODULE_0__["default"].getDetail(this.$route.params.id).then(function (result) {
         _this.data = result.data.data;
-        _this.results = result.data.data.gallery;
-        console.log(_this.results);
+        _this.gallery = result.data.data.gallery;
+        _this.colors = result.data.data.colors;
+        console.log(_this.gallery);
       })["catch"](function (error) {
         _this.snack = true;
         _this.snackColor = "error";
@@ -4449,86 +4498,91 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
       this.upload_size = Number(this.upload_size.toFixed(1));
       this.$forceUpdate();
-    },
-    removeAttachment: function removeAttachment(attachment) {
-      this.attachments.splice(this.attachments.indexOf(attachment), 1);
-      this.getAttachmentSize();
-    },
-    // This function will be called every time you add a file
-    uploadFieldChange: function uploadFieldChange(e) {
-      var _this7 = this;
+    }
+  }, _defineProperty(_methods, "removeImage", function removeImage(attachment) {
+    this.attachments.splice(this.attachments.indexOf(attachment), 1);
+    this.getAttachmentSize();
+  }), _defineProperty(_methods, "uploadFieldChange", function uploadFieldChange(e) {
+    var _this7 = this;
 
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return;
+    var files = e.target.files || e.dataTransfer.files;
+    if (!files.length) return;
 
-      var _loop = function _loop() {
-        _this7.attachments.push(files[i]);
+    var _loop = function _loop() {
+      _this7.attachments.push(files[i]);
 
-        var reader = new FileReader();
-        var vm = _this7;
+      var reader = new FileReader();
+      var vm = _this7;
 
-        reader.onload = function (e) {
-          vm.newImages.push(e.target.result);
-        };
-
-        reader.readAsDataURL(files[i]);
+      reader.onload = function (e) {
+        vm.newImages.push(e.target.result);
       };
 
-      for (var i = files.length - 1; i >= 0; i--) {
-        _loop();
-      } // Reset the form to avoid copying these files multiple times into this.attachments
+      reader.readAsDataURL(files[i]);
+    };
+
+    for (var i = files.length - 1; i >= 0; i--) {
+      _loop();
+    } // Reset the form to avoid copying these files multiple times into this.attachments
 
 
-      document.getElementById("attachments").value = [];
-    },
-    submit: function submit(item) {
-      var _this8 = this;
+    document.getElementById("attachments").value = [];
+  }), _defineProperty(_methods, "submit", function submit(item) {
+    var _this8 = this;
 
-      this.editedIndex = item.id;
-      this.editedItem = Object.assign({}, item);
-      this.editedItem.mainImage = this.mainImage;
-      this.editedItem.newImages = this.newImages;
-      _api_Product_js__WEBPACK_IMPORTED_MODULE_0__["default"].uploadMultiImages(this.editedItem).then(function () {
-        _this8.snack = true;
-        _this8.snackColor = "success";
-        _this8.snackText = _this8.$t("message.changeState.success");
+    this.editedIndex = item.id;
+    this.editedItem = Object.assign({}, item); //this.editedItem.mainImage = this.mainImage;
+
+    this.editedItem.newImages = this.newImages;
+    _api_Product_js__WEBPACK_IMPORTED_MODULE_0__["default"].uploadMultiImages(this.editedItem).then(function () {
+      _this8.snack = true;
+      _this8.snackColor = "success";
+      _this8.snackText = _this8.$t("message.changeState.success");
+    })["catch"](function (error) {
+      _this8.snack = true;
+      _this8.snackColor = "error";
+      _this8.snackText = _this8.$t("message.changeState.error");
+    });
+  }), _defineProperty(_methods, "resetData", function resetData() {
+    this.listImages = new FormData(); // Reset it completely
+
+    this.attachments = [];
+  }), _defineProperty(_methods, "start", function start() {
+    console.log('Starting File Management Component');
+  }), _defineProperty(_methods, "deleteImage", function deleteImage(item) {
+    var _this9 = this;
+
+    var index = this.gallery.indexOf(item);
+
+    if (confirm("از حذف مطمئن هستید؟")) {
+      _api_Product_js__WEBPACK_IMPORTED_MODULE_0__["default"].removeImage(item.id).then(function () {
+        _this9.gallery.splice(index, 1);
+
+        _this9.snack = true;
+        _this9.snackColor = "success";
+        _this9.snackText = _this9.$t("message.delete.success");
       })["catch"](function (error) {
-        _this8.snack = true;
-        _this8.snackColor = "error";
-        _this8.snackText = _this8.$t("message.changeState.error");
+        _this9.snack = true;
+        _this9.snackColor = "error";
+        _this9.snackText = _this9.$t("message.delete.error");
       });
-    },
-    // We want to clear the FormData object on every upload so we can re-calculate new files again.
-    // Keep in mind that we can delete files as well so in the future we will need to keep track of that as well
-    resetData: function resetData() {
-      this.listImages = new FormData(); // Reset it completely
-
-      this.attachments = [];
-    },
-    start: function start() {
-      console.log('Starting File Management Component');
-    },
-    deleteItem: function deleteItem(item) {
-      var _this9 = this;
-
-      var index = this.results.indexOf(item);
-      console.log(index);
-
-      if (confirm("از حذف مطمئن هستید؟")) {
-        _api_Product_js__WEBPACK_IMPORTED_MODULE_0__["default"].removeImage(item.id).then(function () {
-          _this9.results.splice(index, 1);
-
-          _this9.snack = true;
-          _this9.snackColor = "success";
-          _this9.snackText = _this9.$t("message.delete.success");
-        })["catch"](function (error) {
-          _this9.snack = true;
-          _this9.snackColor = "error";
-          _this9.snackText = _this9.$t("message.delete.error");
-        });
-      }
     }
-  }
+  }), _defineProperty(_methods, "addColor", function addColor(itemId) {
+    var _this10 = this;
+
+    _api_Product_js__WEBPACK_IMPORTED_MODULE_0__["default"].addColor(this.selectedColor, itemId).then(function (result) {
+      console.log(_this10.colors);
+
+      _this10.colors.push(result.data.data); //console.log(this.colors);
+
+    })["catch"](function (error) {
+      _this10.snack = true;
+      _this10.snackColor = "error";
+      _this10.snackText = _this10.$t("message.userDetail.error");
+    });
+  }), _defineProperty(_methods, "setColor", function setColor(selectedColor) {
+    this.selectedColor = selectedColor;
+  }), _methods)
 });
 
 /***/ }),
@@ -47189,7 +47243,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-xs-center" }, [
-                  _vm._v(_vm._s(props.item.price))
+                  _vm._v(_vm._s(props.item.brand))
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-xs-center" }, [
@@ -47433,6 +47487,27 @@ var render = function() {
                                   _vm._v(" "),
                                   _c(
                                     "v-flex",
+                                    { attrs: { xs12: "", sm4: "", md4: "" } },
+                                    [
+                                      _c("v-select", {
+                                        attrs: {
+                                          items: _vm.data.brandList,
+                                          label: "برند"
+                                        },
+                                        model: {
+                                          value: _vm.data.brand,
+                                          callback: function($$v) {
+                                            _vm.$set(_vm.data, "brand", $$v)
+                                          },
+                                          expression: "data.brand"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-flex",
                                     { attrs: { xs12: "", sm8: "", md8: "" } },
                                     [
                                       _c("input", {
@@ -47501,7 +47576,7 @@ var render = function() {
                                 staticClass: "control-label",
                                 attrs: { for: "logo" }
                               },
-                              [_vm._v("Attachments")]
+                              [_vm._v("اسلایدر")]
                             ),
                             _vm._v(" "),
                             _c("br"),
@@ -47523,7 +47598,7 @@ var render = function() {
                                 "div",
                                 { staticClass: "col-md-12" },
                                 [
-                                  _vm._l(_vm.results, function(item, key) {
+                                  _vm._l(_vm.gallery, function(item, key) {
                                     return _c(
                                       "div",
                                       {
@@ -47548,7 +47623,7 @@ var render = function() {
                                             attrs: { small: "", color: "red" },
                                             on: {
                                               click: function($event) {
-                                                return _vm.deleteItem(item)
+                                                return _vm.deleteImage(item)
                                               }
                                             }
                                           },
@@ -47608,7 +47683,7 @@ var render = function() {
                                             attrs: { small: "", color: "red" },
                                             on: {
                                               click: function($event) {
-                                                return _vm.removeAttachment(
+                                                return _vm.removeImage(
                                                   attachment
                                                 )
                                               }
@@ -47642,6 +47717,89 @@ var render = function() {
                                 }
                               },
                               [_vm._v("Upload")]
+                            )
+                          ])
+                        ])
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.colorTab
+                    ? _c("v-card-text", [
+                        _c("div", [
+                          _c("div", { staticClass: "form-group col-md-12" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "control-label",
+                                attrs: { for: "logo" }
+                              },
+                              [_vm._v("رنگ ها")]
+                            ),
+                            _vm._v(" "),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "col-md-12" },
+                              [
+                                _vm._l(_vm.colors, function(item, key) {
+                                  return _c(
+                                    "div",
+                                    {
+                                      key: key,
+                                      staticClass:
+                                        "attachment-holder animated fadeIn"
+                                    },
+                                    [
+                                      _c("span", {
+                                        staticClass: "current-color",
+                                        style: "background-color: " + item.code
+                                      }),
+                                      _vm._v(
+                                        _vm._s(item.name) +
+                                          "\n                    "
+                                      ),
+                                      _c(
+                                        "v-icon",
+                                        {
+                                          attrs: { small: "", color: "red" },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.deleteColor(item)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("mdi-delete")]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                }),
+                                _vm._v(" "),
+                                _c("v-select", {
+                                  attrs: {
+                                    label: "رنگ",
+                                    items: _vm.data.colorList,
+                                    "item-text": "name",
+                                    "item-value": "id"
+                                  },
+                                  on: { change: _vm.setColor }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-primary",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.addColor(_vm.data.id)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("افزودن")]
+                                )
+                              ],
+                              2
                             )
                           ])
                         ])
@@ -90795,6 +90953,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   removeImage: function removeImage(id) {
     return _config_axios_js__WEBPACK_IMPORTED_MODULE_0__["default"].get('product/removeImage/' + id);
+  },
+  addColor: function addColor(color, id) {
+    return _config_axios_js__WEBPACK_IMPORTED_MODULE_0__["default"].get('product/addColor/' + color + '/' + id);
   }
 });
 

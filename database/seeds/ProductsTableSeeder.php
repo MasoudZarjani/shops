@@ -17,6 +17,7 @@ class ProductsTableSeeder extends Seeder
         foreach ($products as $product) {
             $productModel = new Product();
             $productModel->status = $product->status;
+            $productModel->brand = $product->brand;
             $productModel->product_able_type = $product->product_able_type;
             $productModel->product_able_id = $product->product_able_id;
             $productModel->save();

@@ -31,7 +31,7 @@
         </td>
         <td class="text-xs-center">{{ props.item.title }}</td>
         <td class="text-xs-center">{{ props.item.category }}</td>
-        <td class="text-xs-center">{{ props.item.price }}</td>
+        <td class="text-xs-center">{{ props.item.brand }}</td>
         <td class="text-xs-center">
           <span v-if="props.item.status == 1">فعال</span>
           <span v-else>غیر فعال</span>
@@ -72,7 +72,7 @@ export default {
       { text: "تصویر ",value: "avatar",align: "center",sortable: false},
       { text: "عنوان محصول", value: "title", align: "center" },
       { text: "دسته بندی", value: "category", align: "center" },
-      { text: "قیمت", value: "price", align: "center" },
+      { text: "برند", value: "brand", align: "center" },
       { text: "وضعیت", value: "status", align: "center" },
       { text: "عملیات", value: "action", align: "center" }
     ],

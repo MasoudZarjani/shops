@@ -4,6 +4,7 @@ namespace App\Http\Resources\Admin;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Category;
+use App\Brand;
 
 class ProductResource extends JsonResource
 {
@@ -15,14 +16,19 @@ class ProductResource extends JsonResource
      */
     public function toArray($request)
     {
-        $price = 0;
+        $brand_name = '';
+        $brand = Brand::find($this->brand);
+        if($brand)
+        {
+            $brand_name = $brand->describe()->ofType(config("constants.describe.type.text"))->first()->title;
+        }
         $category_name = '';
         if($this->detail)
         {
             $detail = $this->detail->properties;
             if($detail)
             {
-                $price = $detail['price'];
+                //$price = $detail['price'];
                 $category_id = $detail['category_id'];
                 $category = Category::find($category_id);
                 if($category)
@@ -37,8 +43,8 @@ class ProductResource extends JsonResource
             'title' => $this->describe->title ?? "",
             'category' => $category_name ??  "",
             'status' =>  $this->status,
-            'image' => $this->files()->first()->path ?? '',
-            'price' => $price,
+            'image' => $this->files()->where('position',2)->first()->path ?? '',
+            'brand' => $brand_name,
         ];
         
     }

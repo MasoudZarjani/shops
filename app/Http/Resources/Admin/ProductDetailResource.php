@@ -6,6 +6,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Carbon\Carbon;
 use App\Helpers\PersianDateConvert;
 use App\Category;
+use App\Brand;
+use App\Color;
 
 class ProductDetailResource extends JsonResource
 {
@@ -18,7 +20,9 @@ class ProductDetailResource extends JsonResource
      */
     public function toArray($request)
     {
-        
+        $colors = $this->colors;
+
+
         $createdDate = Carbon::parse($this->created_at)->format('Y-m-d');
         $date = PersianDateConvert::gregorian_to_jalali($createdDate);
         
@@ -26,7 +30,6 @@ class ProductDetailResource extends JsonResource
         
         if($detail)
         {
-            //$price = $detail['price'];
             $discount = $detail['discount'];
             $category_id = $detail['category_id'];
             $category = Category::find($category_id);
@@ -42,10 +45,14 @@ class ProductDetailResource extends JsonResource
             'description' => $this->describe->description ?? "",
             'category' => $category_name ??  "",
             'status' =>  $this->status,
-            //'price' => $price ?? 0,
+            'brand' =>  Brand::where('id',$this->brand)->first()->describe->title,
+            'brandList' =>  Brand::with('describe')->get()->pluck('describe.title','id')->toArray(),
             'discount' => $discount ?? 0,
             'mainImage' => $mainImage ? $mainImage->path : "",
             'gallery' => $this->files()->where('position',3)->get() ?? '',
+            'colors' => $colors,
+            //'colorList' => Color::pluck('name','id')->toArray(),
+            'colorList' => ColorResource::collection(Color::all()),
         ];
     }
 }

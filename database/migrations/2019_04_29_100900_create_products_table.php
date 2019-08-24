@@ -17,6 +17,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique();
+            $table->integer('brand')->default(0);
             Relation::constant($table, 'status', 'product.status.active');
 
             $table->nullableMorphs('product_able');
